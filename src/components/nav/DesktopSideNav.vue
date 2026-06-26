@@ -6,7 +6,7 @@
       </div>
       <div>
         <h1 class="text-headline-md font-headline-md text-on-surface text-[20px] leading-tight">KALAFAT</h1>
-        <p class="text-label-md font-code text-on-surface-variant">v1.0.0-stable</p>
+        <p class="text-label-md font-code text-on-surface-variant">v6.0.0-july</p>
       </div>
     </div>
     <div class="flex-1 overflow-y-auto py-4 flex flex-col gap-2 px-4">

@@ -1,7 +1,7 @@
 <template>
   <article class="border border-primary bg-surface group flex flex-col relative transition-transform duration-200 brutalist-offset shadow-primary hover:shadow-tertiary brutalist-offset-hover">
     <div class="h-10 bg-primary flex items-center justify-between px-4">
-      <span class="font-code text-label-md text-on-primary">{{ id }}</span>
+      <span class="font-code text-label-md text-on-primary">ID: {{ id }}</span>
       <span class="font-code text-label-md text-on-primary flex items-center gap-1">
         <span class="material-symbols-outlined text-[14px]">{{ typeIcon }}</span>
         {{ type }}

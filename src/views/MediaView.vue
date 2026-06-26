@@ -50,19 +50,34 @@
     </PageHeader>
 
     <section class="flex-1 p-margin-mobile lg:p-margin-desktop bg-surface-container-lowest">
-      <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-gutter">
-        <MediaCard
-          v-for="card in filteredCards"
-          :key="card.id"
-          :id="card.id"
-          :type="card.type"
-          :title="card.title"
-          :imageUrl="card.imageUrl"
-          :rating="card.rating"
-          :meta="card.meta"
-          :description="card.description"
-          :ratingLabel="card.ratingLabel"
-        />
+      <div class="relative border-l-2 border-primary ml-4 pl-8 flex flex-col gap-16">
+        <div v-for="group in groupedCards" :key="group.label" class="relative">
+          <div
+            class="absolute -left-[41px] top-0 w-4 h-4 border-2 border-primary"
+            :class="group.isLatest ? 'bg-tertiary' : 'bg-surface'"
+          ></div>
+          <div
+            class="font-code text-label-md mb-6"
+            :class="group.isLatest ? 'text-tertiary' : 'text-on-surface-variant'"
+          >{{ group.label }}</div>
+          <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-gutter">
+            <MediaCard
+              v-for="card in group.cards"
+              :key="card.id"
+              :id="card.id"
+              :type="card.type"
+              :title="card.title"
+              :imageUrl="card.imageUrl"
+              :rating="card.rating"
+              :meta="card.meta"
+              :description="card.description"
+              :ratingLabel="card.ratingLabel"
+            />
+          </div>
+        </div>
+        <div v-if="groupedCards.length === 0" class="border border-primary bg-surface p-8 text-center">
+          <p class="text-body-md font-code text-on-surface-variant">[NO_RECORDS_FOUND]</p>
+        </div>
       </div>
     </section>
   </div>
@@ -87,6 +102,7 @@ interface MediaCardData {
   meta: string[]
   description: string
   ratingLabel: string
+  date: string
 }
 
 const mediaCards: MediaCardData[] = [
@@ -99,6 +115,7 @@ const mediaCards: MediaCardData[] = [
     meta: ['DIR: G. GIBSON', 'YEAR: 2042'],
     description: 'Exceptional execution of the classic source material. The visual architecture relies heavily on stark contrasts and hard-edged polygonal geometries. Pacing algorithms are optimal.',
     ratingLabel: 'EXCELLENT',
+    date: '2024-10-12',
   },
   {
     id: 'MR-993',
@@ -109,6 +126,7 @@ const mediaCards: MediaCardData[] = [
     meta: ['S1: 9 EPS', 'YEAR: 2024'],
     description: 'Narrative loops are intriguing but exhibit minor memory leaks in the mid-season. Set design effectively leverages liminal aesthetics to induce psychological unease.',
     ratingLabel: 'ACCEPTABLE',
+    date: '2024-09-05',
   },
   {
     id: 'MR-994',
@@ -119,6 +137,18 @@ const mediaCards: MediaCardData[] = [
     meta: ['AUTHOR: C. LIU', 'PAGES: 400'],
     description: 'Flawless hard-sci-fi logic framework. The extrapolation of physics into macro-scale societal engineering is rendered with terrifying precision. A must-compile text.',
     ratingLabel: 'CRITICAL',
+    date: '2024-10-24',
+  },
+  {
+    id: 'MR-991',
+    type: 'MOVIE',
+    title: 'BLADE_RUNNER_2049',
+    imageUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDIZpsD6YA5sM-VM4ujCUqIfd2svR7EMTTZjFNdKfU50zcrNpu38c9iMxzJReKhD9647Lnjw7p-Md9l2RUvA0CZ22OZHPSh44KUsr5ryZkBLDQSZtS8x3Gs6ENaRceG953UiRc0UBkuP3TH3NQzfkARFwntOLE0Fmy_G0K6ctHX7lAIgiDkYFuh5oNWiFx73juCjMAyHI1Cl07DD7ELM3xRzedxtrKvXhVpTnVLaGJqhvBpai6QI9i2Vt4ZcQQI',
+    rating: 8.5,
+    meta: ['DIR: D. VILLENEUVE', 'YEAR: 2017'],
+    description: 'Color grading audit: High fidelity. Narrative coherence: Sustained. Atmospheric pressure optimal for deep-dive diagnostics.',
+    ratingLabel: 'SOLID',
+    date: '2024-08-15',
   },
 ]
 
@@ -129,5 +159,19 @@ const filteredCards = computed(() => {
     const matchesSearch = !q || card.title.toLowerCase().includes(q) || card.description.toLowerCase().includes(q)
     return matchesFilter && matchesSearch
   })
+})
+
+const groupedCards = computed(() => {
+  const groups = new Map<string, { label: string; cards: MediaCardData[] }>()
+  for (const card of filteredCards.value) {
+    const d = new Date(card.date)
+    const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`
+    const label = d.toLocaleDateString('en-US', { month: 'short', year: 'numeric' }).toUpperCase()
+    if (!groups.has(key)) groups.set(key, { label, cards: [] })
+    groups.get(key)!.cards.push(card)
+  }
+  return [...groups.entries()]
+    .sort(([a], [b]) => b.localeCompare(a))
+    .map(([, val], i) => ({ ...val, isLatest: i === 0 }))
 })
 </script>
