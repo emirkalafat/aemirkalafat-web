@@ -55,6 +55,7 @@ export default {
         'surface-container-low': '#1c1b1b',
         'tertiary': '#4cd6ff',
         'on-secondary-container': '#b4b5b5',
+        'cyber-purple': '#BD00FF',
       },
       borderRadius: {
         'DEFAULT': '0.25rem',

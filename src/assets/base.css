@@ -45,3 +45,13 @@
   transform: translate(-2px, -2px);
   box-shadow: 6px 6px 0px 0px var(--tw-shadow-color);
 }
+
+.neo-hover-glow {
+  transition: all 0.2s ease-in-out;
+}
+
+.neo-hover-glow:hover {
+  box-shadow: 8px 8px 0px 0px #4cd6ff;
+  transform: translate(-4px, -4px);
+  border-color: #4cd6ff;
+}
