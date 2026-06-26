@@ -5,43 +5,46 @@
       description="Structured analysis of visual and textual data streams. Evaluating narrative architecture, aesthetic execution, and systemic coherence across multiple media formats."
     >
       <template #filters>
-        <div class="flex flex-wrap gap-4 font-code text-label-md">
-        <button
-          @click="activeFilter = null"
-          :class="[
-            'border border-primary text-primary px-4 py-2 hover:bg-surface-variant transition-colors uppercase',
-            { 'bg-tertiary text-on-tertiary border-tertiary': activeFilter === null }
-          ]"
-        >
-          [*] ALL_RECORDS
-        </button>
-        <button
-          @click="activeFilter = 'MOVIE'"
-          :class="[
-            'border border-primary text-primary px-4 py-2 hover:bg-surface-variant transition-colors uppercase flex items-center gap-2',
-            { 'bg-tertiary text-on-tertiary border-tertiary': activeFilter === 'MOVIE' }
-          ]"
-        >
-          <span class="material-symbols-outlined text-[16px]">movie</span> MOVIES
-        </button>
-        <button
-          @click="activeFilter = 'TV_SERIES'"
-          :class="[
-            'border border-primary text-primary px-4 py-2 hover:bg-surface-variant transition-colors uppercase flex items-center gap-2',
-            { 'bg-tertiary text-on-tertiary border-tertiary': activeFilter === 'TV_SERIES' }
-          ]"
-        >
-          <span class="material-symbols-outlined text-[16px]">tv</span> TV_SERIES
-        </button>
-        <button
-          @click="activeFilter = 'TEXT'"
-          :class="[
-            'border border-primary text-primary px-4 py-2 hover:bg-surface-variant transition-colors uppercase flex items-center gap-2',
-            { 'bg-tertiary text-on-tertiary border-tertiary': activeFilter === 'TEXT' }
-          ]"
-        >
-          <span class="material-symbols-outlined text-[16px]">book</span> TEXT_DATA
-        </button>
+        <div class="flex flex-wrap gap-4 items-center font-code text-label-md">
+          <button
+            @click="activeFilter = null"
+            :class="[
+              'border border-primary text-primary px-4 py-2 hover:bg-surface-variant transition-colors uppercase',
+              { 'bg-tertiary text-on-tertiary border-tertiary': activeFilter === null }
+            ]"
+          >[*] ALL_RECORDS</button>
+          <button
+            @click="activeFilter = 'MOVIE'"
+            :class="[
+              'border border-primary text-primary px-4 py-2 hover:bg-surface-variant transition-colors uppercase flex items-center gap-2',
+              { 'bg-tertiary text-on-tertiary border-tertiary': activeFilter === 'MOVIE' }
+            ]"
+          ><span class="material-symbols-outlined text-[16px]">movie</span> MOVIES</button>
+          <button
+            @click="activeFilter = 'TV_SERIES'"
+            :class="[
+              'border border-primary text-primary px-4 py-2 hover:bg-surface-variant transition-colors uppercase flex items-center gap-2',
+              { 'bg-tertiary text-on-tertiary border-tertiary': activeFilter === 'TV_SERIES' }
+            ]"
+          ><span class="material-symbols-outlined text-[16px]">tv</span> TV_SERIES</button>
+          <button
+            @click="activeFilter = 'TEXT'"
+            :class="[
+              'border border-primary text-primary px-4 py-2 hover:bg-surface-variant transition-colors uppercase flex items-center gap-2',
+              { 'bg-tertiary text-on-tertiary border-tertiary': activeFilter === 'TEXT' }
+            ]"
+          ><span class="material-symbols-outlined text-[16px]">book</span> TEXT_DATA</button>
+          <div class="ml-auto w-full md:w-auto mt-4 md:mt-0 flex border border-primary bg-background focus-within:border-tertiary transition-colors">
+            <input
+              v-model="searchQuery"
+              type="text"
+              placeholder="QUERY_RECORDS..."
+              class="bg-transparent border-none text-on-surface text-body-md font-code py-2 px-3 focus:ring-0 w-full md:w-64 outline-none"
+            />
+            <button class="px-3 text-primary hover:text-tertiary transition-colors border-l border-primary">
+              <span class="material-symbols-outlined">search</span>
+            </button>
+          </div>
         </div>
       </template>
     </PageHeader>
@@ -73,6 +76,7 @@ import MediaCard from '@/components/ui/MediaCard.vue'
 type FilterType = 'MOVIE' | 'TV_SERIES' | 'TEXT' | null
 
 const activeFilter = ref<FilterType>(null)
+const searchQuery = ref('')
 
 interface MediaCardData {
   id: string
@@ -119,9 +123,11 @@ const mediaCards: MediaCardData[] = [
 ]
 
 const filteredCards = computed(() => {
-  if (!activeFilter.value) {
-    return mediaCards
-  }
-  return mediaCards.filter(card => card.type === activeFilter.value)
+  return mediaCards.filter(card => {
+    const matchesFilter = !activeFilter.value || card.type === activeFilter.value
+    const q = searchQuery.value.toLowerCase()
+    const matchesSearch = !q || card.title.toLowerCase().includes(q) || card.description.toLowerCase().includes(q)
+    return matchesFilter && matchesSearch
+  })
 })
 </script>

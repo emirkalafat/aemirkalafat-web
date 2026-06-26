@@ -5,35 +5,34 @@
       description="System architecture analysis, embedded hardware experiments, and computational theory. Parsing reality through boolean logic."
     >
       <template #filters>
-        <div class="flex flex-wrap gap-4 items-center">
-          <span class="text-label-md font-code text-primary uppercase mr-2">FILTER_TAGS:</span>
+        <div class="flex flex-wrap gap-4 items-center font-code text-label-md">
           <button
             @click="activeFilter = null"
-            class="border px-3 py-1 text-label-md font-code transition-colors"
-            :class="activeFilter === null
-              ? 'border-tertiary text-tertiary bg-surface-container-low'
-              : 'border-primary text-primary hover:bg-surface-variant transition-colors uppercase'"
-          >ALL</button>
+            :class="[
+              'border border-primary text-primary px-4 py-2 hover:bg-surface-variant transition-colors uppercase',
+              { 'bg-tertiary text-on-tertiary border-tertiary': activeFilter === null }
+            ]"
+          >[*] ALL</button>
           <button
             @click="activeFilter = 'DEV'"
-            class="border px-3 py-1 text-label-md font-code transition-colors"
-            :class="activeFilter === 'DEV'
-              ? 'border-tertiary text-tertiary bg-surface-container-low'
-              : 'border-primary text-primary hover:bg-surface-variant transition-colors uppercase'"
+            :class="[
+              'border border-primary text-primary px-4 py-2 hover:bg-surface-variant transition-colors uppercase',
+              { 'bg-tertiary text-on-tertiary border-tertiary': activeFilter === 'DEV' }
+            ]"
           >[DEV]</button>
           <button
             @click="activeFilter = 'E-ENG'"
-            class="border px-3 py-1 text-label-md font-code transition-colors"
-            :class="activeFilter === 'E-ENG'
-              ? 'border-tertiary text-tertiary bg-surface-container-low'
-              : 'border-primary text-primary hover:bg-surface-variant transition-colors uppercase'"
+            :class="[
+              'border border-primary text-primary px-4 py-2 hover:bg-surface-variant transition-colors uppercase',
+              { 'bg-tertiary text-on-tertiary border-tertiary': activeFilter === 'E-ENG' }
+            ]"
           >[E-ENG]</button>
           <button
             @click="activeFilter = 'THEORY'"
-            class="border px-3 py-1 text-label-md font-code transition-colors"
-            :class="activeFilter === 'THEORY'
-              ? 'border-tertiary text-tertiary bg-surface-container-low'
-              : 'border-primary text-primary hover:bg-surface-variant transition-colors uppercase'"
+            :class="[
+              'border border-primary text-primary px-4 py-2 hover:bg-surface-variant transition-colors uppercase',
+              { 'bg-tertiary text-on-tertiary border-tertiary': activeFilter === 'THEORY' }
+            ]"
           >[THEORY]</button>
           <div class="ml-auto w-full md:w-auto mt-4 md:mt-0 flex border border-primary bg-background focus-within:border-tertiary transition-colors">
             <input

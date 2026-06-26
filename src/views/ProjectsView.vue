@@ -5,38 +5,38 @@
       description="Active deployment tracking and version control manifest. Review stability metrics before initiating compilation sequences."
     >
       <template #filters>
-        <div class="flex flex-wrap gap-4 items-center">
-          <div class="relative flex-1 min-w-[200px] max-w-md">
+        <div class="flex flex-wrap gap-4 items-center font-code text-label-md">
+          <button
+            @click="activeFilter = null"
+            :class="[
+              'border border-primary text-primary px-4 py-2 hover:bg-surface-variant transition-colors uppercase',
+              { 'bg-tertiary text-on-tertiary border-tertiary': activeFilter === null }
+            ]"
+          >[*] ALL</button>
+          <button
+            @click="activeFilter = 'STABLE'"
+            :class="[
+              'border border-primary text-primary px-4 py-2 hover:bg-surface-variant transition-colors uppercase',
+              { 'bg-tertiary text-on-tertiary border-tertiary': activeFilter === 'STABLE' }
+            ]"
+          >STABLE</button>
+          <button
+            @click="activeFilter = 'BETA'"
+            :class="[
+              'border border-primary text-primary px-4 py-2 hover:bg-surface-variant transition-colors uppercase',
+              { 'bg-tertiary text-on-tertiary border-tertiary': activeFilter === 'BETA' }
+            ]"
+          >BETA</button>
+          <div class="ml-auto w-full md:w-auto mt-4 md:mt-0 flex border border-primary bg-background focus-within:border-tertiary transition-colors">
             <input
               v-model="searchQuery"
               type="text"
-              placeholder="Grep projects..."
-              class="w-full bg-transparent border-0 border-b border-surface-variant focus:border-tertiary focus:ring-0 text-body-md font-code text-on-surface py-2 px-0 placeholder-on-surface-variant transition-colors outline-none"
+              placeholder="GREP_PROJECTS..."
+              class="bg-transparent border-none text-on-surface text-body-md font-code py-2 px-3 focus:ring-0 w-full md:w-64 outline-none"
             />
-            <span class="material-symbols-outlined absolute right-0 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
-          </div>
-          <div class="flex gap-2">
-            <button
-              @click="activeFilter = null"
-              class="px-3 py-1 text-label-md font-code border transition-colors"
-              :class="activeFilter === null
-                ? 'border-tertiary text-tertiary bg-surface-container-low'
-                : 'border-surface-variant text-on-surface-variant hover:text-on-surface hover:bg-surface-container'"
-            >ALL</button>
-            <button
-              @click="activeFilter = 'STABLE'"
-              class="px-3 py-1 text-label-md font-code border transition-colors"
-              :class="activeFilter === 'STABLE'
-                ? 'border-tertiary text-tertiary bg-surface-container-low'
-                : 'border-surface-variant text-on-surface-variant hover:text-on-surface hover:bg-surface-container'"
-            >STABLE</button>
-            <button
-              @click="activeFilter = 'BETA'"
-              class="px-3 py-1 text-label-md font-code border transition-colors"
-              :class="activeFilter === 'BETA'
-                ? 'border-tertiary text-tertiary bg-surface-container-low'
-                : 'border-surface-variant text-on-surface-variant hover:text-on-surface hover:bg-surface-container'"
-            >BETA</button>
+            <button class="px-3 text-primary hover:text-tertiary transition-colors border-l border-primary">
+              <span class="material-symbols-outlined">search</span>
+            </button>
           </div>
         </div>
       </template>
