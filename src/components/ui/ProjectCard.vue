@@ -39,6 +39,11 @@
           >{{ status === 'STABLE' ? 'STABLE' : 'BETA / UNSTABLE' }}</span>
         </div>
         <p class="text-body-md font-body-md text-on-surface-variant">{{ description }}</p>
+        <RouterLink
+          :to="`/projects/${name}`"
+          class="mt-2 inline-flex items-center gap-2 font-code text-code text-primary border border-primary px-4 py-2 hover:bg-primary hover:text-on-primary transition-colors uppercase self-start"
+          @click.stop
+        >VIEW_DETAILS <span class="material-symbols-outlined text-[14px]">arrow_forward</span></RouterLink>
         <div class="flex items-center gap-4 text-label-md font-code text-on-surface-variant mt-2">
           <span class="flex items-center gap-1">
             <span class="material-symbols-outlined text-[16px]">calendar_today</span>
@@ -91,41 +96,34 @@
       </div>
     </div>
 
-    <!-- Collapsible Changelog -->
+    <!-- Collapsible Changelog — latest entry only -->
     <div v-show="isOpen" class="border-t border-surface-variant bg-surface p-gutter">
       <h4 class="text-label-md font-code text-tertiary mb-4 uppercase flex items-center gap-2">
-        <span class="material-symbols-outlined text-[18px]">history</span> Changelog Segment
+        <span class="material-symbols-outlined text-[18px]">history</span> Latest Changes
       </h4>
-      <div class="flex flex-col gap-4 border-l border-surface-variant ml-2 pl-4">
-        <div v-for="entry in changelog" :key="entry.version" class="relative">
-          <span
-            class="absolute -left-[21px] top-1 w-2 h-2 bg-surface"
-            :class="entry.isLatest ? 'border border-tertiary' : 'border border-surface-variant'"
-          ></span>
-          <div
-            class="font-code text-xs mb-1"
-            :class="entry.isLatest ? 'text-tertiary' : 'text-on-surface'"
-          >[{{ entry.version }}] - {{ entry.label }}</div>
-          <ul class="list-none text-body-md font-body-md text-on-surface-variant space-y-1">
-            <li
-              v-for="(item, idx) in entry.items"
-              :key="idx"
-              class="flex items-start gap-2"
-            >
-              <span class="text-tertiary mt-1">-</span>
-              <span>
-                <span v-if="item.isError" class="text-error font-bold">KNOWN ISSUE: </span>{{ item.text }}
-              </span>
-            </li>
-          </ul>
+      <template v-if="latestEntry">
+        <div class="flex flex-wrap items-baseline gap-3 mb-3">
+          <span class="font-code font-bold text-tertiary text-sm">{{ latestEntry.version }}</span>
+          <span class="font-code text-code text-on-surface-variant">{{ latestEntry.label }}</span>
+          <span class="font-code text-code text-on-surface-variant opacity-50 text-xs">{{ latestEntry.date }}</span>
         </div>
-      </div>
+        <div class="flex flex-col gap-2 border-l border-surface-variant ml-2 pl-4">
+          <div
+            v-for="(item, idx) in latestEntry.items"
+            :key="idx"
+            class="flex items-start gap-2 font-code text-code"
+          >
+            <span class="shrink-0 font-bold" :class="flagClass(item.flag)">[{{ item.flag }}]</span>
+            <span class="text-on-surface-variant">{{ item.text }}</span>
+          </div>
+        </div>
+      </template>
     </div>
   </article>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 
 interface Tag {
   label: string
@@ -146,11 +144,14 @@ interface Stats {
   barColor: string
 }
 
+type ChangelogFlag = 'ADDED' | 'FIXED' | 'IMPRV' | 'INIT' | 'WARN'
+
 interface ChangelogEntry {
   version: string
   label: string
+  date: string
   isLatest: boolean
-  items: { text: string; isError?: boolean }[]
+  items: { flag: ChangelogFlag; text: string }[]
 }
 
 interface Props {
@@ -165,7 +166,20 @@ interface Props {
   changelog: ChangelogEntry[]
 }
 
-defineProps<Props>()
+const props = defineProps<Props>()
 
 const isOpen = ref(false)
+
+const latestEntry = computed(() => props.changelog.find(e => e.isLatest))
+
+function flagClass(flag: ChangelogFlag) {
+  const map: Record<ChangelogFlag, string> = {
+    ADDED: 'text-tertiary',
+    FIXED: 'text-[#4ade80]',
+    IMPRV: 'text-primary',
+    INIT:  'text-on-surface-variant',
+    WARN:  'text-error',
+  }
+  return map[flag]
+}
 </script>

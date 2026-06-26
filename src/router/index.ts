@@ -15,12 +15,24 @@ const routes = [
     component: MediaView,
   },
   {
+    path: '/media/:id',
+    component: () => import('@/views/MediaDetailView.vue'),
+  },
+  {
     path: '/projects',
     component: ProjectsView,
   },
   {
+    path: '/projects/:name',
+    component: () => import('@/views/ProjectDetailView.vue'),
+  },
+  {
     path: '/blog',
     component: BlogView,
+  },
+  {
+    path: '/blog/:id',
+    component: () => import('@/views/BlogDetailView.vue'),
   },
   {
     path: '/status',

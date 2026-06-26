@@ -62,13 +62,13 @@
             style="background-image: radial-gradient(circle, rgba(76,214,255,0.05) 1px, transparent 1px); background-size: 20px 20px;"></div>
           <div class="border-b border-on-surface bg-on-surface px-4 py-2 flex justify-between items-center z-10 relative">
             <span class="text-background text-label-md font-code font-bold uppercase tracking-widest">SYSTEM_CRITICAL</span>
-            <span class="text-background text-label-md font-code">INIT: 2024.10.24</span>
+            <span class="text-background text-label-md font-code">INIT: {{ featuredPost.date }}</span>
           </div>
           <div class="flex flex-col md:flex-row flex-1 z-10 relative">
             <div class="w-full md:w-1/2 h-64 md:h-auto border-r border-on-surface bg-surface-container relative overflow-hidden">
               <img
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBsWkb91Ar7NWRDrruAC5VRebqB2vI-BOrDNmo144NygegbcSPZJuj2BsHrVTeEj-X9phaF_4KBVtAf0r8Hlus5GzcEou8sbrPFmzLHm2tQKYKRIAsaS8KG39AtBRxfygAjvXDcbdYZDrLOIw-TyGzt00fRv0pGAmJBwnlCwVS8q_P6P6IKEhPufLnhsZHL8WqegbtuP6sRnA3UPYyjQ_8lrYDW-aorhuYqFH7kYRGILY_KU9mhIObYbSe-s0QIKvSW3TY"
-                alt="Silicon wafer circuit board"
+                :src="featuredPost.imageUrl"
+                :alt="featuredPost.title"
                 class="w-full h-full object-cover filter grayscale group-hover:grayscale-0 transition-all duration-500"
               />
               <div class="absolute bottom-4 right-4 border border-tertiary bg-background/80 p-2 hidden group-hover:block text-tertiary font-code text-xs">
@@ -78,20 +78,20 @@
             <div class="p-6 flex flex-col justify-between flex-1">
               <div>
                 <div class="flex gap-2 mb-4">
-                  <span class="border border-tertiary text-tertiary px-2 py-0.5 text-xs font-code">[E-ENG]</span>
-                  <span class="border border-outline text-outline px-2 py-0.5 text-xs font-code">READ_TIME: 14m</span>
+                  <span class="border border-tertiary text-tertiary px-2 py-0.5 text-xs font-code">[{{ featuredPost.category }}]</span>
+                  <span class="border border-outline text-outline px-2 py-0.5 text-xs font-code">READ_TIME: {{ featuredPost.readTime }}</span>
                 </div>
                 <h3 class="text-headline-lg-mobile md:text-headline-md font-headline-md text-on-surface mb-4 leading-tight">
-                  Reverse Engineering the ARM Cortex-M4 Architecture
+                  {{ featuredPost.title }}
                 </h3>
                 <p class="text-body-md font-body-md text-on-surface-variant mb-6 line-clamp-3">
-                  A deep dive into bypassing JTAG protection mechanisms on consumer IoT devices using voltage glitching and differential power analysis. We explore the structural vulnerabilities inherent in low-cost MCU implementations.
+                  {{ featuredPost.description }}
                 </p>
               </div>
               <div class="mt-auto">
-                <a href="#" class="inline-flex items-center gap-2 text-tertiary font-code text-label-md uppercase hover:underline">
+                <RouterLink :to="`/blog/${featuredPost.id}`" class="inline-flex items-center gap-2 text-tertiary font-code text-label-md uppercase hover:underline">
                   EXECUTE_READ <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
-                </a>
+                </RouterLink>
               </div>
             </div>
           </div>
@@ -140,11 +140,11 @@
             <span class="border border-outline text-on-surface px-2 py-0.5 text-xs font-code group-hover:border-tertiary group-hover:text-tertiary transition-colors">[{{ post.category }}]</span>
             <span class="text-outline font-code text-xs">{{ post.date }}</span>
           </div>
-          <h3 class="font-headline-md text-on-surface mb-3 text-xl group-hover:text-tertiary transition-colors leading-tight">{{ post.title }}</h3>
+          <RouterLink :to="`/blog/${post.id}`" class="font-headline-md text-on-surface mb-3 text-xl group-hover:text-tertiary transition-colors leading-tight">{{ post.title }}</RouterLink>
           <p class="text-body-md font-body-md text-on-surface-variant mb-6 line-clamp-4 flex-1">{{ post.description }}</p>
           <div class="flex justify-between items-center border-t border-surface-container-highest pt-4 mt-auto">
             <span class="text-outline font-code text-xs">RT: {{ post.readTime }}</span>
-            <a href="#" class="text-on-surface hover:text-tertiary font-code text-sm uppercase">READ_MORE</a>
+            <RouterLink :to="`/blog/${post.id}`" class="text-on-surface hover:text-tertiary font-code text-sm uppercase">READ_MORE</RouterLink>
           </div>
         </article>
 
@@ -159,11 +159,11 @@
             <span class="text-outline font-code text-xs mt-auto hidden md:block">RT: {{ widePost.readTime }}</span>
           </div>
           <div class="flex flex-col flex-1 justify-center">
-            <h3 class="font-headline-md text-on-surface mb-2 text-2xl group-hover:text-tertiary transition-colors">{{ widePost.title }}</h3>
+            <RouterLink :to="`/blog/${widePost.id}`" class="font-headline-md text-on-surface mb-2 text-2xl group-hover:text-tertiary transition-colors">{{ widePost.title }}</RouterLink>
             <p class="text-body-md font-body-md text-on-surface-variant mb-4">{{ widePost.description }}</p>
-            <a href="#" class="text-on-surface hover:text-tertiary font-code text-sm uppercase mt-2 w-max inline-flex items-center gap-1">
+            <RouterLink :to="`/blog/${widePost.id}`" class="text-on-surface hover:text-tertiary font-code text-sm uppercase mt-2 w-max inline-flex items-center gap-1">
               &gt; EXECUTE_READ
-            </a>
+            </RouterLink>
           </div>
         </article>
 
@@ -189,73 +189,16 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import PageHeader from '@/components/ui/PageHeader.vue'
+import { blogPosts, type BlogPost } from '@/data/blog'
 
-type CategoryType = 'DEV' | 'E-ENG' | 'THEORY'
-type FilterType = null | CategoryType
+type FilterType = null | 'DEV' | 'E-ENG' | 'THEORY'
 
 const activeFilter = ref<FilterType>(null)
 const searchQuery = ref('')
 
-interface BlogPost {
-  id: string
-  category: CategoryType
-  date: string
-  readTime: string
-  title: string
-  description: string
-}
-
-const regularPosts: BlogPost[] = [
-  {
-    id: 'LOG-001',
-    category: 'DEV',
-    date: '2024.10.15',
-    readTime: '8m',
-    title: 'Optimizing Rust Compiles for Embedded Systems',
-    description: 'Stripping binary bloat and leveraging link-time optimization (LTO) to squeeze massive Rust binaries onto microcontrollers with less than 64KB of flash memory.',
-  },
-  {
-    id: 'LOG-002',
-    category: 'THEORY',
-    date: '2024.09.28',
-    readTime: '22m',
-    title: 'Non-Euclidean Data Structures in Spatial Computing',
-    description: 'An algorithmic approach to mapping complex topologies without relying on standard Cartesian grids. Implications for rendering engines and collision detection in VR environments.',
-  },
-  {
-    id: 'LOG-003',
-    category: 'E-ENG',
-    date: '2024.09.12',
-    readTime: '11m',
-    title: 'Acoustic Metamaterials & Signal Dampening',
-    description: 'Designing physical structures that manipulate sound waves below sub-wavelength frequencies. Applications in EMI shielding for high-density PCB layouts.',
-  },
-  {
-    id: 'LOG-004',
-    category: 'DEV',
-    date: '2024.07.20',
-    readTime: '13m',
-    title: 'Zero-Copy Networking in Linux Kernel Space',
-    description: 'Bypassing userspace overhead with io_uring and AF_XDP to build high-frequency data pipelines that route packets at near-wire speed without CPU bottlenecks.',
-  },
-  {
-    id: 'LOG-005',
-    category: 'THEORY',
-    date: '2024.06.05',
-    readTime: '17m',
-    title: 'Type Theory Applied to Hardware Description Languages',
-    description: 'Exploring how dependent types from Idris and Agda can be applied to VHDL and Verilog to prove circuit correctness at compile time before FPGA synthesis.',
-  },
-]
-
-const widePost: BlogPost = {
-  id: 'LOG-WIDE-001',
-  category: 'DEV',
-  date: '2024.08.30_14:22:00',
-  readTime: '6m',
-  title: 'Building a Custom RTOS from Scratch',
-  description: 'Why rely on FreeRTOS when you can build your own preemptive scheduler? A step-by-step guide to context switching, managing stack frames, and implementing basic mutexes on an ATmega328P.',
-}
+const featuredPost = blogPosts.find(p => p.isFeatured) as BlogPost
+const regularPosts = blogPosts.filter(p => !p.isFeatured && !p.isWide)
+const widePost = blogPosts.find(p => p.isWide) as BlogPost
 
 const matchesQuery = (post: BlogPost) => {
   const q = searchQuery.value.toLowerCase()
@@ -266,14 +209,7 @@ const matchesCategory = (post: BlogPost) => {
   return activeFilter.value === null || post.category === activeFilter.value
 }
 
-const showFeatured = computed(() => {
-  if (activeFilter.value !== null && activeFilter.value !== 'E-ENG') return false
-  if (searchQuery.value) {
-    const q = searchQuery.value.toLowerCase()
-    return 'reverse engineering arm cortex'.includes(q) || 'jtag'.includes(q)
-  }
-  return true
-})
+const showFeatured = computed(() => matchesCategory(featuredPost) && matchesQuery(featuredPost))
 
 const filteredRegularPosts = computed(() => {
   return regularPosts.filter(p => matchesCategory(p) && matchesQuery(p))

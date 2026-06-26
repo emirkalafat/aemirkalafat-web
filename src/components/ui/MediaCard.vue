@@ -33,6 +33,10 @@
           <span :class="ratingClass">{{ ratingLabel }}</span>
         </div>
         <RatingBar :rating="rating" />
+        <RouterLink
+          :to="`/media/${id}`"
+          class="mt-3 flex items-center justify-end gap-1 font-code text-code text-on-surface-variant hover:text-tertiary transition-colors uppercase"
+        >ANALYZE <span class="material-symbols-outlined text-[14px]">arrow_forward</span></RouterLink>
       </div>
     </div>
   </article>
