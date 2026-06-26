@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MEDIA_LOG // NEUROMANCER</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&amp;family=Space+Grotesk:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-highest": "#353535",
+                        "inverse-surface": "#e5e2e1",
+                        "primary-container": "#000000",
+                        "on-secondary-fixed": "#1a1c1c",
+                        "primary-fixed-dim": "#c6c6c6",
+                        "on-secondary": "#2f3131",
+                        "on-secondary-container": "#b4b5b5",
+                        "tertiary": "#4cd6ff",
+                        "surface-container-low": "#1c1b1b",
+                        "surface-container": "#20201f",
+                        "on-primary": "#303030",
+                        "background": "#131313",
+                        "on-tertiary": "#003543",
+                        "inverse-primary": "#5e5e5e",
+                        "outline-variant": "#4c4546",
+                        "secondary-container": "#454747",
+                        "outline": "#988e90",
+                        "on-error": "#690005",
+                        "on-background": "#e5e2e1",
+                        "error": "#ffb4ab",
+                        "on-primary-fixed-variant": "#474747",
+                        "on-error-container": "#ffdad6",
+                        "secondary-fixed": "#e2e2e2",
+                        "surface-container-lowest": "#0e0e0e",
+                        "secondary": "#c6c6c7",
+                        "surface-tint": "#c6c6c6",
+                        "inverse-on-surface": "#313030",
+                        "tertiary-container": "#000000",
+                        "on-tertiary-fixed-variant": "#004e60",
+                        "on-primary-container": "#757575",
+                        "on-tertiary-container": "#00809d",
+                        "primary": "#c6c6c6",
+                        "surface-container-high": "#2a2a2a",
+                        "on-secondary-fixed-variant": "#454747",
+                        "tertiary-fixed-dim": "#4cd6ff",
+                        "surface": "#131313",
+                        "secondary-fixed-dim": "#c6c6c7",
+                        "primary-fixed": "#e2e2e2",
+                        "on-tertiary-fixed": "#001f28",
+                        "on-primary-fixed": "#1b1b1b",
+                        "surface-bright": "#393939",
+                        "error-container": "#93000a",
+                        "surface-dim": "#131313",
+                        "on-surface": "#e5e2e1",
+                        "surface-variant": "#353535",
+                        "on-surface-variant": "#cfc4c5",
+                        "tertiary-fixed": "#b7eaff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "column-gap": "32px",
+                        "unit": "4px",
+                        "margin-desktop": "64px",
+                        "margin-mobile": "20px",
+                        "gutter": "24px"
+                    },
+                    "fontFamily": {
+                        "headline-lg-mobile": ["Space Grotesk"],
+                        "headline-lg": ["Space Grotesk"],
+                        "display": ["Space Grotesk"],
+                        "label-md": ["JetBrains Mono"],
+                        "code": ["JetBrains Mono"],
+                        "body-md": ["JetBrains Mono"],
+                        "headline-md": ["Space Grotesk"],
+                        "body-lg": ["JetBrains Mono"]
+                    },
+                    "fontSize": {
+                        "headline-lg-mobile": ["32px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-lg": ["48px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "display": ["72px", { "lineHeight": "1.1", "letterSpacing": "-0.04em", "fontWeight": "700" }],
+                        "label-md": ["14px", { "lineHeight": "1.2", "fontWeight": "700" }],
+                        "code": ["14px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "headline-md": ["32px", { "lineHeight": "1.3", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { background-color: #000000; color: #FFFFFF; font-family: 'JetBrains Mono', monospace; overflow-x: hidden; }
+        .brutalist-border { border: 1px solid #FFFFFF; }
+        .brutalist-border-active { border: 2px solid #00D1FF; }
+        .neo-shadow { box-shadow: 4px 4px 0px 0px #00D1FF; }
+        .neo-shadow-purple { box-shadow: 8px 8px 0px 0px #B026FF; }
+        .cyber-bg { background-color: #1A1A1A; }
+        .text-electric-blue { color: #00D1FF; }
+        .bg-electric-blue { background-color: #00D1FF; }
+        .border-electric-blue { border-color: #00D1FF; }
+        .text-cyber-purple { color: #B026FF; }
+        .bg-cyber-purple { background-color: #B026FF; }
+        .border-cyber-purple { border-color: #B026FF; }
+        
+        .blinking-cursor::after {
+            content: '█';
+            animation: blink 1s step-end infinite;
+            color: #00D1FF;
+            margin-left: 4px;
+        }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+        
+        .scanline {
+            width: 100%;
+            height: 100px;
+            z-index: 9999;
+            position: absolute;
+            pointer-events: none;
+            background: linear-gradient(0deg, rgba(0,0,0,0) 0%, rgba(255,255,255,0.2) 10%, rgba(0,0,0,0.1) 100%);
+            opacity: 0.1;
+            animation: scanline 8s linear infinite;
+        }
+        @keyframes scanline { 0% { top: -100px; } 100% { top: 100%; } }
+    </style>
+</head>
+<body class="flex flex-col md:flex-row min-h-screen relative">
+<div class="scanline"></div>
+<!-- SideNavBar Component -->
+<nav class="bg-background dark:bg-background text-primary dark:text-primary font-label-md text-label-md h-screen w-64 fixed left-0 top-0 border-r-2 border-primary dark:border-primary flex flex-col h-full p-margin-mobile border-r-2 border-primary z-50 hidden md:flex">
+<div class="mb-8">
+<h1 class="font-headline-md text-headline-md text-on-background uppercase tracking-tighter">SYS_ADMIN</h1>
+<p class="text-on-surface-variant font-code text-code mt-1">v4.2.0-stable</p>
+</div>
+<ul class="flex flex-col gap-4 flex-grow">
+<li>
+<a class="flex items-center text-on-surface-variant hover:text-on-surface hover:bg-surface-container-highest transition-colors duration-75 p-2 uppercase" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="terminal">terminal</span>
+                    TERMINAL
+                </a>
+</li>
+<li>
+<a class="flex items-center text-on-surface-variant hover:text-on-surface hover:bg-surface-container-highest transition-colors duration-75 p-2 uppercase" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="developer_board">developer_board</span>
+                    PROJECTS
+                </a>
+</li>
+<li>
+<a class="flex items-center text-on-surface-variant hover:text-on-surface hover:bg-surface-container-highest transition-colors duration-75 p-2 uppercase" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="memory">memory</span>
+                    HARDWARE
+                </a>
+</li>
+<li>
+<a class="flex items-center text-tertiary font-bold before:content-['&gt;'] before:mr-2 before:animate-pulse hover:bg-surface-container-highest transition-colors duration-75 p-2 uppercase translate-x-1 duration-100" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="movie_filter">movie_filter</span>
+                    MEDIA_LOG <span class="blinking-cursor"></span>
+</a>
+</li>
+<li>
+<a class="flex items-center text-on-surface-variant hover:text-on-surface hover:bg-surface-container-highest transition-colors duration-75 p-2 uppercase" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="settings">settings</span>
+                    CONFIG
+                </a>
+</li>
+</ul>
+<div class="mt-auto pt-8 border-t border-primary">
+<button class="w-full bg-white text-black font-bold py-2 px-4 uppercase hover:bg-[#00D1FF] hover:text-black neo-shadow-purple transition-all duration-150 mb-4">
+                INIT_CONTACT
+            </button>
+<div class="flex flex-col gap-2">
+<a class="flex items-center text-on-surface-variant hover:text-on-surface text-code font-code" href="#">
+<span class="material-symbols-outlined mr-2 text-sm" data-icon="info">info</span> VERSION
+                </a>
+<a class="flex items-center text-on-surface-variant hover:text-on-surface text-code font-code" href="#">
+<span class="material-symbols-outlined mr-2 text-sm" data-icon="check_circle">check_circle</span> STATUS
+                </a>
+</div>
+</div>
+</nav>
+<!-- Mobile Header (Visible only on md:hidden) -->
+<header class="md:hidden flex items-center justify-between p-4 border-b-2 border-primary bg-background sticky top-0 z-40">
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-on-background uppercase tracking-tighter">SYS_ADMIN</h1>
+<span class="material-symbols-outlined text-primary text-3xl" data-icon="menu">menu</span>
+</header>
+<!-- Main Content Canvas -->
+<main class="md:ml-64 flex-grow p-margin-mobile md:p-margin-desktop bg-[#000000] text-white overflow-y-auto">
+<!-- Header -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 border-b-2 border-white pb-4">
+<div>
+<p class="font-code text-code text-[#00D1FF] mb-2 uppercase tracking-widest">ID: 0x9A4F // DIRECTIVE: ARCHIVE</p>
+<h1 class="font-display text-display uppercase tracking-tighter m-0 leading-none">NEUROMANCER_ANALYSIS</h1>
+</div>
+<div class="mt-4 md:mt-0 flex items-center border border-[#00D1FF] bg-[#1A1A1A] px-4 py-2">
+<span class="material-symbols-outlined text-[#00D1FF] mr-2" data-icon="verified">verified</span>
+<span class="font-label-md text-label-md text-[#00D1FF] uppercase">STATUS: CRITICAL_SUCCESS</span>
+</div>
+</div>
+<!-- Top Section: Hero Image & Metadata -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter mb-12">
+<!-- Hero Image -->
+<div class="md:col-span-8 brutalist-border p-2 bg-[#1A1A1A] relative group">
+<div class="absolute top-0 left-0 bg-white text-black font-label-md text-label-md px-2 py-1 z-10 uppercase">
+                    VISUAL_DATA_STREAM
+                </div>
+<img class="w-full h-[400px] object-cover grayscale contrast-150 filter group-hover:grayscale-0 transition-all duration-500" data-alt="A high-contrast, stark monochrome cyberpunk cityscape, viewed from a slightly elevated angle. Towering geometric skyscrapers loom in deep black against a stark white sky, with harsh, angular shadows cutting across metallic surfaces. A single, distinct electric blue data stream slithers vertically down one facade. The image conveys a cold, oppressive, deeply technical neo-brutalist atmosphere, devoid of organic life, emphasizing raw structural power and abstract data aesthetics." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBZ2sdPMfE35zZ2d6WKjWl3jqVL-0K94qkw5t8o1SP0IJvKhO1jtVOZGG04duXMYvIpRQLF1Uf7-LEfMTTZmEZ3SvH5z9ZQ4DQOmzcgr4BTv31DKc8X1lNcV0WOVn6roNWQbF7M7iJT9ezkwT5ivlZjIuNWZXm6q8OgiL1qOo7QighLPOFI-5MBgH8np6NpeT9lvKYPjkIBuKD6J8whF_S_PilxiNHFPKajpVGS_uoUVxu6E2eUOwGp7EOaIDwGE4Ds1QBey_m1HA0"/>
+</div>
+<!-- System Metadata -->
+<div class="md:col-span-4 brutalist-border bg-black flex flex-col">
+<div class="bg-white text-black font-label-md text-label-md p-2 uppercase border-b border-white">
+                    SYSTEM_METADATA
+                </div>
+<div class="p-6 flex flex-col gap-6 font-code text-code flex-grow">
+<div class="flex justify-between border-b border-dashed border-[#4c4546] pb-2">
+<span class="text-[#988e90]">YEAR_INIT:</span>
+<span class="text-white">1984</span>
+</div>
+<div class="flex justify-between border-b border-dashed border-[#4c4546] pb-2">
+<span class="text-[#988e90]">AUTHOR_NODE:</span>
+<span class="text-white">W. GIBSON</span>
+</div>
+<div class="flex justify-between border-b border-dashed border-[#4c4546] pb-2">
+<span class="text-[#988e90]">GENRE_CLASS:</span>
+<span class="text-[#00D1FF] border border-[#00D1FF] px-1 uppercase text-xs">CYBERPUNK</span>
+</div>
+<div class="flex justify-between border-b border-dashed border-[#4c4546] pb-2">
+<span class="text-[#988e90]">DATA_SIZE:</span>
+<span class="text-white">271 PAGES</span>
+</div>
+<div class="mt-auto">
+<button class="w-full bg-white text-black font-bold py-3 px-4 uppercase hover:bg-[#00D1FF] hover:text-black transition-colors border border-black hover:border-white">
+                            ACCESS_RAW_FILE
+                        </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Analysis Section: Multi-column -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter mb-12">
+<!-- Left Column: CORE_REVIEW -->
+<div class="lg:col-span-8 brutalist-border bg-[#1A1A1A] flex flex-col relative">
+<div class="absolute -top-3 -left-3 bg-black border border-white px-2 py-1 font-label-md text-label-md text-white uppercase z-10 flex items-center">
+<span class="material-symbols-outlined text-sm mr-2" data-icon="subject">subject</span>
+                    CORE_REVIEW_LOG
+                </div>
+<div class="p-8 pt-10 font-body-md text-body-md text-inverse-surface leading-relaxed flex flex-col gap-4 border-l-4 border-l-[#B026FF] h-full">
+<p>
+                        &gt; INITIALIZING ANALYSIS SEQUENCE...<br/>
+                        The architecture of Gibson's matrix remains unparalleled. It is a foundational structure, rendering abstract data into a navigable, albeit hostile, topography. The prose is densely packed, requiring significant processing power to parse, but yields high-resolution conceptual imagery.
+                    </p>
+<p>
+                        &gt; EVALUATING PROTAGONIST PROTOCOLS...<br/>
+                        Case operates as a compromised executable, stripped of administrative privileges, driven by sheer survival imperatives. His integration with the Panther Moderns and the construct of Dixie Flatline demonstrates complex multi-threading narratives that intersect with terminal precision.
+                    </p>
+<p>
+                        &gt; CONCLUSION...<br/>
+                        The Sprawl trilogy's initiating text is not merely predictive; it is prescriptive. It established the nomenclature and visual parameters for subsequent digital environments. Its brutalist disregard for exposition forces immediate immersion. Flawless execution.
+                    </p>
+</div>
+</div>
+<!-- Right Column: SYSTEM_RATING_LOG -->
+<div class="lg:col-span-4 flex flex-col gap-6">
+<!-- Main Score Card -->
+<div class="brutalist-border-active bg-black p-6 flex flex-col items-center justify-center neo-shadow">
+<p class="font-code text-code text-[#00D1FF] mb-2 uppercase">AGGREGATE_SCORE</p>
+<div class="font-display text-display text-white leading-none">
+                        9.8<span class="text-headline-md text-[#4c4546]">/10</span>
+</div>
+</div>
+<!-- Metrics Dashboard -->
+<div class="brutalist-border bg-[#1A1A1A] p-6 flex flex-col gap-6 flex-grow">
+<p class="font-label-md text-label-md text-white uppercase border-b border-[#4c4546] pb-2 mb-2">PERFORMANCE_METRICS</p>
+<div>
+<div class="flex justify-between font-code text-code text-sm mb-1">
+<span class="text-[#cfc4c5]">NARRATIVE_ARCH</span>
+<span class="text-white">95%</span>
+</div>
+<div class="h-2 w-full bg-[#353535]">
+<div class="h-full bg-[#00D1FF] w-[95%]"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between font-code text-code text-sm mb-1">
+<span class="text-[#cfc4c5]">AESTHETIC_EXEC</span>
+<span class="text-white">100%</span>
+</div>
+<div class="h-2 w-full bg-[#353535]">
+<div class="h-full bg-white w-[100%] border-r-2 border-[#B026FF]"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between font-code text-code text-sm mb-1">
+<span class="text-[#cfc4c5]">COHERENCE_RATING</span>
+<span class="text-white">88%</span>
+</div>
+<div class="h-2 w-full bg-[#353535]">
+<div class="h-full bg-[#4cd6ff] w-[88%]"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Section: CONSUMPTION_METRICS -->
+<div class="border border-dashed border-[#4c4546] p-6 bg-black flex flex-col md:flex-row justify-between items-center gap-4">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-4xl text-[#B026FF]" data-icon="update">update</span>
+<div>
+<p class="font-label-md text-label-md text-[#B026FF] uppercase">CONSUMPTION_METRICS</p>
+<p class="font-code text-code text-[#988e90]">LAST_ACCESS: <span class="text-white">2024.10.15 22:14:00 GMT</span></p>
+</div>
+</div>
+<div class="font-code text-code border border-white px-4 py-2 uppercase bg-[#1A1A1A]">
+                STATE: <span class="text-white font-bold blinking-cursor">COMPLETED</span>
+</div>
+</div>
+</main>
+<!-- Mobile Bottom NavBar Component -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full bg-background dark:bg-background border-t border-primary dark:border-primary z-50 flex justify-around items-center p-2">
+<a class="flex flex-col items-center text-on-surface-variant hover:text-on-surface p-2" href="#">
+<span class="material-symbols-outlined" data-icon="terminal">terminal</span>
+</a>
+<a class="flex flex-col items-center text-on-surface-variant hover:text-on-surface p-2" href="#">
+<span class="material-symbols-outlined" data-icon="developer_board">developer_board</span>
+</a>
+<a class="flex flex-col items-center text-tertiary font-bold p-2 relative" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="movie_filter">movie_filter</span>
+<div class="absolute bottom-0 w-full h-1 bg-tertiary"></div>
+</a>
+<a class="flex flex-col items-center text-on-surface-variant hover:text-on-surface p-2" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</a>
+</nav>
+</body></html>

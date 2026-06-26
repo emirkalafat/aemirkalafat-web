@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ROOT@PORTFOLIO:~# NEURAL_VISION_ARRAY</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&amp;family=Space+Grotesk:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary": "#003543",
+                        "primary": "#c6c6c6",
+                        "error": "#ffb4ab",
+                        "surface-variant": "#353535",
+                        "surface": "#131313",
+                        "secondary-fixed-dim": "#c6c6c7",
+                        "outline-variant": "#4c4546",
+                        "on-secondary": "#2f3131",
+                        "secondary-container": "#454747",
+                        "on-tertiary-fixed-variant": "#004e60",
+                        "on-primary": "#303030",
+                        "tertiary": "#4cd6ff",
+                        "surface-bright": "#393939",
+                        "primary-fixed-dim": "#c6c6c6",
+                        "tertiary-fixed": "#b7eaff",
+                        "on-secondary-fixed": "#1a1c1c",
+                        "on-primary-fixed-variant": "#474747",
+                        "error-container": "#93000a",
+                        "surface-tint": "#c6c6c6",
+                        "on-surface": "#e5e2e1",
+                        "on-tertiary-container": "#00809d",
+                        "on-primary-container": "#757575",
+                        "primary-container": "#000000",
+                        "tertiary-container": "#000000",
+                        "surface-dim": "#131313",
+                        "on-secondary-container": "#b4b5b5",
+                        "secondary-fixed": "#e2e2e2",
+                        "on-surface-variant": "#cfc4c5",
+                        "on-background": "#e5e2e1",
+                        "on-secondary-fixed-variant": "#454747",
+                        "outline": "#988e90",
+                        "surface-container-highest": "#353535",
+                        "surface-container-high": "#2a2a2a",
+                        "inverse-surface": "#e5e2e1",
+                        "background": "#131313",
+                        "surface-container-lowest": "#0e0e0e",
+                        "surface-container": "#20201f",
+                        "primary-fixed": "#e2e2e2",
+                        "on-error-container": "#ffdad6",
+                        "secondary": "#c6c6c7",
+                        "tertiary-fixed-dim": "#4cd6ff",
+                        "on-tertiary-fixed": "#001f28",
+                        "surface-container-low": "#1c1b1b",
+                        "on-error": "#690005",
+                        "inverse-primary": "#5e5e5e",
+                        "on-primary-fixed": "#1b1b1b",
+                        "inverse-on-surface": "#313030"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "column-gap": "32px",
+                        "unit": "4px",
+                        "margin-mobile": "20px",
+                        "margin-desktop": "64px",
+                        "gutter": "24px"
+                    },
+                    "fontFamily": {
+                        "headline-lg-mobile": ["Space Grotesk"],
+                        "display": ["Space Grotesk"],
+                        "code": ["JetBrains Mono"],
+                        "body-lg": ["JetBrains Mono"],
+                        "label-md": ["JetBrains Mono"],
+                        "body-md": ["JetBrains Mono"],
+                        "headline-md": ["Space Grotesk"],
+                        "headline-lg": ["Space Grotesk"]
+                    },
+                    "fontSize": {
+                        "headline-lg-mobile": ["32px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "display": ["72px", { "lineHeight": "1.1", "letterSpacing": "-0.04em", "fontWeight": "700" }],
+                        "code": ["14px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "label-md": ["14px", { "lineHeight": "1.2", "fontWeight": "700" }],
+                        "body-md": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "headline-md": ["32px", { "lineHeight": "1.3", "fontWeight": "600" }],
+                        "headline-lg": ["48px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .terminal-blink { animation: blink 1s step-end infinite; }
+        @keyframes blink { 50% { opacity: 0; } }
+        
+        .brutal-shadow { box-shadow: 4px 4px 0px 0px #4cd6ff; }
+        .brutal-shadow-hover:hover { box-shadow: 8px 8px 0px 0px #000000; transform: translate(-2px, -2px); }
+        .brutal-shadow-purple:hover { box-shadow: 8px 8px 0px 0px #8000ff; transform: translate(-2px, -2px); }
+        
+        /* Custom Scrollbar for code aesthetic */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #000000; border-left: 1px solid #ffffff; }
+        ::-webkit-scrollbar-thumb { background: #c6c6c6; border-left: 1px solid #ffffff; }
+        ::-webkit-scrollbar-thumb:hover { background: #4cd6ff; }
+    </style>
+</head>
+<body class="bg-background dark:bg-background text-on-surface font-body-md text-body-md h-screen w-screen overflow-hidden flex selection:bg-tertiary selection:text-on-tertiary">
+<!-- SideNavBar (Shared Component) -->
+<nav class="hidden lg:flex flex-col h-full fixed left-0 top-0 z-40 bg-surface-container-lowest dark:bg-surface-container-lowest text-tertiary dark:text-tertiary docked h-full w-64 border-r-2 border-primary dark:border-primary flat no shadows">
+<div class="p-6 border-b-2 border-primary">
+<h1 class="text-headline-md font-headline-md text-on-surface">SYS_ADMIN</h1>
+<p class="text-label-md font-code text-on-surface-variant mt-2">v4.2.0-stable</p>
+<img alt="System Operator Avatar" class="w-16 h-16 mt-4 border border-primary grayscale hover:grayscale-0 transition-all" data-alt="A highly stylized, neo-brutalist avatar graphic of a 'System Operator'. It features a stylized face wireframe or digital mask against a pure black background with sharp, neon electric blue and stark white accents. The image is high contrast, sharp-edged, and lacks any organic softness, perfectly fitting a cyberpunk or deep-tech aesthetic. High-tech, rigid, technical blueprint look." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCo75Adn5xBYLhsPNz8QKNUjYWFdEbOO2txnoMjsUY0h6bpZE55eQDN3sEzh0ppYg-Ihp4qgO7mgTPagSyGp19IxbMdN08Bf4HWvzUQwmWD7K7psrOMFHE-p9WNZh9Z-UGldJnLVZSX3APeeLxc3Ls7Vg2izGGE6fAasSwpeQDTkrGSXYm5kDLfOwhaPXRFcw6MpqWFdsOLIZAJ51_QadJFkTde1oRLY0K08tbtYqjA_EIgIGlNiaL3ZmIUwWEwZVYHrXOPsjW8SEM"/>
+</div>
+<ul class="flex-1 overflow-y-auto">
+<li><a class="flex items-center px-6 py-4 text-label-md font-code text-on-surface-variant hover:bg-surface-container-high" href="#"><span class="material-symbols-outlined mr-4" data-icon="home">home</span>Home</a></li>
+<li><a class="flex items-center px-6 py-4 text-label-md font-code text-on-surface-variant hover:bg-surface-container-high" href="#"><span class="material-symbols-outlined mr-4" data-icon="movie">movie</span>Media</a></li>
+<li><a class="flex items-center px-6 py-4 text-label-md font-code bg-primary text-on-primary font-bold border-l-4 border-tertiary Active: scale-95 transition-transform" href="#"><span class="material-symbols-outlined mr-4" data-icon="developer_board">developer_board</span>Projects<span class="terminal-blink ml-2">_█</span></a></li>
+<li><a class="flex items-center px-6 py-4 text-label-md font-code text-on-surface-variant hover:bg-surface-container-high" href="#"><span class="material-symbols-outlined mr-4" data-icon="article">article</span>Blog</a></li>
+<li><a class="flex items-center px-6 py-4 text-label-md font-code text-on-surface-variant hover:bg-surface-container-high" href="#"><span class="material-symbols-outlined mr-4" data-icon="sensors">sensors</span>Status</a></li>
+</ul>
+<div class="p-6 border-t-2 border-primary">
+<button class="w-full py-2 bg-on-surface text-primary-container text-label-md font-code font-bold brutal-shadow-hover transition-all mb-4">GET_TOKEN</button>
+<ul class="space-y-2">
+<li><a class="flex items-center text-label-md font-code text-on-surface-variant hover:text-tertiary" href="#"><span class="material-symbols-outlined mr-2 text-sm" data-icon="settings">settings</span>Settings</a></li>
+<li><a class="flex items-center text-label-md font-code text-on-surface-variant hover:text-tertiary" href="#"><span class="material-symbols-outlined mr-2 text-sm" data-icon="power_settings_new">power_settings_new</span>Logout</a></li>
+</ul>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="flex-1 ml-0 lg:ml-64 h-full overflow-y-auto px-margin-mobile lg:px-margin-desktop py-8 relative">
+<!-- Top App Bar (Mobile Nav Alternative) -->
+<header class="flex lg:hidden justify-between items-center w-full pb-4 mb-8 border-b-2 border-primary dark:border-primary bg-background dark:bg-background text-primary dark:text-primary docked full-width top-0 flat no shadows flex justify-between items-center w-full max-w-full">
+<div class="text-label-md font-code text-primary dark:text-primary tracking-tighter">ROOT@PORTFOLIO:~#</div>
+<button class="text-on-surface hover:text-primary"><span class="material-symbols-outlined" data-icon="terminal">terminal</span></button>
+</header>
+<div class="max-w-[1200px] mx-auto">
+<!-- 1. Header -->
+<section class="mb-12 border-b border-primary pb-8">
+<div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
+<div>
+<div class="flex items-center gap-3 mb-2">
+<span class="px-2 py-1 border border-tertiary text-tertiary text-code font-code bg-surface-container-lowest">v1.2.4</span>
+<span class="flex items-center gap-2 text-code font-code text-on-surface"><span class="w-2 h-2 rounded-full bg-[#00ff00] terminal-blink"></span> SYSTEM_ONLINE</span>
+</div>
+<h1 class="text-headline-lg-mobile md:text-headline-lg font-headline-lg-mobile md:font-headline-lg text-on-surface uppercase tracking-tighter">NEURAL_VISION_ARRAY</h1>
+</div>
+<div class="flex gap-2">
+<span class="px-2 py-1 border border-tertiary text-tertiary text-code font-code">SOFTWARE/LOGIC</span>
+<span class="px-2 py-1 border border-[#8000ff] text-[#8000ff] text-code font-code">HARDWARE/ELECTRONICS</span>
+</div>
+</div>
+</section>
+<!-- Main Layout Grid -->
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-gutter">
+<!-- Left Column (Overview, Portal, Specs) -->
+<div class="xl:col-span-4 flex flex-col gap-8">
+<!-- 2. Project Overview -->
+<div class="border border-primary bg-surface-container-lowest relative">
+<div class="bg-primary text-primary-container font-code text-label-md px-4 py-2 border-b border-primary">
+                            OVERVIEW.md
+                        </div>
+<div class="p-4 text-code font-code text-on-surface-variant leading-relaxed">
+<p>A high-performance, edge-computed computer vision pipeline designed for real-time anomaly detection in industrial manufacturing environments. Utilizes a custom C++ inference engine compiled for embedded ARM architectures.</p>
+<img alt="Project Architecture Diagram" class="w-full h-32 object-cover border border-primary mt-4 filter grayscale" data-alt="A neo-brutalist technical schematic or wireframe graphic showing a camera lens feeding into a series of abstract geometric nodes or neural network layers. The image is rendered in stark black and white with electric blue gridlines. High contrast, technical, rigid, emphasizing computational power and raw hardware architecture over organic design." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDb3rhQzMgqsEiVOPuHpC1XfyPq4R0dTGZmZNNFL4jPZXX3zM6DMshvcLFNNNzvZoGPmttrFDrM2-oMagzf3M3DSoYJMbn2HCulHOY-ZaLUlCWe3Y6QC7oaowblenthZ7D1o84AY3TjARwoCxP23DJUZHQE9VjxMBPT-R1c9OAyRMrzOzV7eUvYO8IRWKmjkByvzrYA12trEzoy6uuTziVNc0c_49cSFrM91bOl2ev75J57Lbgij5EZonxUgvGjsE86PjN6cAhf0wo"/>
+</div>
+</div>
+<!-- 3. Access Portal -->
+<div class="border border-primary bg-surface-container-lowest">
+<div class="bg-primary text-primary-container font-code text-label-md px-4 py-2 border-b border-primary flex justify-between items-center">
+<span>ACCESS_PORTAL</span>
+<span class="material-symbols-outlined text-sm" data-icon="open_in_new">open_in_new</span>
+</div>
+<div class="flex flex-col">
+<a class="flex items-center gap-3 p-4 border-b border-surface-variant hover:bg-surface-container-high transition-colors group" href="#">
+<span class="material-symbols-outlined text-on-surface group-hover:text-tertiary" data-icon="code">code</span>
+<span class="text-label-md font-code text-on-surface group-hover:text-tertiary">GITHUB_REPOSITORY</span>
+</a>
+<a class="flex items-center gap-3 p-4 border-b border-surface-variant hover:bg-surface-container-high transition-colors group" href="#">
+<span class="material-symbols-outlined text-on-surface group-hover:text-tertiary" data-icon="menu_book">menu_book</span>
+<span class="text-label-md font-code text-on-surface group-hover:text-tertiary">DOCUMENTATION_WIKI</span>
+</a>
+<a class="flex items-center gap-3 p-4 hover:bg-surface-container-high transition-colors group" href="#">
+<span class="material-symbols-outlined text-on-surface group-hover:text-tertiary" data-icon="cloud_download">cloud_download</span>
+<span class="text-label-md font-code text-on-surface group-hover:text-tertiary">DOWNLOAD_BINARIES</span>
+</a>
+</div>
+</div>
+<!-- 4. Technical Specs -->
+<div class="border border-primary bg-surface-container-lowest">
+<div class="bg-primary text-primary-container font-code text-label-md px-4 py-2 border-b border-primary">
+                            SYS_METADATA
+                        </div>
+<div class="grid grid-cols-2 gap-px bg-primary">
+<div class="bg-surface-container-lowest p-3">
+<div class="text-[10px] font-code text-on-surface-variant uppercase">Language</div>
+<div class="text-code font-code text-on-surface">C++20 / Rust</div>
+</div>
+<div class="bg-surface-container-lowest p-3">
+<div class="text-[10px] font-code text-on-surface-variant uppercase">Framework</div>
+<div class="text-code font-code text-on-surface">TensorRT / OpenCV</div>
+</div>
+<div class="bg-surface-container-lowest p-3">
+<div class="text-[10px] font-code text-on-surface-variant uppercase">License</div>
+<div class="text-code font-code text-on-surface">MIT</div>
+</div>
+<div class="bg-surface-container-lowest p-3">
+<div class="text-[10px] font-code text-on-surface-variant uppercase">Last Deploy</div>
+<div class="text-code font-code text-on-surface">2024-10-24</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column (Changelog) -->
+<div class="xl:col-span-8">
+<div class="border border-primary bg-[#1a1a1a] h-full flex flex-col">
+<div class="bg-primary text-primary-container font-code text-label-md px-4 py-2 border-b border-primary flex items-center justify-between">
+<span>CHANGELOG.log</span>
+<span class="material-symbols-outlined text-sm" data-icon="history">history</span>
+</div>
+<div class="p-6 overflow-y-auto space-y-8">
+<!-- Changelog Entry 1 -->
+<div class="relative pl-6 border-l border-surface-variant">
+<div class="absolute w-3 h-3 bg-tertiary -left-[6.5px] top-1"></div>
+<div class="flex items-baseline gap-4 mb-4">
+<h3 class="text-headline-md font-headline-md text-tertiary">v1.2.4</h3>
+<span class="text-code font-code text-on-surface-variant">2024-10-24 14:32:00 UTC</span>
+</div>
+<div class="space-y-2 font-code text-code text-on-surface">
+<div class="flex items-start gap-2">
+<span class="text-[#00ff00] w-16 shrink-0">[ADDED]</span>
+<span>Implemented multithreaded tensor allocation for 15% performance gain on edge devices.</span>
+</div>
+<div class="flex items-start gap-2">
+<span class="text-[#00ff00] w-16 shrink-0">[ADDED]</span>
+<span>New generic API interface for custom model loading via JSON config.</span>
+</div>
+<div class="flex items-start gap-2">
+<span class="text-[#ffb4ab] w-16 shrink-0">[FIXED]</span>
+<span>Resolved memory leak in thermal calibration routine during extended uptime (&gt;72h).</span>
+</div>
+<div class="flex items-start gap-2">
+<span class="text-[#ffb4ab] w-16 shrink-0">[FIXED]</span>
+<span>Corrected bounding box coordinate drift at edges of ultra-wide FoV lenses.</span>
+</div>
+</div>
+</div>
+<!-- Changelog Entry 2 -->
+<div class="relative pl-6 border-l border-surface-variant opacity-70 hover:opacity-100 transition-opacity">
+<div class="absolute w-3 h-3 bg-surface-variant -left-[6.5px] top-1 border border-primary"></div>
+<div class="flex items-baseline gap-4 mb-4">
+<h3 class="text-headline-md font-headline-md text-on-surface">v1.2.0</h3>
+<span class="text-code font-code text-on-surface-variant">2024-09-12 09:15:00 UTC</span>
+</div>
+<div class="space-y-2 font-code text-code text-on-surface">
+<div class="flex items-start gap-2">
+<span class="text-[#00ff00] w-16 shrink-0">[ADDED]</span>
+<span>Initial support for INT8 quantization pipelines.</span>
+</div>
+<div class="flex items-start gap-2">
+<span class="text-tertiary w-16 shrink-0">[IMPRV]</span>
+<span>Refactored data logging system to use asynchronous I/O, reducing main thread latency.</span>
+</div>
+<div class="flex items-start gap-2">
+<span class="text-[#ffb4ab] w-16 shrink-0">[FIXED]</span>
+<span>Handled edge case where disconnected hardware trigger would cause segmentation fault.</span>
+</div>
+</div>
+</div>
+<!-- Changelog Entry 3 -->
+<div class="relative pl-6 border-l border-surface-variant opacity-70 hover:opacity-100 transition-opacity">
+<div class="absolute w-3 h-3 bg-surface-variant -left-[6.5px] top-1 border border-primary"></div>
+<div class="flex items-baseline gap-4 mb-4">
+<h3 class="text-headline-md font-headline-md text-on-surface">v1.0.0</h3>
+<span class="text-code font-code text-on-surface-variant">2024-05-01 00:00:00 UTC</span>
+</div>
+<div class="space-y-2 font-code text-code text-on-surface">
+<div class="flex items-start gap-2">
+<span class="text-on-surface w-16 shrink-0">[INIT]</span>
+<span>INITIAL SYSTEM COMPILATION AND RELEASE. CORE ARCHITECTURE ESTABLISHED.</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Minimal Footer -->
+<footer class="mt-16 flex flex-col md:flex-row justify-between items-center w-full py-8 border-t-2 border-primary dark:border-primary text-on-surface dark:text-on-surface bg-background dark:bg-background full-width bottom-0 flat no shadows px-margin-desktop gap-gutter">
+<div class="text-label-md font-code text-tertiary">© 2024 DEEP_TECH_LOGIC // ALL RIGHTS RESERVED</div>
+<div class="flex gap-4">
+<a class="text-label-md font-code text-on-surface-variant hover:text-tertiary transition-colors" href="#">GITHUB</a>
+<a class="text-label-md font-code text-on-surface-variant hover:text-tertiary transition-colors" href="#">LINKEDIN</a>
+<a class="text-label-md font-code text-on-surface-variant hover:text-tertiary transition-colors" href="#">RSS</a>
+<a class="text-label-md font-code text-on-surface-variant hover:text-tertiary transition-colors" href="#">SOURCE</a>
+</div>
+</footer>
+</main>
+</body></html>
