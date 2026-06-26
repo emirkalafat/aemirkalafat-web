@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Media Reviews | Root Portfolio</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&amp;family=Space+Grotesk:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-family: 'Material Symbols Outlined';
+            font-weight: normal;
+            font-style: normal;
+            font-size: 24px;
+            line-height: 1;
+            letter-spacing: normal;
+            text-transform: none;
+            display: inline-block;
+            white-space: nowrap;
+            word-wrap: normal;
+            direction: ltr;
+            -webkit-font-feature-settings: 'liga';
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Custom scrollbar for brutalist feel */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0e0e0e; 
+            border-left: 1px solid #c6c6c6;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #c6c6c6; 
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #4cd6ff; 
+        }
+
+        .brutalist-offset {
+            box-shadow: 4px 4px 0px 0px var(--tw-shadow-color);
+        }
+        
+        .brutalist-offset-hover:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 6px 6px 0px 0px var(--tw-shadow-color);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "error-container": "#93000a",
+                        "surface-bright": "#393939",
+                        "on-primary-fixed": "#1b1b1b",
+                        "on-tertiary-fixed": "#001f28",
+                        "secondary-fixed-dim": "#c6c6c7",
+                        "primary-fixed": "#e2e2e2",
+                        "surface": "#131313",
+                        "tertiary-fixed-dim": "#4cd6ff",
+                        "on-secondary-fixed-variant": "#454747",
+                        "surface-container-high": "#2a2a2a",
+                        "tertiary-fixed": "#b7eaff",
+                        "on-surface-variant": "#cfc4c5",
+                        "surface-variant": "#353535",
+                        "on-surface": "#e5e2e1",
+                        "surface-dim": "#131313",
+                        "surface-container-lowest": "#0e0e0e",
+                        "secondary-fixed": "#e2e2e2",
+                        "on-error-container": "#ffdad6",
+                        "on-primary-fixed-variant": "#474747",
+                        "primary": "#c6c6c6",
+                        "on-tertiary-container": "#00809d",
+                        "on-tertiary-fixed-variant": "#004e60",
+                        "tertiary-container": "#000000",
+                        "on-primary-container": "#757575",
+                        "surface-tint": "#c6c6c6",
+                        "inverse-on-surface": "#313030",
+                        "secondary": "#c6c6c7",
+                        "secondary-container": "#454747",
+                        "outline-variant": "#4c4546",
+                        "inverse-primary": "#5e5e5e",
+                        "error": "#ffb4ab",
+                        "on-background": "#e5e2e1",
+                        "outline": "#988e90",
+                        "on-error": "#690005",
+                        "on-secondary": "#2f3131",
+                        "primary-fixed-dim": "#c6c6c6",
+                        "on-secondary-fixed": "#1a1c1c",
+                        "primary-container": "#000000",
+                        "surface-container-highest": "#353535",
+                        "inverse-surface": "#e5e2e1",
+                        "on-tertiary": "#003543",
+                        "on-primary": "#303030",
+                        "background": "#131313",
+                        "surface-container": "#20201f",
+                        "surface-container-low": "#1c1b1b",
+                        "tertiary": "#4cd6ff",
+                        "on-secondary-container": "#b4b5b5"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-mobile": "20px",
+                        "gutter": "24px",
+                        "column-gap": "32px",
+                        "unit": "4px",
+                        "margin-desktop": "64px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["JetBrains Mono"],
+                        "headline-md": ["Space Grotesk"],
+                        "display": ["Space Grotesk"],
+                        "headline-lg": ["Space Grotesk"],
+                        "headline-lg-mobile": ["Space Grotesk"],
+                        "body-md": ["JetBrains Mono"],
+                        "label-md": ["JetBrains Mono"],
+                        "code": ["JetBrains Mono"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "headline-md": ["32px", { "lineHeight": "1.3", "fontWeight": "600" }],
+                        "display": ["72px", { "lineHeight": "1.1", "letterSpacing": "-0.04em", "fontWeight": "700" }],
+                        "headline-lg": ["48px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-lg-mobile": ["32px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-md": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "label-md": ["14px", { "lineHeight": "1.2", "fontWeight": "700" }],
+                        "code": ["14px", { "lineHeight": "1.5", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-surface-container-lowest text-on-surface font-body-md min-h-screen flex flex-col lg:flex-row antialiased selection:bg-tertiary selection:text-on-tertiary">
+<!-- DESKTOP SIDE NAV -->
+<nav class="hidden lg:flex flex-col h-full fixed left-0 top-0 z-40 w-64 bg-surface-container-lowest border-r-2 border-primary">
+<div class="p-gutter border-b-2 border-primary flex items-center gap-4">
+<div class="w-12 h-12 bg-primary flex items-center justify-center border border-surface-container-lowest">
+<span class="material-symbols-outlined text-on-primary">terminal</span>
+</div>
+<div>
+<h1 class="text-headline-md font-headline-md text-on-surface text-[20px] leading-tight">SYS_ADMIN</h1>
+<p class="text-label-md font-code text-on-surface-variant">v4.2.0-stable</p>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto py-4 flex flex-col gap-2 px-4">
+<a class="flex items-center gap-4 p-3 text-label-md font-code text-on-surface-variant hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined">home</span>
+<span>Home</span>
+</a>
+<a class="flex items-center gap-4 p-3 text-label-md font-code bg-primary text-on-primary font-bold border-l-4 border-tertiary active-nav-item" href="#">
+<span class="material-symbols-outlined">movie</span>
+<span>Media</span>
+</a>
+<a class="flex items-center gap-4 p-3 text-label-md font-code text-on-surface-variant hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined">developer_board</span>
+<span>Projects</span>
+</a>
+<a class="flex items-center gap-4 p-3 text-label-md font-code text-on-surface-variant hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined">article</span>
+<span>Blog</span>
+</a>
+<a class="flex items-center gap-4 p-3 text-label-md font-code text-on-surface-variant hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined">sensors</span>
+<span>Status</span>
+</a>
+</div>
+<div class="p-4 border-t-2 border-primary flex flex-col gap-2">
+<button class="w-full bg-surface border border-primary text-primary hover:bg-secondary-container hover:text-on-secondary-container transition-colors py-2 text-label-md font-code flex justify-center items-center gap-2 brutalist-offset shadow-tertiary hover:shadow-tertiary">
+<span class="material-symbols-outlined text-[16px]">key</span>
+                GET_TOKEN
+            </button>
+<div class="mt-4 flex flex-col gap-1">
+<a class="flex items-center gap-3 p-2 text-label-md font-code text-on-surface-variant hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-[18px]">settings</span>
+<span>Settings</span>
+</a>
+<a class="flex items-center gap-3 p-2 text-label-md font-code text-error hover:text-error-container transition-colors" href="#">
+<span class="material-symbols-outlined text-[18px]">power_settings_new</span>
+<span>Logout</span>
+</a>
+</div>
+</div>
+</nav>
+<!-- MOBILE TOP NAV -->
+<nav class="flex lg:hidden justify-between items-center w-full px-margin-mobile py-4 bg-background border-b-2 border-primary sticky top-0 z-50">
+<div class="text-label-md font-code text-primary tracking-tighter">
+            ROOT@PORTFOLIO:~#
+        </div>
+<div class="flex gap-4">
+<a class="text-label-md font-code text-on-surface hover:text-primary hidden sm:block" href="#">MEDIA</a>
+<a class="text-label-md font-code text-on-surface hover:text-primary hidden sm:block" href="#">PROJECTS</a>
+<button class="text-primary hover:text-tertiary transition-colors">
+<span class="material-symbols-outlined">terminal</span>
+</button>
+</div>
+</nav>
+<!-- MAIN CANVAS -->
+<main class="flex-1 lg:ml-64 flex flex-col min-h-screen">
+<!-- HEADER & FILTERS -->
+<header class="px-margin-mobile lg:px-margin-desktop py-12 border-b-2 border-primary bg-surface-dim">
+<h1 class="text-headline-lg-mobile lg:text-headline-lg font-headline-lg-mobile lg:font-headline-lg text-primary uppercase tracking-tighter mb-6 flex items-center gap-4">
+<span class="w-4 h-8 bg-tertiary animate-pulse inline-block"></span>
+                MEDIA_REVIEWS.LOG
+            </h1>
+<p class="text-body-lg font-body-lg text-on-surface-variant max-w-3xl mb-8 border-l-2 border-primary pl-4">
+                Structured analysis of visual and textual data streams. Evaluating narrative architecture, aesthetic execution, and systemic coherence across multiple media formats.
+            </p>
+<div class="flex flex-wrap gap-4 font-code text-label-md">
+<button class="border border-tertiary bg-tertiary text-on-tertiary px-4 py-2 hover:bg-tertiary-fixed transition-colors uppercase">
+                    [*] ALL_RECORDS
+                </button>
+<button class="border border-primary text-primary px-4 py-2 hover:bg-surface-variant transition-colors uppercase flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]">movie</span> MOVIES
+                </button>
+<button class="border border-primary text-primary px-4 py-2 hover:bg-surface-variant transition-colors uppercase flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]">tv</span> TV_SERIES
+                </button>
+<button class="border border-primary text-primary px-4 py-2 hover:bg-surface-variant transition-colors uppercase flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]">book</span> TEXT_DATA
+                </button>
+</div>
+</header>
+<!-- GRID CONTENT -->
+<section class="flex-1 p-margin-mobile lg:p-margin-desktop bg-surface-container-lowest">
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-gutter">
+<!-- CARD 1 -->
+<article class="border border-primary bg-surface group flex flex-col relative transition-transform duration-200 brutalist-offset shadow-primary hover:shadow-tertiary brutalist-offset-hover">
+<div class="h-10 bg-primary flex items-center justify-between px-4">
+<span class="font-code text-label-md text-on-primary">ID: MR-992</span>
+<span class="font-code text-label-md text-on-primary flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">movie</span> MOVIE</span>
+</div>
+<div class="p-4 flex flex-col flex-1">
+<div class="aspect-[16/9] w-full border border-primary bg-surface-variant mb-4 relative overflow-hidden group-hover:border-tertiary transition-colors">
+<img class="w-full h-full object-cover filter grayscale group-hover:grayscale-0 transition-all duration-500" data-alt="A stark, high-contrast digital painting of a brutalist, towering concrete megastructure in a dark cyberpunk city. Neon cyan lights cut through heavy fog and rain. The mood is oppressive, industrial, and highly technical, utilizing a strictly monochrome palette with singular vibrant blue accents." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBRFlyTnLHLDTro8-vjsS8VnN0It0G59eKzggzSHixXSzqDOnRrbMut2N20YqVZ-XZkhao41SacZz07AfJz27YVFZpcIvVuKCXvg7NcrrMdgxswBBqs4UmNJUOmAazPg6XIkNAZrpmsJ3Mt-XF2EaPGMZfaPgza1HIIij9UaHCCKHz4SxeuR1mPqWApMgeJjUHztTvzXwhRhttrBKXEKJkmoMfaq82JtSj59tVnCMTojunQ-haid8iQT6v7sWQ_huwQQHMXF3F7nOA"/>
+<div class="absolute top-2 right-2 bg-background border border-primary px-2 py-1 font-code text-label-md font-bold text-tertiary">
+                                9.2/10
+                            </div>
+</div>
+<h2 class="text-headline-md font-headline-md text-primary mb-2 truncate group-hover:text-tertiary transition-colors">NEUROMANCER_V2</h2>
+<div class="text-label-md font-code text-on-surface-variant mb-4 flex gap-4 border-b border-surface-container-high pb-4">
+<span>DIR: G. GIBSON</span>
+<span>YEAR: 2042</span>
+</div>
+<p class="text-body-md font-body-md text-on-surface-variant line-clamp-3 mb-6">
+                            Exceptional execution of the classic source material. The visual architecture relies heavily on stark contrasts and hard-edged polygonal geometries. Pacing algorithms are optimal.
+                        </p>
+<div class="mt-auto pt-4 border-t border-primary">
+<div class="flex justify-between font-code text-label-md mb-2">
+<span class="text-primary">SYSTEM_RATING</span>
+<span class="text-tertiary">EXCELLENT</span>
+</div>
+<div class="w-full h-2 bg-surface-container border border-primary relative">
+<div class="absolute top-0 left-0 h-full bg-tertiary w-[92%]"></div>
+</div>
+</div>
+</div>
+</article>
+<!-- CARD 2 -->
+<article class="border border-primary bg-surface group flex flex-col relative transition-transform duration-200 brutalist-offset shadow-primary hover:shadow-tertiary brutalist-offset-hover">
+<div class="h-10 bg-primary flex items-center justify-between px-4">
+<span class="font-code text-label-md text-on-primary">ID: MR-993</span>
+<span class="font-code text-label-md text-on-primary flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">tv</span> TV_SERIES</span>
+</div>
+<div class="p-4 flex flex-col flex-1">
+<div class="aspect-[16/9] w-full border border-primary bg-surface-variant mb-4 relative overflow-hidden group-hover:border-tertiary transition-colors">
+<img class="w-full h-full object-cover filter grayscale group-hover:grayscale-0 transition-all duration-500" data-alt="A retro-futuristic server room illuminated by harsh, sterile white fluorescent lights. Walls of massive, monolithic black mainframes with blinking red and green diodes. The composition is rigidly symmetrical, emphasizing absolute order and technical precision over human element. High contrast, sharp edges." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAUMw8B3VhclQKbZhGlPwh5hiGsuCvbzdLUi8SeCM9TdSMLbtlUp39RJBQarmoJ5ZQROJw027v1Ow4fnKGnR5z2KPwvzRO_WqpUGwAAEAAXmDUxfnfI3wAT09Dm7HxxjTWOY3Mwb0_jr_4BcREb4vvtxaXMma4zZgh0aiPD8qwgtedsfMJB5xKNqTR41dr8a9Xx4idiQFS7xDwxE_MXX6ClG6cupabL9xzlPmnw2zibAuXYmrIcLGmehdWCmFFhgx7uqzyP8i1Flxo"/>
+<div class="absolute top-2 right-2 bg-background border border-primary px-2 py-1 font-code text-label-md font-bold text-tertiary">
+                                7.8/10
+                            </div>
+</div>
+<h2 class="text-headline-md font-headline-md text-primary mb-2 truncate group-hover:text-tertiary transition-colors">SEVERANCE_PROTOCOL</h2>
+<div class="text-label-md font-code text-on-surface-variant mb-4 flex gap-4 border-b border-surface-container-high pb-4">
+<span>S1: 9 EPS</span>
+<span>YEAR: 2024</span>
+</div>
+<p class="text-body-md font-body-md text-on-surface-variant line-clamp-3 mb-6">
+                            Narrative loops are intriguing but exhibit minor memory leaks in the mid-season. Set design effectively leverages liminal aesthetics to induce psychological unease.
+                        </p>
+<div class="mt-auto pt-4 border-t border-primary">
+<div class="flex justify-between font-code text-label-md mb-2">
+<span class="text-primary">SYSTEM_RATING</span>
+<span class="text-primary-fixed-dim">ACCEPTABLE</span>
+</div>
+<div class="w-full h-2 bg-surface-container border border-primary relative">
+<div class="absolute top-0 left-0 h-full bg-primary-fixed-dim w-[78%]"></div>
+</div>
+</div>
+</div>
+</article>
+<!-- CARD 3 -->
+<article class="border border-primary bg-surface group flex flex-col relative transition-transform duration-200 brutalist-offset shadow-primary hover:shadow-tertiary brutalist-offset-hover">
+<div class="h-10 bg-primary flex items-center justify-between px-4">
+<span class="font-code text-label-md text-on-primary">ID: MR-994</span>
+<span class="font-code text-label-md text-on-primary flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">book</span> TEXT</span>
+</div>
+<div class="p-4 flex flex-col flex-1">
+<div class="aspect-[16/9] w-full border border-primary bg-surface-variant mb-4 relative overflow-hidden group-hover:border-tertiary transition-colors">
+<img class="w-full h-full object-cover filter grayscale group-hover:grayscale-0 transition-all duration-500" data-alt="A minimalist layout resembling a complex technical manual or blueprint. A solid stark black background overlaid with intricate, razor-thin white geometric schematics and monospace typography. The design feels like raw data output, devoid of organic forms, heavily emphasizing structure and logic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCFM9QpAYRs6L243J4Qq413E6_skEwmNXGhVkV3D0Xi9ey0k3oP32-ASzpC6SwaKH_pA7wD8Hf-BLVgBGQmlln860_GuETQArBv-NuueEbfl5OI8QokkYj6MJaN4blvaRipfHYJbHacw2yhfGXMI8ZvMTERfVarNXnK93mOeJwjKxSY6cfIZMclf5iKRfAGQZqiBBoSEIE30IWxriql9ieW4MTG0mep7EvMRS3oEP0Ydv0ucrqNgfb9TXC1LTH8H0DMBmqfG4c2_G8"/>
+<div class="absolute top-2 right-2 bg-background border border-primary px-2 py-1 font-code text-label-md font-bold text-tertiary">
+                                9.8/10
+                            </div>
+</div>
+<h2 class="text-headline-md font-headline-md text-primary mb-2 truncate group-hover:text-tertiary transition-colors">THE_THREE_BODY</h2>
+<div class="text-label-md font-code text-on-surface-variant mb-4 flex gap-4 border-b border-surface-container-high pb-4">
+<span>AUTHOR: C. LIU</span>
+<span>PAGES: 400</span>
+</div>
+<p class="text-body-md font-body-md text-on-surface-variant line-clamp-3 mb-6">
+                            Flawless hard-sci-fi logic framework. The extrapolation of physics into macro-scale societal engineering is rendered with terrifying precision. A must-compile text.
+                        </p>
+<div class="mt-auto pt-4 border-t border-primary">
+<div class="flex justify-between font-code text-label-md mb-2">
+<span class="text-primary">SYSTEM_RATING</span>
+<span class="text-tertiary">CRITICAL</span>
+</div>
+<div class="w-full h-2 bg-surface-container border border-primary relative">
+<div class="absolute top-0 left-0 h-full bg-tertiary w-[98%]"></div>
+</div>
+</div>
+</div>
+</article>
+</div>
+</section>
+<!-- FOOTER -->
+<footer class="mt-auto bg-background border-t-2 border-primary">
+<div class="flex flex-col md:flex-row justify-between items-center w-full px-margin-mobile lg:px-margin-desktop py-8 gap-gutter">
+<div class="text-label-md font-code text-on-surface">
+                    © 2024 DEEP_TECH_LOGIC // ALL RIGHTS RESERVED
+                </div>
+<div class="flex gap-6">
+<a class="text-label-md font-code text-on-surface-variant hover:text-tertiary transition-colors" href="#">GITHUB</a>
+<a class="text-label-md font-code text-on-surface-variant hover:text-tertiary transition-colors" href="#">LINKEDIN</a>
+<a class="text-label-md font-code text-on-surface-variant hover:text-tertiary transition-colors" href="#">RSS</a>
+<a class="text-label-md font-code text-on-surface-variant hover:text-tertiary transition-colors" href="#">SOURCE</a>
+</div>
+<div class="text-label-md font-code text-tertiary flex items-center gap-2">
+<span class="w-2 h-2 bg-tertiary animate-ping inline-block rounded-none"></span> SYSTEM_ONLINE
+                </div>
+</div>
+</footer>
+</main>
+<script>
+        // Simple script to handle active states on nav items if needed
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', (e) => {
+                // In a real app this would route, here we just visually update the active state
+                // e.preventDefault();
+                console.log('Navigated to:', link.textContent.trim());
+            });
+        });
+    </script>
+</body></html>
