@@ -54,7 +54,7 @@ export interface Project {
   license?: string;
 }
 
-export const projects: Project[] = [
+export const seedProjects: Project[] = [
   {
     name: "Quantum_Router_Core",
     version: "v2.4.1",

@@ -18,27 +18,28 @@
       <NavLink to="/status" icon="sensors" label="Status" />
     </div>
     <div class="p-4 border-t-2 border-primary flex flex-col gap-2">
-      <button
+      <RouterLink
+        to="/contact"
         class="w-full bg-surface border border-primary text-primary hover:bg-secondary-container hover:text-on-secondary-container transition-colors py-2 text-label-md font-code flex justify-center items-center gap-2 brutalist-offset shadow-tertiary hover:shadow-tertiary">
-        <span class="material-symbols-outlined text-[16px]">key</span>
-        GET_TOKEN
-      </button>
+        <span class="material-symbols-outlined text-[16px]">mail</span>
+        CONTACT
+      </RouterLink>
       <div class="mt-4 flex flex-col gap-1">
-        <a
-          class="flex items-center gap-3 p-2 text-label-md font-code text-on-surface-variant hover:text-primary transition-colors cursor-pointer">
-          <span class="material-symbols-outlined text-[18px]">settings</span>
-          <span>Settings</span>
-        </a>
-        <a
-          class="flex items-center gap-3 p-2 text-label-md font-code text-error hover:text-error-container transition-colors cursor-pointer">
-          <span class="material-symbols-outlined text-[18px]">power_settings_new</span>
-          <span>Logout</span>
-        </a>
+        <RouterLink
+          :to="user ? '/admin' : '/login'"
+          class="flex items-center gap-3 p-2 text-label-md font-code text-on-surface-variant hover:text-primary transition-colors router-link-active:text-tertiary">
+          <span class="material-symbols-outlined text-[18px]">account_circle</span>
+          <span>{{ user ? 'Admin' : 'Account' }}</span>
+        </RouterLink>
       </div>
     </div>
   </nav>
 </template>
 
 <script setup lang="ts">
+import { RouterLink } from 'vue-router'
+import { useAuth } from '@/composables/useAuth'
 import NavLink from './NavLink.vue'
+
+const { user } = useAuth()
 </script>

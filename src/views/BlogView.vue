@@ -189,16 +189,15 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import PageHeader from '@/components/ui/PageHeader.vue'
-import { blogPosts, type BlogPost } from '@/data/blog'
+import { useBlog } from '@/composables/useBlog'
+import type { BlogPost } from '@/data/blog'
+
+const blog = useBlog()
 
 type FilterType = null | 'DEV' | 'E-ENG' | 'THEORY'
 
 const activeFilter = ref<FilterType>(null)
 const searchQuery = ref('')
-
-const featuredPost = blogPosts.find(p => p.isFeatured) as BlogPost
-const regularPosts = blogPosts.filter(p => !p.isFeatured && !p.isWide)
-const widePost = blogPosts.find(p => p.isWide) as BlogPost
 
 const matchesQuery = (post: BlogPost) => {
   const q = searchQuery.value.toLowerCase()
@@ -209,13 +208,17 @@ const matchesCategory = (post: BlogPost) => {
   return activeFilter.value === null || post.category === activeFilter.value
 }
 
-const showFeatured = computed(() => matchesCategory(featuredPost) && matchesQuery(featuredPost))
+const featuredPost = computed(() => blog.items.value.find(p => p.isFeatured) || null)
+const regularPosts = computed(() => blog.items.value.filter(p => !p.isFeatured && !p.isWide))
+const widePost = computed(() => blog.items.value.find(p => p.isWide) || null)
+
+const showFeatured = computed(() => featuredPost.value && matchesCategory(featuredPost.value) && matchesQuery(featuredPost.value))
 
 const filteredRegularPosts = computed(() => {
-  return regularPosts.filter(p => matchesCategory(p) && matchesQuery(p))
+  return regularPosts.value.filter(p => matchesCategory(p) && matchesQuery(p))
 })
 
 const showWidePost = computed(() => {
-  return matchesCategory(widePost) && matchesQuery(widePost)
+  return widePost.value && matchesCategory(widePost.value) && matchesQuery(widePost.value)
 })
 </script>

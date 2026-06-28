@@ -139,10 +139,12 @@
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import PageHeader from '@/components/ui/PageHeader.vue'
-import { projects, type ChangelogFlag } from '@/data/projects'
+import { useProjects } from '@/composables/useProjects'
+import type { ChangelogFlag } from '@/data/projects'
 
 const route = useRoute()
-const project = computed(() => projects.find(p => p.name === route.params.name))
+const projects = useProjects()
+const project = computed(() => projects.items.value.find(p => p.name === route.params.name))
 
 function flagClass(flag: ChangelogFlag) {
   const map: Record<ChangelogFlag, string> = {

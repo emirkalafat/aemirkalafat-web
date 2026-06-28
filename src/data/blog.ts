@@ -17,9 +17,10 @@ export interface BlogPost {
   isWide?: boolean;
   relatedIds?: string[];
   content?: ContentBlock[];
+  markdown?: string;
 }
 
-export const blogPosts: BlogPost[] = [
+export const seedBlogPosts: BlogPost[] = [
   {
     id: "LOG-FEAT-001",
     category: "E-ENG",
@@ -32,6 +33,36 @@ export const blogPosts: BlogPost[] = [
       "https://lh3.googleusercontent.com/aida-public/AB6AXuBsWkb91Ar7NWRDrruAC5VRebqB2vI-BOrDNmo144NygegbcSPZJuj2BsHrVTeEj-X9phaF_4KBVtAf0r8Hlus5GzcEou8sbrPFmzLHm2tQKYKRIAsaS8KG39AtBRxfygAjvXDcbdYZDrLOIw-TyGzt00fRv0pGAmJBwnlCwVS8q_P6P6IKEhPufLnhsZHL8WqegbtuP6sRnA3UPYyjQ_8lrYDW-aorhuYqFH7kYRGILY_KU9mhIObYbSe-s0QIKvSW3TY",
     isFeatured: true,
     relatedIds: ["LOG-003", "LOG-WIDE-001"],
+    markdown: `# Reverse Engineering ARM Cortex-M4
+
+The ARM Cortex-M4 is the backbone of a significant portion of commercial IoT hardware. Its debug interface, JTAG/SWD, is protected by a single lock bit in non-volatile memory. Once that bit is set, the debug port is disabled. However, the protection model assumes that the attacker cannot control the power supply rail.
+
+## Voltage Glitching the Lock Bit
+
+By introducing a precise voltage spike on the VDD rail during the boot sequence — specifically in the 50–200ns window when the device reads the option bytes — we can force a bit-flip in SRAM that bypasses the protection check.
+
+\`\`\`c
+// Option byte read sequence (simplified)
+#define OPTION_BYTES_BASE 0x1FFFF800
+
+uint16_t read_rdp_level(void) {
+    volatile uint16_t *ob = (uint16_t *)OPTION_BYTES_BASE;
+    return (*ob >> 8) & 0xFF; // RDP level in bits [15:8]
+}
+\`\`\`
+
+## Differential Power Analysis
+
+DPA involves collecting thousands of power traces during AES operations and applying statistical correlation to recover the secret key. On a Cortex-M4 without hardware countermeasures, a successful attack typically requires fewer than 10,000 traces.
+
+**Key insight**: SRAM bus activity creates measurable correlations with intermediate cipher values.
+
+### Implementation Details
+
+- Requires precision oscilloscope (sub-nanosecond resolution)
+- Power supply monitoring during boot sequence
+- Statistical analysis of power traces
+- Correlation with known AES operations`,
     content: [
       {
         type: "paragraph",

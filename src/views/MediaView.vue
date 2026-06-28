@@ -87,7 +87,10 @@
 import { ref, computed } from 'vue'
 import PageHeader from '@/components/ui/PageHeader.vue'
 import MediaCard from '@/components/ui/MediaCard.vue'
-import { mediaCards, type MediaCardData } from '@/data/media'
+import { useMedia } from '@/composables/useMedia'
+import type { MediaCardData } from '@/data/media'
+
+const media = useMedia()
 
 type FilterType = 'MOVIE' | 'TV_SERIES' | 'TEXT' | null
 
@@ -95,7 +98,7 @@ const activeFilter = ref<FilterType>(null)
 const searchQuery = ref('')
 
 const filteredCards = computed(() => {
-  return mediaCards.filter(card => {
+  return media.items.value.filter(card => {
     const matchesFilter = !activeFilter.value || card.type === activeFilter.value
     const q = searchQuery.value.toLowerCase()
     const matchesSearch = !q || card.title.toLowerCase().includes(q) || card.description.toLowerCase().includes(q)

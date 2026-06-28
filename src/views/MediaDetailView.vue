@@ -132,10 +132,11 @@
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import PageHeader from '@/components/ui/PageHeader.vue'
-import { mediaCards } from '@/data/media'
+import { useMedia } from '@/composables/useMedia'
 
 const route = useRoute()
-const card = computed(() => mediaCards.find(c => c.id === route.params.id))
+const media = useMedia()
+const card = computed(() => media.items.value.find(c => c.id === route.params.id))
 
 const analysisTitle = computed(() => card.value ? `${card.value.title}_ANALYSIS` : 'MEDIA_ANALYSIS')
 

@@ -33,8 +33,11 @@
             />
           </div>
 
-          <!-- Content blocks -->
-          <div class="flex flex-col gap-8">
+          <!-- Markdown Content (new) or Content Blocks (legacy) -->
+          <div v-if="post.markdown" class="flex flex-col gap-8">
+            <MarkdownRenderer :markdown="post.markdown" />
+          </div>
+          <div v-else-if="post.content" class="flex flex-col gap-8">
             <template v-for="(block, i) in post.content" :key="i">
 
               <!-- Paragraph -->
@@ -115,15 +118,17 @@
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import PageHeader from '@/components/ui/PageHeader.vue'
-import { blogPosts } from '@/data/blog'
+import MarkdownRenderer from '@/components/MarkdownRenderer.vue'
+import { useBlog } from '@/composables/useBlog'
 
 const route = useRoute()
-const post = computed(() => blogPosts.find(p => p.id === route.params.id))
+const blog = useBlog()
+const post = computed(() => blog.items.value.find(p => p.id === route.params.id))
 
 const relatedPosts = computed(() => {
   if (!post.value?.relatedIds) return []
   return post.value.relatedIds
-    .map(id => blogPosts.find(p => p.id === id))
-    .filter(Boolean) as typeof blogPosts
+    .map(id => blog.items.value.find(p => p.id === id))
+    .filter(Boolean)
 })
 </script>

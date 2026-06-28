@@ -65,7 +65,9 @@
 import { ref, computed } from 'vue'
 import PageHeader from '@/components/ui/PageHeader.vue'
 import ProjectCard from '@/components/ui/ProjectCard.vue'
-import { projects } from '@/data/projects'
+import { useProjects } from '@/composables/useProjects'
+
+const projects = useProjects()
 
 type FilterType = null | 'STABLE' | 'BETA'
 
@@ -73,7 +75,7 @@ const activeFilter = ref<FilterType>(null)
 const searchQuery = ref('')
 
 const filteredProjects = computed(() => {
-  return projects.filter(p => {
+  return projects.items.value.filter(p => {
     const matchesFilter = activeFilter.value === null || p.status === activeFilter.value
     const q = searchQuery.value.toLowerCase()
     const matchesSearch = !q || p.name.toLowerCase().includes(q) || p.description.toLowerCase().includes(q)

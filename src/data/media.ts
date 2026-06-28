@@ -18,7 +18,7 @@ export interface MediaCardData {
   metrics?: MediaMetrics;
 }
 
-export const mediaCards: MediaCardData[] = [
+export const seedMediaCards: MediaCardData[] = [
   {
     id: "MR-992",
     type: "MOVIE",
