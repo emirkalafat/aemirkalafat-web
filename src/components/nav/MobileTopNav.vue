@@ -48,10 +48,9 @@
     <!-- Nav Links -->
     <div class="flex-1 overflow-y-auto py-4 flex flex-col gap-2 px-4">
       <NavLink to="/" icon="home" label="Home" @navigate="isOpen = false" />
-      <NavLink to="/media" icon="movie" label="Media" @navigate="isOpen = false" />
       <NavLink to="/projects" icon="developer_board" label="Projects" @navigate="isOpen = false" />
       <NavLink to="/blog" icon="article" label="Blog" @navigate="isOpen = false" />
-      <NavLink to="/status" icon="sensors" label="Status" @navigate="isOpen = false" />
+      <NavLink to="/media" icon="movie" label="Media" @navigate="isOpen = false" />
     </div>
 
     <!-- Footer -->

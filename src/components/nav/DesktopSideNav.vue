@@ -12,9 +12,9 @@
     </div>
     <div class="flex-1 overflow-y-auto py-4 flex flex-col gap-2 px-4">
       <NavLink to="/" icon="home" label="Home" />
-      <NavLink to="/media" icon="movie" label="Media" />
       <NavLink to="/projects" icon="developer_board" label="Projects" />
       <NavLink to="/blog" icon="article" label="Blog" />
+      <NavLink to="/media" icon="movie" label="Media" />
       <!-- <NavLink to="/status" icon="sensors" label="Status" /> -->
     </div>
     <div class="p-4 border-t-2 border-primary flex flex-col gap-2">
