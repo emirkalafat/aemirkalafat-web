@@ -141,6 +141,9 @@
       <p v-if="seedMessage" class="font-code text-code text-tertiary">{{ seedMessage }}</p>
       <p v-if="migrateMessage" class="font-code text-code text-tertiary">{{ migrateMessage }}</p>
     </section>
+
+    <!-- Data Migration -->
+    <DataMigrationPanel />
   </div>
 </template>
 
@@ -152,6 +155,7 @@ import { useMedia } from '@/composables/useMedia'
 import { useCategories } from '@/composables/useCategories'
 import { seedFirestore } from '@/firebase/seed'
 import { migrateBlogContent } from '@/firebase/migrate'
+import DataMigrationPanel from '@/components/admin/DataMigrationPanel.vue'
 
 const blog = useBlog()
 const projects = useProjects()
