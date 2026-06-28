@@ -20,4 +20,14 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url)),
     },
   },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: (id: string) => {
+          if (id.includes('firebase')) return 'firebase'
+          if (id.includes('marked') || id.includes('highlight.js')) return 'markdown'
+        },
+      },
+    },
+  },
 })

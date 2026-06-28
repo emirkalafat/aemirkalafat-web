@@ -55,7 +55,7 @@
     </nav>
 
     <!-- Admin Content -->
-    <main class="flex-1 lg:ml-64 flex flex-col min-h-screen">
+    <main class="flex-1 lg:ml-64 flex flex-col h-screen">
       <!-- Top Bar -->
       <header class="sticky top-0 z-30 bg-surface-container-lowest border-b-2 border-primary px-gutter py-4 flex justify-between items-center">
         <div class="text-headline-md font-headline-md text-on-surface uppercase">ROOT_ACCESS</div>
@@ -68,7 +68,9 @@
       </header>
 
       <!-- Router View -->
-      <RouterView />
+      <div class="flex-1 min-h-0">
+        <RouterView />
+      </div>
     </main>
   </div>
 </template>

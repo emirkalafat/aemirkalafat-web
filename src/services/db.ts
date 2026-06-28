@@ -50,3 +50,16 @@ export async function remove(collectionName: string, docId: string): Promise<voi
   const docRef = doc(db, collectionName, docId)
   await deleteDoc(docRef)
 }
+
+export async function getSubcollection<T extends DocumentData>(
+  collectionName: string,
+  docId: string,
+  subName: string,
+): Promise<T[]> {
+  try {
+    const snap = await getDocs(collection(db, collectionName, docId, subName))
+    return snap.docs.map(d => ({ ...d.data(), id: d.id } as unknown as T))
+  } catch {
+    return []
+  }
+}

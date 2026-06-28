@@ -1,21 +1,20 @@
 <template>
-  <div class="p-gutter md:p-margin-desktop flex gap-gutter min-h-[calc(100vh-80px)]">
+  <div class="flex h-full bg-surface">
     <!-- Left: Posts List -->
-    <div class="flex-1 md:max-w-sm border border-on-surface bg-surface-container-lowest flex flex-col">
-      <div class="bg-on-surface text-surface px-4 py-3 border-b border-on-surface flex justify-between items-center font-label-md">
-        <span>INDEX // POSTS</span>
-        <button @click="newPost" class="hover:text-tertiary transition-colors">
-          <span class="material-symbols-outlined">add_box</span>
-        </button>
-      </div>
-
-      <!-- Featured Post Selector -->
-      <div class="px-4 py-3 border-b border-on-surface bg-surface-dim flex flex-col gap-2">
-        <label class="font-code text-xs text-on-surface-variant uppercase">FEATURED</label>
+    <div class="flex-1 md:max-w-sm border-r border-on-surface bg-surface-dim flex flex-col">
+      <div class="px-4 py-4 border-b border-on-surface">
+        <h2 class="font-code text-on-surface font-bold uppercase text-sm mb-4">INDEX // POSTS</h2>
+        <input
+          v-model="searchQuery"
+          type="text"
+          placeholder="Search title or ID"
+          class="w-full bg-surface border-b border-on-surface text-on-surface font-code text-sm px-2 py-2 outline-none focus:border-tertiary mb-3"
+        />
+        <label class="font-code text-xs text-on-surface-variant uppercase block mb-1">FEATURED</label>
         <select
           v-model="featuredPostId"
           @change="setFeaturedPost"
-          class="bg-transparent border-b border-on-surface text-code font-code text-on-surface focus:ring-0 focus:border-tertiary px-0 py-2 cursor-pointer outline-none"
+          class="w-full bg-surface border-b border-on-surface text-on-surface font-code text-sm px-2 py-2 cursor-pointer outline-none focus:border-tertiary"
         >
           <option value="">None</option>
           <option v-for="post in blog.items.value" :key="post.id" :value="post.id">
@@ -23,33 +22,38 @@
           </option>
         </select>
       </div>
-
-      <input
-        v-model="searchQuery"
-        placeholder="grep 'title'..."
-        class="p-2 border-b border-on-surface bg-surface-dim font-code text-code text-on-surface focus:outline-none focus:ring-0 px-2 py-2"
-      />
       <div class="flex-1 overflow-y-auto flex flex-col">
         <div
           v-for="post in filteredPosts"
           :key="post.id"
           @click="selectPost(post)"
           :class="[
-            'p-4 border-b border-on-surface border-l-4 cursor-pointer transition-colors',
-            selectedPost?.id === post.id ? 'border-l-tertiary bg-surface-container' : 'border-l-transparent hover:bg-surface-container',
+            'px-4 py-3 border-b border-on-surface/20 cursor-pointer transition-colors hover:bg-surface',
+            selectedPost?.id === post.id ? 'bg-surface-container-highest' : 'bg-surface-dim'
           ]"
         >
-          <h3 class="font-code text-code text-tertiary mb-2 line-clamp-2 leading-tight">&gt; {{ post.title }}</h3>
-          <div class="flex justify-between items-end">
-            <span class="border border-tertiary text-tertiary px-1.5 py-0.5 text-xs font-code uppercase">{{ post.category }}</span>
-            <span class="text-xs font-code text-on-surface-variant">{{ post.date }}</span>
+          <div class="flex justify-between items-start gap-2">
+            <div class="flex-1 min-w-0">
+              <p class="font-code text-sm text-on-surface truncate font-bold">{{ post.title }}</p>
+              <p class="font-code text-xs text-on-surface-variant uppercase">{{ post.category }}</p>
+            </div>
+            <span class="font-code text-xs text-tertiary whitespace-nowrap">{{ post.date }}</span>
           </div>
         </div>
+      </div>
+      <div class="border-t border-on-surface p-4">
+        <button
+          @click="newPost"
+          class="w-full bg-on-surface text-surface border border-on-surface px-4 py-2 font-code font-bold uppercase text-sm hover:bg-tertiary hover:text-on-tertiary transition-colors flex items-center justify-center gap-2"
+        >
+          <span class="material-symbols-outlined text-lg">add</span>
+          <span>NEW</span>
+        </button>
       </div>
     </div>
 
     <!-- Right: Editor -->
-    <div class="flex-1 flex flex-col gap-gutter min-h-[calc(100vh-80px)] overflow-y-auto pb-8">
+    <div class="flex-1 flex flex-col overflow-y-auto pb-8">
       <div v-if="selectedPost" class="space-y-gutter">
         <!-- Meta Fields -->
         <div class="grid grid-cols-2 gap-gutter">

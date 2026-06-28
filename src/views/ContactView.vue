@@ -17,7 +17,7 @@
             type="email"
             placeholder="example@email.com"
             required
-            class="bg-primary-container text-on-surface border-b-2 border-on-surface focus:border-tertiary font-body-md py-3 px-0 outline-none transition-colors"
+            class="bg-surface-container-low text-on-surface placeholder:text-on-surface-variant border-b-2 border-on-surface focus:border-tertiary font-body-md py-3 px-0 outline-none transition-colors"
           />
         </div>
 
@@ -29,7 +29,7 @@
             type="text"
             placeholder="Message subject"
             required
-            class="bg-primary-container text-on-surface border-b-2 border-on-surface focus:border-tertiary font-body-md py-3 px-0 outline-none transition-colors"
+            class="bg-surface-container-low text-on-surface placeholder:text-on-surface-variant border-b-2 border-on-surface focus:border-tertiary font-body-md py-3 px-0 outline-none transition-colors"
           />
         </div>
 
@@ -41,7 +41,7 @@
             placeholder="Write your message here..."
             required
             rows="6"
-            class="bg-primary-container text-on-surface border-b-2 border-on-surface focus:border-tertiary font-body-md py-3 px-0 outline-none resize-none transition-colors"
+            class="bg-surface-container-low text-on-surface placeholder:text-on-surface-variant border-b-2 border-on-surface focus:border-tertiary font-body-md py-3 px-0 outline-none resize-none transition-colors"
           />
         </div>
 

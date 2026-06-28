@@ -13,7 +13,7 @@
             v-model="email"
             type="email"
             placeholder="admin@example.com"
-            class="bg-primary-container text-on-surface border-0 border-b-2 border-on-surface focus:ring-0 focus:border-tertiary py-2 font-body-md transition-colors outline-none"
+            class="bg-surface-container-low text-on-surface placeholder:text-on-surface-variant border-0 border-b-2 border-on-surface focus:ring-0 focus:border-tertiary py-2 font-body-md transition-colors outline-none"
             required
           />
         </div>
@@ -24,7 +24,7 @@
             v-model="password"
             type="password"
             placeholder="••••••••"
-            class="bg-primary-container text-on-surface border-0 border-b-2 border-on-surface focus:ring-0 focus:border-tertiary py-2 font-body-md transition-colors outline-none"
+            class="bg-surface-container-low text-on-surface placeholder:text-on-surface-variant border-0 border-b-2 border-on-surface focus:ring-0 focus:border-tertiary py-2 font-body-md transition-colors outline-none"
             required
           />
         </div>

@@ -141,6 +141,9 @@
       <p v-if="seedMessage" class="font-code text-code text-tertiary">{{ seedMessage }}</p>
       <p v-if="migrateMessage" class="font-code text-code text-tertiary">{{ migrateMessage }}</p>
     </section>
+
+    <!-- Data Migration -->
+    <DataMigrationPanel />
   </div>
 </template>
 
@@ -150,8 +153,7 @@ import { useBlog } from '@/composables/useBlog'
 import { useProjects } from '@/composables/useProjects'
 import { useMedia } from '@/composables/useMedia'
 import { useCategories } from '@/composables/useCategories'
-import { seedFirestore } from '@/firebase/seed'
-import { migrateBlogContent } from '@/firebase/migrate'
+import DataMigrationPanel from '@/components/admin/DataMigrationPanel.vue'
 
 const blog = useBlog()
 const projects = useProjects()
@@ -169,6 +171,7 @@ async function seedDb() {
   seeding.value = true
   seedMessage.value = ''
   try {
+    const { seedFirestore } = await import('@/firebase/seed')
     await seedFirestore()
     seedMessage.value = '✓ Database seeded successfully'
     setTimeout(() => { seedMessage.value = '' }, 3000)
@@ -183,6 +186,7 @@ async function migrateBlog() {
   migrating.value = true
   migrateMessage.value = ''
   try {
+    const { migrateBlogContent } = await import('@/firebase/migrate')
     const { migrated, skipped } = await migrateBlogContent()
     migrateMessage.value = `✓ Migration complete — ${migrated} migrated, ${skipped} already up to date`
     setTimeout(() => { migrateMessage.value = '' }, 5000)
