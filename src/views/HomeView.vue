@@ -14,12 +14,14 @@
             LEVEL.
           </h1>
           <p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl border-l-4 border-primary pl-4">
-            Bridging the gap between physical hardware and abstract logic. Computer &amp; Electrical Engineer focused on high-performance embedded systems and low-latency software architecture.
+            I'm a Computer &amp; Electrical Engineer with a Double Major from Fatih Sultan Mehmet Vakıf University and an Erasmus+ exchange in Electrical &amp; Automation Engineering under my belt. Professionally, I've been building software at talsen team GmbH and previously developed mobile applications at SameUp — always chasing that sweet spot between low-level hardware and high-level software.
           </p>
           <div class="flex flex-wrap gap-4 mt-8">
-            <button class="bg-primary text-on-primary border border-primary font-label-md text-label-md px-8 py-4 uppercase hover:bg-tertiary hover:text-on-tertiary hover:border-tertiary hover:-translate-x-1 hover:-translate-y-1 hover:shadow-[4px_4px_0px_#BD00FF] transition-all duration-100">
-              Deploy Protocol
-            </button>
+            <a href="/cv.pdf" target="_blank" rel="noopener"
+              class="bg-primary text-on-primary border border-primary font-label-md text-label-md px-8 py-4 uppercase hover:bg-tertiary hover:text-on-tertiary hover:border-tertiary hover:-translate-x-1 hover:-translate-y-1 hover:shadow-[4px_4px_0px_#BD00FF] transition-all duration-100 flex items-center gap-2">
+              <span class="material-symbols-outlined text-[18px]">download</span>
+              Download CV
+            </a>
             <button class="border border-primary text-primary hover:bg-primary hover:text-on-primary font-label-md text-label-md px-8 py-4 uppercase transition-colors">
               View Source
             </button>
@@ -34,81 +36,87 @@
         </div>
       </section>
 
-      <!-- Core Competencies Bento Grid -->
+      <!-- Experience Section -->
       <section class="flex flex-col gap-8">
-        <h2 class="font-headline-md text-headline-md border-b-2 border-primary pb-2 uppercase w-full">Core.Modules()</h2>
-        <div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+        <h2 class="font-headline-md text-headline-md border-b-2 border-primary pb-2 uppercase w-full">Experience.Log()</h2>
+        <div class="flex flex-col gap-gutter">
+          <ExperienceCard v-for="exp in experience" :key="exp.company" v-bind="exp" />
+        </div>
 
-          <!-- Hardware Card -->
-          <div class="md:col-span-7 border border-outline flex flex-col min-h-[300px]">
-            <div class="bg-on-surface text-background font-label-md text-label-md uppercase flex justify-between items-center px-4 py-2 border-b border-outline">
-              <span>HW_ENGINEERING</span>
-              <span class="material-symbols-outlined">memory</span>
+        <!-- Projects CTA -->
+        <div class="border border-primary bg-surface-container-lowest flex flex-col md:flex-row items-center justify-between gap-6 p-gutter mt-4">
+          <div class="flex flex-col gap-2">
+            <p class="font-label-md text-label-md text-tertiary font-code uppercase">Projects.ls()</p>
+            <p class="font-body-md text-body-md text-on-surface-variant max-w-lg">
+              Want to see what I actually build? Check out my projects — side quests, experiments, and things that (mostly) work in production.
+            </p>
+          </div>
+          <RouterLink to="/projects"
+            class="shrink-0 flex items-center gap-2 bg-on-surface text-background font-label-md text-label-md px-8 py-4 uppercase hover:-translate-x-1 hover:-translate-y-1 hover:shadow-[4px_4px_0px_#BD00FF] transition-all duration-100">
+            <span class="material-symbols-outlined text-[18px]">folder_open</span>
+            View Projects
+          </RouterLink>
+        </div>
+      </section>
+
+      <!-- Education Section -->
+      <section class="flex flex-col gap-8">
+        <h2 class="font-headline-md text-headline-md border-b-2 border-primary pb-2 uppercase w-full">Education.Stack()</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-gutter">
+          <EducationCard v-for="edu in education" :key="edu.institution + edu.degree" v-bind="edu" />
+        </div>
+      </section>
+
+      <!-- Terminal Output Card -->
+      <section class="flex flex-col gap-8">
+        <h2 class="font-headline-md text-headline-md border-b-2 border-primary pb-2 uppercase w-full">System.Status()</h2>
+        <div class="border border-outline bg-surface-container-lowest p-0">
+          <div class="bg-primary text-on-primary font-code text-code px-4 py-2 border-b border-outline flex justify-between">
+            <span>bash - 80x24</span>
+            <span>_ </span>
+          </div>
+          <div class="p-4 font-code text-code text-on-surface-variant flex flex-col gap-2 h-auto overflow-y-auto">
+            <div class="flex gap-4">
+              <span class="text-tertiary select-none">1</span>
+              <span class="text-primary">$ ./compile_career.sh</span>
             </div>
-            <div class="p-6 flex-grow flex flex-col gap-4 bg-surface-container-lowest">
-              <p class="font-body-md text-body-md text-on-surface-variant">
-                PCB design, FPGA programming, and embedded microcontroller architecture. Designing physical systems that operate with deterministic precision.
-              </p>
-              <div class="flex flex-wrap gap-2 mt-auto">
-                <span class="font-code text-code px-2 py-1 border border-cyber-purple text-cyber-purple">VHDL/Verilog</span>
-                <span class="font-code text-code px-2 py-1 border border-cyber-purple text-cyber-purple">Altium</span>
-                <span class="font-code text-code px-2 py-1 border border-cyber-purple text-cyber-purple">ARM Cortex</span>
-              </div>
+            <div class="flex gap-4">
+              <span class="text-tertiary select-none">2</span>
+              <span>[INFO] Stacking education modules...</span>
+            </div>
+            <div class="flex gap-4">
+              <span class="text-tertiary select-none">3</span>
+              <span>[✓] FSMVU: Double Major in Computer Engineering (2021-2026)</span>
+            </div>
+            <div class="flex gap-4">
+              <span class="text-tertiary select-none">4</span>
+              <span>[✓] Erasmus+ Exchange: Electrical &amp; Automation Eng (2023)</span>
+            </div>
+            <div class="flex gap-4">
+              <span class="text-tertiary select-none">5</span>
+              <span>[INFO] Loading career experience buffer...</span>
+            </div>
+            <div class="flex gap-4">
+              <span class="text-tertiary select-none">6</span>
+              <span>[✓] talsen team GmbH: Full-stack Developer (1 yr 10 mos)</span>
+            </div>
+            <div class="flex gap-4">
+              <span class="text-tertiary select-none">7</span>
+              <span>[✓] SameUp: Mobile Dev Trailblazer (1 yr 2 mos)</span>
+            </div>
+            <div class="flex gap-4">
+              <span class="text-tertiary select-none">8</span>
+              <span>[INFO] Skill matrix compiled: Hardware + Software fusion ⚡</span>
+            </div>
+            <div class="flex gap-4">
+              <span class="text-tertiary select-none">9</span>
+              <span class="text-error">[WARN] Coffee levels depleted. System unstable without caffeine.</span>
+            </div>
+            <div class="flex gap-4">
+              <span class="text-tertiary select-none">10</span>
+              <span class="text-primary blinking-cursor">$ </span>
             </div>
           </div>
-
-          <!-- Software Card -->
-          <div class="md:col-span-5 border border-outline flex flex-col min-h-[300px]">
-            <div class="bg-on-surface text-background font-label-md text-label-md uppercase flex justify-between items-center px-4 py-2 border-b border-outline">
-              <span>SW_DEVELOPMENT</span>
-              <span class="material-symbols-outlined">code</span>
-            </div>
-            <div class="p-6 flex-grow flex flex-col gap-4 bg-surface-container-lowest">
-              <p class="font-body-md text-body-md text-on-surface-variant">
-                Low-latency C/C++, Rust systems programming, and Real-Time Operating Systems (RTOS). Writing code that respects the laws of physics.
-              </p>
-              <div class="flex flex-wrap gap-2 mt-auto">
-                <span class="font-code text-code px-2 py-1 border border-tertiary text-tertiary">C/C++</span>
-                <span class="font-code text-code px-2 py-1 border border-tertiary text-tertiary">Rust</span>
-                <span class="font-code text-code px-2 py-1 border border-tertiary text-tertiary">Linux Kernel</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Terminal Output Card -->
-          <div class="md:col-span-12 border border-outline bg-surface-container-lowest p-0">
-            <div class="bg-primary text-on-primary font-code text-code px-4 py-2 border-b border-outline flex justify-between">
-              <span>bash - 80x24</span>
-              <span>_ </span>
-            </div>
-            <div class="p-4 font-code text-code text-on-surface-variant flex flex-col gap-2 h-48 overflow-y-auto">
-              <div class="flex gap-4">
-                <span class="text-tertiary select-none">1</span>
-                <span class="text-primary">$ ./compile_career.sh</span>
-              </div>
-              <div class="flex gap-4">
-                <span class="text-tertiary select-none">2</span>
-                <span>[INFO] Loading dependencies... OK</span>
-              </div>
-              <div class="flex gap-4">
-                <span class="text-tertiary select-none">3</span>
-                <span>[INFO] B.S. Electrical &amp; Computer Engineering... VERIFIED</span>
-              </div>
-              <div class="flex gap-4">
-                <span class="text-tertiary select-none">4</span>
-                <span>[INFO] 5+ Years Industry Experience... VERIFIED</span>
-              </div>
-              <div class="flex gap-4">
-                <span class="text-tertiary select-none">5</span>
-                <span class="text-error">[WARN] Coffee levels critical. Suggest immediate refuel.</span>
-              </div>
-              <div class="flex gap-4">
-                <span class="text-tertiary select-none">6</span>
-                <span class="text-primary blinking-cursor">$ </span>
-              </div>
-            </div>
-          </div>
-
         </div>
       </section>
 
@@ -117,4 +125,7 @@
 </template>
 
 <script setup lang="ts">
+import ExperienceCard from '@/components/ui/ExperienceCard.vue'
+import EducationCard from '@/components/ui/EducationCard.vue'
+import { experience, education } from '@/data/experience'
 </script>
