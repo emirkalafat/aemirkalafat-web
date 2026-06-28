@@ -394,7 +394,7 @@ const filteredCards = computed(() => {
 
 function selectCard(card: MediaCardData) {
   selectedCard.value = card
-  editingCard.value = JSON.parse(JSON.stringify(card))
+  editingCard.value = structuredClone(card)
   metricsData.value = card.metrics || { narrativeArch: 0, aestheticExec: 0, coherenceRating: 0 }
   lookupQuery.value = ''
   lookupResults.value = []

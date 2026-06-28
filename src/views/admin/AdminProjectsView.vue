@@ -126,7 +126,7 @@
         <div class="border border-on-surface bg-surface-dim p-6 flex flex-col gap-4">
           <h3 class="font-headline-md text-on-surface uppercase border-b border-on-surface pb-2">TAGS</h3>
           <div class="flex flex-wrap gap-2 mb-4">
-            <div v-for="(tag, i) in editingProject.tags" :key="i" class="flex items-center gap-2 bg-surface-container border border-on-surface/20 px-2 py-1 font-code text-code">
+            <div v-for="(tag, i) in editingProject.tags" :key="`tag-${i}-${tag.label}`" class="flex items-center gap-2 bg-surface-container border border-on-surface/20 px-2 py-1 font-code text-code">
               <span>{{ tag.label }} ({{ tag.type }})</span>
               <button @click="removeTag(i)" class="text-error hover:text-error-container transition-colors">
                 <span class="material-symbols-outlined text-sm">close</span>
@@ -147,7 +147,7 @@
         <div class="border border-on-surface bg-surface-dim p-6 flex flex-col gap-4">
           <h3 class="font-headline-md text-on-surface uppercase border-b border-on-surface pb-2">LINKS</h3>
           <div class="space-y-2">
-            <div v-for="(link, i) in editingProject.links" :key="i" class="flex gap-2 items-end">
+            <div v-for="(link, i) in editingProject.links" :key="`link-${i}-${link.url}`" class="flex gap-2 items-end">
               <input v-model="link.icon" placeholder="Icon" class="w-20 bg-transparent border-b border-on-surface text-code font-code text-on-surface px-0 py-2 focus:ring-0 focus:border-tertiary outline-none text-xs" />
               <input v-model="link.label" placeholder="Label" class="flex-1 bg-transparent border-b border-on-surface text-code font-code text-on-surface px-0 py-2 focus:ring-0 focus:border-tertiary outline-none text-sm" />
               <input v-model="link.url" placeholder="URL" class="flex-1 bg-transparent border-b border-on-surface text-code font-code text-on-surface px-0 py-2 focus:ring-0 focus:border-tertiary outline-none text-sm" />
@@ -185,7 +185,7 @@
             </div>
           </div>
           <div class="mt-4 space-y-2">
-            <div v-for="(metric, i) in editingProject.stats.metrics" :key="i" class="flex gap-2 items-end">
+            <div v-for="(metric, i) in editingProject.stats.metrics" :key="`metric-${i}-${metric.label}`" class="flex gap-2 items-end">
               <input v-model="metric.label" placeholder="Label" class="flex-1 bg-transparent border-b border-on-surface text-code font-code text-on-surface px-0 py-2 focus:ring-0 focus:border-tertiary outline-none" />
               <input v-model="metric.value" placeholder="Value" class="w-24 bg-transparent border-b border-on-surface text-code font-code text-on-surface px-0 py-2 focus:ring-0 focus:border-tertiary outline-none" />
               <input v-model="metric.valueColor" placeholder="Color" class="w-32 bg-transparent border-b border-on-surface text-code font-code text-on-surface px-0 py-2 focus:ring-0 focus:border-tertiary outline-none text-xs" />
@@ -216,7 +216,7 @@
 
           <!-- Versions -->
           <div class="space-y-3">
-            <div v-for="(entry, i) in editingProject.changelog" :key="i" class="border border-on-surface/20 bg-surface-container">
+            <div v-for="(entry, i) in editingProject.changelog" :key="entry.version" class="border border-on-surface/20 bg-surface-container">
               <!-- Header -->
               <div @click="toggleVersion(i)" class="p-3 cursor-pointer hover:bg-surface-container-highest transition-colors flex justify-between items-center border-b border-on-surface/20">
                 <div class="flex items-center gap-3 flex-1">
@@ -256,7 +256,7 @@
 
                 <!-- Items -->
                 <div class="border-t border-on-surface/20 pt-3">
-                  <div v-for="(item, j) in entry.items" :key="j" class="flex gap-2 mb-2 items-start">
+                  <div v-for="(item, j) in entry.items" :key="`${entry.version}-${j}`" class="flex gap-2 mb-2 items-start">
                     <select v-model="item.flag" class="bg-transparent border-b border-on-surface text-code font-code text-on-surface focus:ring-0 focus:border-tertiary px-0 py-2 cursor-pointer outline-none w-24 text-sm">
                       <option v-for="f in flags" :key="f" :value="f">{{ f }}</option>
                     </select>
@@ -321,7 +321,7 @@ const filteredProjects = computed(() => {
 
 function selectProject(project: Project) {
   selectedProject.value = project
-  editingProject.value = JSON.parse(JSON.stringify(project)) as Project
+  editingProject.value = structuredClone(project)
   openVersions.value.clear()
 }
 

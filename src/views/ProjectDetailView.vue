@@ -116,8 +116,8 @@
                   <!-- Items -->
                   <ul class="flex flex-col gap-3">
                     <li
-                      v-for="item in entry.items"
-                      :key="item.text"
+                      v-for="(item, idx) in entry.items"
+                      :key="`${entry.version}-${idx}`"
                       class="flex gap-3 font-code text-code"
                     >
                       <span class="shrink-0 font-bold" :class="flagClass(item.flag)">[{{ item.flag }}]</span>

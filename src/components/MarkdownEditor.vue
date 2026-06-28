@@ -50,7 +50,7 @@ const hello = 'world';
       <div class="border border-on-surface bg-surface-dim flex flex-col overflow-hidden">
         <div class="bg-on-surface text-surface px-4 py-2 font-code text-xs uppercase">Preview</div>
         <div class="flex-1 overflow-y-auto p-4 prose prose-invert max-w-none">
-          <MarkdownRenderer :markdown="modelValue" />
+          <MarkdownRenderer :markdown="previewValue" />
         </div>
       </div>
     </div>
@@ -61,16 +61,25 @@ const hello = 'world';
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import MarkdownRenderer from './MarkdownRenderer.vue'
 
 interface Props {
   modelValue: string
 }
 
-defineProps<Props>()
+const props = defineProps<Props>()
 
 const editorRef = ref<HTMLTextAreaElement>()
+const previewValue = ref('')
+let debounceTimer: ReturnType<typeof setTimeout> | null = null
+
+watch(() => props.modelValue, (newVal) => {
+  if (debounceTimer) clearTimeout(debounceTimer)
+  debounceTimer = setTimeout(() => {
+    previewValue.value = newVal ?? ''
+  }, 250)
+}, { immediate: true })
 
 function insertMarkdown(before: string, after: string) {
   const textarea = editorRef.value
