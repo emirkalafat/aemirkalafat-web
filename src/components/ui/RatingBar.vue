@@ -1,10 +1,7 @@
 <template>
   <div class="w-full h-2 bg-surface-container border border-primary relative">
-    <div
-      class="absolute top-0 left-0 h-full transition-all duration-300"
-      :class="barColorClass"
-      :style="{ width: `${(rating / 10) * 100}%` }"
-    ></div>
+    <div class="absolute top-0 left-0 h-full transition-all duration-300" :class="barColorClass"
+      :style="{ width: `${(rating / 10) * 100}%` }"></div>
   </div>
 </template>
 

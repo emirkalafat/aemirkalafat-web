@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ROOT_ACCESS | Media Reviews</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&amp;family=Space+Grotesk:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings:
+            'FILL' 1,
+            'wght' 400,
+            'GRAD' 0,
+            'opsz' 24
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-primary-fixed": "#1b1b1b",
+                      "inverse-on-surface": "#313030",
+                      "secondary": "#c6c6c7",
+                      "primary-container": "#000000",
+                      "primary": "#c6c6c6",
+                      "outline-variant": "#4c4546",
+                      "error": "#ffb4ab",
+                      "inverse-primary": "#5e5e5e",
+                      "primary-fixed-dim": "#c6c6c6",
+                      "on-secondary": "#2f3131",
+                      "on-secondary-container": "#b4b5b5",
+                      "surface-dim": "#131313",
+                      "surface-container-lowest": "#0e0e0e",
+                      "on-error-container": "#ffdad6",
+                      "secondary-container": "#454747",
+                      "on-background": "#e5e2e1",
+                      "on-primary": "#303030",
+                      "surface-variant": "#353535",
+                      "surface-container-low": "#1c1b1b",
+                      "background": "#131313",
+                      "tertiary": "#4cd6ff",
+                      "surface-container-highest": "#353535",
+                      "on-primary-container": "#757575",
+                      "error-container": "#93000a",
+                      "on-tertiary": "#003543",
+                      "surface": "#131313",
+                      "surface-tint": "#c6c6c6",
+                      "on-secondary-fixed": "#1a1c1c",
+                      "surface-bright": "#393939",
+                      "on-surface": "#e5e2e1",
+                      "on-tertiary-fixed": "#001f28",
+                      "primary-fixed": "#e2e2e2",
+                      "tertiary-container": "#000000",
+                      "on-tertiary-fixed-variant": "#004e60",
+                      "tertiary-fixed": "#b7eaff",
+                      "on-error": "#690005",
+                      "surface-container-high": "#2a2a2a",
+                      "on-secondary-fixed-variant": "#454747",
+                      "on-primary-fixed-variant": "#474747",
+                      "inverse-surface": "#e5e2e1",
+                      "on-tertiary-container": "#00809d",
+                      "surface-container": "#20201f",
+                      "on-surface-variant": "#cfc4c5",
+                      "tertiary-fixed-dim": "#4cd6ff",
+                      "secondary-fixed": "#e2e2e2",
+                      "outline": "#988e90",
+                      "secondary-fixed-dim": "#c6c6c7"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "margin-desktop": "64px",
+                      "unit": "4px",
+                      "column-gap": "32px",
+                      "gutter": "24px",
+                      "margin-mobile": "20px"
+              },
+              "fontFamily": {
+                      "label-md": [
+                              "JetBrains Mono"
+                      ],
+                      "headline-lg-mobile": [
+                              "Space Grotesk"
+                      ],
+                      "headline-md": [
+                              "Space Grotesk"
+                      ],
+                      "code": [
+                              "JetBrains Mono"
+                      ],
+                      "body-lg": [
+                              "JetBrains Mono"
+                      ],
+                      "body-md": [
+                              "JetBrains Mono"
+                      ],
+                      "display": [
+                              "Space Grotesk"
+                      ],
+                      "headline-lg": [
+                              "Space Grotesk"
+                      ]
+              },
+              "fontSize": {
+                      "label-md": [
+                              "14px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "headline-lg-mobile": [
+                              "32px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "headline-md": [
+                              "32px",
+                              {
+                                      "lineHeight": "1.3",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "code": [
+                              "14px",
+                              {
+                                      "lineHeight": "1.5",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "1.6",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "1.6",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "display": [
+                              "72px",
+                              {
+                                      "lineHeight": "1.1",
+                                      "letterSpacing": "-0.04em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "headline-lg": [
+                              "48px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ]
+              }
+            }
+          }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen flex selection:bg-tertiary selection:text-on-tertiary">
+<!-- SideNavBar Component -->
+<nav class="bg-background dark:bg-background text-primary dark:text-primary font-body-md text-body-md font-label-md text-label-md h-screen w-64 fixed left-0 top-0 border-r-2 border-on-surface dark:border-on-surface z-50">
+<div class="flex flex-col h-full py-margin-desktop space-y-unit">
+<!-- Header -->
+<div class="px-6 mb-8 flex flex-col items-start gap-4">
+<img alt="Admin User Avatar" class="w-12 h-12 rounded-none border border-on-surface object-cover grayscale" data-alt="A stark, high-contrast avatar placeholder image with a harsh cyber-punk aesthetic. The image features a solid black background with a glowing white wireframe head silhouette. The style is raw, technical, and brutalist." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA2CeRJOwqA2vSBhcGK0zZrCE-KiB32wZDHRc63f4dZPHo7Gx7-KEIBBh3mVDgPQyNRDxZqD4RFhSW4Y_1Kht0FDT8PpqDkywYbkNVGrSB0tQD7f65_AzEfbAKCyfeWDGMu1uGURX3LzLo_l9g7x2pjJ1Cs0rvptRop_gk3_1-TUfVKaSqhomc9QMXCFH37dpeb05JMAmwxJpkPRxZIQNgXXQWlj_RxB8kmOoiRdItpIuXtNEUROcR3vd7JqfWsLLa4GCMxZ-9tSyk"/>
+<div>
+<div class="font-headline-md text-headline-md font-bold text-on-surface uppercase tracking-tighter">VOLTAGE_LOGIC</div>
+<div class="font-code text-code text-on-surface-variant">ADMIN_v1.0.4</div>
+</div>
+</div>
+<!-- Navigation Links -->
+<div class="flex-1 flex flex-col gap-2 px-4">
+<a class="text-on-primary-fixed bg-primary-fixed font-bold border-r-4 border-tertiary-fixed-dim hover:bg-surface-container-highest transition-colors duration-75 flex items-center gap-3 px-3 py-2 uppercase tracking-wide" href="#">
+<span class="material-symbols-outlined" data-icon="subscriptions">subscriptions</span>
+<span>Media<span class="animate-pulse ml-1 text-tertiary">_</span></span>
+</a>
+<a class="text-on-surface-variant hover:text-on-surface hover:bg-surface-container-highest transition-colors duration-75 flex items-center gap-3 px-3 py-2 uppercase tracking-wide" href="#">
+<span class="material-symbols-outlined" data-icon="engineering">engineering</span>
+<span>Projects</span>
+</a>
+<a class="text-on-surface-variant hover:text-on-surface hover:bg-surface-container-highest transition-colors duration-75 flex items-center gap-3 px-3 py-2 uppercase tracking-wide" href="#">
+<span class="material-symbols-outlined" data-icon="article">article</span>
+<span>Blog</span>
+</a>
+<a class="text-on-surface-variant hover:text-on-surface hover:bg-surface-container-highest transition-colors duration-75 flex items-center gap-3 px-3 py-2 uppercase tracking-wide" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span>System Settings</span>
+</a>
+</div>
+<!-- CTA -->
+<div class="px-4 mt-auto mb-4">
+<button class="w-full bg-on-surface text-surface py-3 font-label-md text-label-md uppercase tracking-wider hover:bg-tertiary hover:shadow-[4px_4px_0_0_#988e90] transition-all border border-transparent hover:border-on-surface">DEPLOY_CHANGES</button>
+</div>
+<!-- Footer Links -->
+<div class="flex flex-col gap-2 px-4 mt-auto">
+<a class="text-on-surface-variant hover:text-on-surface hover:bg-surface-container-highest transition-colors duration-75 flex items-center gap-3 px-3 py-2 uppercase tracking-wide" href="#">
+<span class="material-symbols-outlined" data-icon="menu_book">menu_book</span>
+<span>Documentation</span>
+</a>
+<a class="text-on-surface-variant hover:text-on-surface hover:bg-surface-container-highest transition-colors duration-75 flex items-center gap-3 px-3 py-2 uppercase tracking-wide" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span>Logout</span>
+</a>
+</div>
+</div>
+</nav>
+<!-- Main Content Area -->
+<div class="flex-1 ml-64 flex flex-col min-h-screen">
+<!-- TopAppBar Component -->
+<header class="bg-background dark:bg-background text-primary dark:text-primary font-code text-code flex justify-between items-center w-full h-16 px-gutter docked full-width top-0 sticky border-b-2 border-on-surface dark:border-on-surface z-40">
+<div class="flex items-center gap-8">
+<div class="font-headline-md text-headline-md text-on-surface font-bold tracking-tight">ROOT_ACCESS</div>
+<nav class="hidden md:flex gap-6">
+<a class="text-primary border-b-2 border-primary pb-1 hover:text-tertiary transition-all" href="#">Analytics</a>
+<a class="text-on-surface-variant pb-1 hover:text-tertiary transition-all" href="#">Logs</a>
+</nav>
+</div>
+<div class="flex items-center gap-6">
+<!-- Search -->
+<div class="relative hidden lg:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-sm">search</span>
+<input class="bg-surface-container-lowest text-on-surface border border-on-surface py-1 pl-9 pr-3 font-code text-code focus:outline-none focus:border-tertiary focus:ring-1 focus:ring-tertiary transition-colors w-64 rounded-none placeholder:text-on-surface-variant" placeholder="QUERY_DB..." type="text"/>
+</div>
+<!-- Actions -->
+<div class="flex items-center gap-4">
+<button class="text-on-surface hover:text-tertiary transition-all active:scale-95">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="text-on-surface hover:text-tertiary transition-all active:scale-95">
+<span class="material-symbols-outlined" data-icon="terminal">terminal</span>
+</button>
+<img alt="Admin Profile" class="w-8 h-8 rounded-none border border-on-surface object-cover grayscale ml-2" data-alt="A stark, high-contrast minimal profile picture placeholder. A solid black square with a harsh white digital artifact texture pattern. The aesthetic is neo-brutalist and technical." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAGJPYpgS0CayA9IZaFqTe5fdm_7r1Q2QeDF8OOSXFoVxMtghSVQ0NHTBiiO8rhmZU_8bj5gL_WeP1BfR8-esARDnDy6D7eU8IKZf1VniNDoZTvBda38A4wyBEuINEUX05_MAv64wkx14tEfu_DALJadv-UfmWS5rKaTjKgu3lZhJwIWkxFrgT0mOUDVCMkj8aU-nWCoqpRZS9ASruE2DSIAeEWVlgITFcYa-2W7efVlF5C393zT6ELKa-iRfh1ypO-uhP21YP4tPE"/>
+</div>
+</div>
+</header>
+<!-- Canvas -->
+<main class="flex-1 p-gutter lg:p-margin-desktop overflow-x-hidden">
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 gap-4">
+<div>
+<h1 class="font-headline-lg text-headline-lg-mobile lg:text-headline-lg text-on-surface uppercase tracking-tighter mb-2">MEDIA_REVIEWS</h1>
+<p class="font-code text-code text-on-surface-variant border-l-2 border-tertiary pl-3">SYSTEM_LOG: Indexing media entities. Status: NORMAL.</p>
+</div>
+<button class="bg-on-surface text-surface py-2 px-6 font-label-md text-label-md uppercase tracking-wider hover:bg-tertiary hover:shadow-[4px_4px_0_0_#988e90] transition-all border border-transparent hover:border-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">add</span>
+                    ADD_RECORD
+                </button>
+</div>
+<!-- Data Table Container -->
+<div class="border border-on-surface bg-background">
+<!-- Controls Bar -->
+<div class="border-b border-on-surface p-4 flex flex-col sm:flex-row gap-4 justify-between items-center bg-surface-container-low">
+<div class="flex items-center gap-2 w-full sm:w-auto">
+<span class="material-symbols-outlined text-on-surface-variant">filter_alt</span>
+<select class="bg-background text-on-surface border border-on-surface py-1.5 px-3 font-code text-code focus:outline-none focus:border-tertiary rounded-none appearance-none pr-8 relative cursor-pointer">
+<option>ALL_TYPES</option>
+<option>HARDWARE</option>
+<option>SOFTWARE</option>
+<option>SYSTEM</option>
+</select>
+<select class="bg-background text-on-surface border border-on-surface py-1.5 px-3 font-code text-code focus:outline-none focus:border-tertiary rounded-none appearance-none pr-8 cursor-pointer">
+<option>RATING_&gt;=_0</option>
+<option>RATING_&gt;=_7</option>
+<option>RATING_&gt;=_9</option>
+</select>
+</div>
+<div class="relative w-full sm:w-64">
+<input class="bg-background text-on-surface border border-on-surface py-1.5 pl-3 pr-8 font-code text-code focus:outline-none focus:border-tertiary w-full rounded-none placeholder:text-on-surface-variant" placeholder="REGEX_SEARCH..." type="text"/>
+<span class="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 text-on-surface-variant text-sm pointer-events-none">search</span>
+</div>
+</div>
+<!-- Table -->
+<div class="overflow-x-auto">
+<table class="w-full text-left font-code text-code whitespace-nowrap">
+<thead class="bg-surface-container-highest text-on-surface border-b border-on-surface uppercase font-label-md text-label-md">
+<tr>
+<th class="p-4 w-16">ID</th>
+<th class="p-4">TITLE_STRING</th>
+<th class="p-4">ENTITY_TYPE</th>
+<th class="p-4">SCORE</th>
+<th class="p-4">TIMESTAMP</th>
+<th class="p-4 text-right">ACTIONS</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-on-surface/30">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="p-4 text-tertiary">#0x1A</td>
+<td class="p-4 font-bold text-on-surface">Neural Interface V3</td>
+<td class="p-4">
+<span class="border border-outline px-2 py-0.5 text-xs">HARDWARE</span>
+</td>
+<td class="p-4">
+<div class="flex items-center gap-2">
+<div class="h-2 w-16 bg-surface-container-highest border border-on-surface/50">
+<div class="h-full bg-tertiary w-[90%]"></div>
+</div>
+<span>9.0</span>
+</div>
+</td>
+<td class="p-4 text-on-surface-variant">2024-10-24 14:32:00</td>
+<td class="p-4 text-right">
+<button class="text-on-surface-variant hover:text-tertiary px-2 transition-colors uppercase text-xs font-bold mr-2">EDIT</button>
+<button class="text-on-surface-variant hover:text-error px-2 transition-colors uppercase text-xs font-bold">DEL</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="p-4 text-tertiary">#0x1B</td>
+<td class="p-4 font-bold text-on-surface">Quantum Compiler Opt</td>
+<td class="p-4">
+<span class="border border-tertiary text-tertiary px-2 py-0.5 text-xs">SOFTWARE</span>
+</td>
+<td class="p-4">
+<div class="flex items-center gap-2">
+<div class="h-2 w-16 bg-surface-container-highest border border-on-surface/50">
+<div class="h-full bg-on-surface w-[75%]"></div>
+</div>
+<span>7.5</span>
+</div>
+</td>
+<td class="p-4 text-on-surface-variant">2024-10-23 09:15:22</td>
+<td class="p-4 text-right">
+<button class="text-on-surface-variant hover:text-tertiary px-2 transition-colors uppercase text-xs font-bold mr-2">EDIT</button>
+<button class="text-on-surface-variant hover:text-error px-2 transition-colors uppercase text-xs font-bold">DEL</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="p-4 text-tertiary">#0x1C</td>
+<td class="p-4 font-bold text-on-surface">Sub-Ohm Resistor Pack</td>
+<td class="p-4">
+<span class="border border-outline px-2 py-0.5 text-xs">HARDWARE</span>
+</td>
+<td class="p-4">
+<div class="flex items-center gap-2">
+<div class="h-2 w-16 bg-surface-container-highest border border-on-surface/50">
+<div class="h-full bg-on-surface w-[60%]"></div>
+</div>
+<span>6.0</span>
+</div>
+</td>
+<td class="p-4 text-on-surface-variant">2024-10-22 18:45:10</td>
+<td class="p-4 text-right">
+<button class="text-on-surface-variant hover:text-tertiary px-2 transition-colors uppercase text-xs font-bold mr-2">EDIT</button>
+<button class="text-on-surface-variant hover:text-error px-2 transition-colors uppercase text-xs font-bold">DEL</button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="p-4 text-tertiary">#0x1D</td>
+<td class="p-4 font-bold text-on-surface">Core Temp Monitor Daemon</td>
+<td class="p-4">
+<span class="border border-tertiary text-tertiary px-2 py-0.5 text-xs">SYSTEM</span>
+</td>
+<td class="p-4">
+<div class="flex items-center gap-2">
+<div class="h-2 w-16 bg-surface-container-highest border border-on-surface/50">
+<div class="h-full bg-error w-[40%]"></div>
+</div>
+<span class="text-error">4.0</span>
+</div>
+</td>
+<td class="p-4 text-on-surface-variant">2024-10-21 11:20:05</td>
+<td class="p-4 text-right">
+<button class="text-on-surface-variant hover:text-tertiary px-2 transition-colors uppercase text-xs font-bold mr-2">EDIT</button>
+<button class="text-on-surface-variant hover:text-error px-2 transition-colors uppercase text-xs font-bold">DEL</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="border-t border-on-surface p-4 flex justify-between items-center bg-surface-container-low font-code text-code text-sm">
+<span class="text-on-surface-variant">SHOWING 1-4 OF 256</span>
+<div class="flex gap-2">
+<button class="border border-on-surface px-3 py-1 hover:bg-surface-container-highest transition-colors disabled:opacity-50" disabled="">&lt; PREV</button>
+<button class="border border-on-surface px-3 py-1 bg-on-surface text-surface">1</button>
+<button class="border border-on-surface px-3 py-1 hover:bg-surface-container-highest transition-colors">2</button>
+<button class="border border-on-surface px-3 py-1 hover:bg-surface-container-highest transition-colors">3</button>
+<span class="px-2">...</span>
+<button class="border border-on-surface px-3 py-1 hover:bg-surface-container-highest transition-colors">NEXT &gt;</button>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

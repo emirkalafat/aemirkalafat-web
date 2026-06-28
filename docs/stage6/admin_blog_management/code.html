@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>VOLTAGE_LOGIC - Blog Editor</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&amp;family=Space+Grotesk:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "on-primary-fixed": "#1b1b1b",
+                        "inverse-on-surface": "#313030",
+                        "secondary": "#c6c6c7",
+                        "primary-container": "#000000",
+                        "primary": "#c6c6c6",
+                        "outline-variant": "#4c4546",
+                        "error": "#ffb4ab",
+                        "inverse-primary": "#5e5e5e",
+                        "primary-fixed-dim": "#c6c6c6",
+                        "on-secondary": "#2f3131",
+                        "on-secondary-container": "#b4b5b5",
+                        "surface-dim": "#131313",
+                        "surface-container-lowest": "#0e0e0e",
+                        "on-error-container": "#ffdad6",
+                        "secondary-container": "#454747",
+                        "on-background": "#e5e2e1",
+                        "on-primary": "#303030",
+                        "surface-variant": "#353535",
+                        "surface-container-low": "#1c1b1b",
+                        "background": "#131313",
+                        "tertiary": "#4cd6ff",
+                        "surface-container-highest": "#353535",
+                        "on-primary-container": "#757575",
+                        "error-container": "#93000a",
+                        "on-tertiary": "#003543",
+                        "surface": "#131313",
+                        "surface-tint": "#c6c6c6",
+                        "on-secondary-fixed": "#1a1c1c",
+                        "surface-bright": "#393939",
+                        "on-surface": "#e5e2e1",
+                        "on-tertiary-fixed": "#001f28",
+                        "primary-fixed": "#e2e2e2",
+                        "tertiary-container": "#000000",
+                        "on-tertiary-fixed-variant": "#004e60",
+                        "tertiary-fixed": "#b7eaff",
+                        "on-error": "#690005",
+                        "surface-container-high": "#2a2a2a",
+                        "on-secondary-fixed-variant": "#454747",
+                        "on-primary-fixed-variant": "#474747",
+                        "inverse-surface": "#e5e2e1",
+                        "on-tertiary-container": "#00809d",
+                        "surface-container": "#20201f",
+                        "on-surface-variant": "#cfc4c5",
+                        "tertiary-fixed-dim": "#4cd6ff",
+                        "secondary-fixed": "#e2e2e2",
+                        "outline": "#988e90",
+                        "secondary-fixed-dim": "#c6c6c7"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    spacing: {
+                        "margin-desktop": "64px",
+                        "unit": "4px",
+                        "column-gap": "32px",
+                        "gutter": "24px",
+                        "margin-mobile": "20px"
+                    },
+                    fontFamily: {
+                        "label-md": ["JetBrains Mono"],
+                        "headline-lg-mobile": ["Space Grotesk"],
+                        "headline-md": ["Space Grotesk"],
+                        "code": ["JetBrains Mono"],
+                        "body-lg": ["JetBrains Mono"],
+                        "body-md": ["JetBrains Mono"],
+                        "display": ["Space Grotesk"],
+                        "headline-lg": ["Space Grotesk"]
+                    },
+                    fontSize: {
+                        "label-md": ["14px", { "lineHeight": "1.2", "fontWeight": "700" }],
+                        "headline-lg-mobile": ["32px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-md": ["32px", { "lineHeight": "1.3", "fontWeight": "600" }],
+                        "code": ["14px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "display": ["72px", { "lineHeight": "1.1", "letterSpacing": "-0.04em", "fontWeight": "700" }],
+                        "headline-lg": ["48px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700" }]
+                    }
+                }
+            }
+        };
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .blinking-cursor::after {
+            content: '█';
+            animation: blink 1s step-start infinite;
+            margin-left: 4px;
+            color: currentColor;
+        }
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+        /* Hide scrollbar for clean neo-brutalist look in specific areas */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md min-h-screen flex selection:bg-tertiary selection:text-background">
+<!-- SideNavBar -->
+<aside class="h-screen w-64 fixed left-0 top-0 bg-background border-r-2 border-on-surface flex flex-col py-margin-desktop space-y-unit z-50">
+<!-- Brand/Header -->
+<div class="px-6 mb-8 flex flex-col gap-2">
+<div class="w-12 h-12 bg-on-surface flex items-center justify-center">
+<span class="material-symbols-outlined text-background" data-icon="terminal">terminal</span>
+</div>
+<div>
+<h1 class="font-headline-md text-headline-md font-bold text-on-surface uppercase tracking-tighter">VOLTAGE_LOGIC</h1>
+<p class="font-code text-code text-on-surface-variant text-xs">ADMIN_v1.0.4</p>
+</div>
+</div>
+<!-- Navigation Links -->
+<nav class="flex-1 flex flex-col w-full font-body-md text-body-md font-label-md text-label-md">
+<a class="flex items-center gap-3 px-6 py-3 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-highest transition-colors duration-75" href="#">
+<span class="material-symbols-outlined" data-icon="subscriptions">subscriptions</span>
+<span class="uppercase tracking-widest text-xs">Media</span>
+</a>
+<a class="flex items-center gap-3 px-6 py-3 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-highest transition-colors duration-75" href="#">
+<span class="material-symbols-outlined" data-icon="engineering">engineering</span>
+<span class="uppercase tracking-widest text-xs">Projects</span>
+</a>
+<!-- Active Tab: Blog -->
+<a class="flex items-center gap-3 px-6 py-3 text-on-primary-fixed bg-primary-fixed font-bold border-r-4 border-tertiary-fixed-dim transition-colors duration-75 group" href="#">
+<span class="material-symbols-outlined" data-icon="article">article</span>
+<span class="uppercase tracking-widest text-xs blinking-cursor group-hover:text-background">Blog</span>
+</a>
+<a class="flex items-center gap-3 px-6 py-3 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-highest transition-colors duration-75" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="uppercase tracking-widest text-xs">System Settings</span>
+</a>
+</nav>
+<!-- Footer / CTA -->
+<div class="px-6 flex flex-col gap-4 mt-auto">
+<button class="w-full border-2 border-on-surface bg-transparent text-on-surface font-label-md py-3 uppercase tracking-wider hover:bg-on-surface hover:text-background transition-colors flex justify-center items-center gap-2 shadow-[4px_4px_0_0_#e5e2e1] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0_0_#e5e2e1]">
+<span class="material-symbols-outlined text-[18px]" data-icon="rocket_launch">rocket_launch</span>
+                DEPLOY_CHANGES
+            </button>
+<div class="h-px bg-on-surface w-full my-2 opacity-50"></div>
+<a class="flex items-center gap-3 py-2 text-on-surface-variant hover:text-on-surface text-xs font-code" href="#">
+<span class="material-symbols-outlined text-[16px]" data-icon="menu_book">menu_book</span>
+                Documentation
+            </a>
+<a class="flex items-center gap-3 py-2 text-on-surface-variant hover:text-error text-xs font-code transition-colors" href="#">
+<span class="material-symbols-outlined text-[16px]" data-icon="logout">logout</span>
+                Logout
+            </a>
+</div>
+</aside>
+<!-- Main Content Wrapper -->
+<div class="flex-1 ml-64 flex flex-col min-h-screen">
+<!-- TopAppBar -->
+<header class="docked full-width top-0 sticky bg-background border-b-2 border-on-surface flex justify-between items-center w-full h-16 px-gutter z-40">
+<div class="flex items-center gap-6">
+<span class="font-headline-md text-headline-md text-on-surface uppercase tracking-tight text-[24px]">ROOT_ACCESS</span>
+<div class="hidden md:flex gap-4 font-code text-code text-xs uppercase">
+<a class="text-on-surface-variant hover:text-tertiary transition-all" href="#">Analytics</a>
+<a class="text-primary border-b-2 border-primary pb-1" href="#">Logs</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative hidden md:block">
+<input class="bg-surface-container-low border border-on-surface text-code font-code px-3 py-1.5 focus:outline-none focus:border-tertiary text-on-surface w-64 placeholder:text-on-surface-variant" placeholder="CMD + K TO SEARCH..." type="text"/>
+<span class="material-symbols-outlined absolute right-2 top-1.5 text-on-surface-variant" data-icon="search">search</span>
+</div>
+<button class="text-on-surface hover:text-tertiary transition-colors">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="text-on-surface hover:text-tertiary transition-colors">
+<span class="material-symbols-outlined" data-icon="terminal">terminal</span>
+</button>
+<div class="w-8 h-8 border border-on-surface bg-surface-container-highest ml-2 overflow-hidden">
+<img class="w-full h-full object-cover grayscale opacity-80" data-alt="A minimalist profile avatar consisting of abstract geometric white shapes on a pure black background, conveying a sense of technical anonymity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCDM_E0KmeN8eIgkxm3r2A2Dvqn6yaAJlFWfIyMdfRg4DMVuJXR6WLLBYYGDvTShxcCtkgazL-YCotGpsTIRkmEyHxtZPE6ETvrKB9Td-J8OS51-XWjPcBxJvxJsAtYjeakvIDwhU3yNQWL2v5g_YgUeurG_nFN-_sCjmvEGeUyOZVGCx7VrB1pFu0S3P3oJQE-NCNuGMwW5RlP8JOWhMnaxYgRWIlu9JBvXRX2ohHck2qSzGnBoeh0P3C4Apq4RZLMIBFV1-WEiWE"/>
+</div>
+</div>
+</header>
+<!-- Main Canvas -->
+<main class="flex-1 p-gutter md:p-margin-desktop grid grid-cols-1 md:grid-cols-12 gap-gutter">
+<!-- Left Column: Posts List -->
+<section class="md:col-span-4 flex flex-col border border-on-surface bg-surface-container-lowest h-[calc(100vh-140px)] overflow-hidden">
+<div class="bg-on-surface text-background px-4 py-3 border-b border-on-surface flex justify-between items-center">
+<h2 class="font-label-md text-label-md uppercase tracking-widest">INDEX // POSTS</h2>
+<button class="hover:text-tertiary transition-colors">
+<span class="material-symbols-outlined text-[18px]" data-icon="add_box">add_box</span>
+</button>
+</div>
+<!-- Search/Filter -->
+<div class="p-2 border-b border-on-surface bg-surface-dim">
+<input class="w-full bg-transparent border-none text-code font-code text-on-surface focus:ring-0 px-2 py-1 placeholder:text-on-surface-variant" placeholder="grep 'title'..." type="text"/>
+</div>
+<!-- List Items -->
+<div class="flex-1 overflow-y-auto no-scrollbar flex flex-col">
+<!-- Item 1 (Active) -->
+<div class="p-4 border-b border-on-surface border-l-4 border-l-tertiary bg-surface-container hover:bg-surface-container cursor-pointer transition-colors group">
+<h3 class="font-code text-code text-tertiary mb-2 line-clamp-2 leading-tight">&gt; System Architecture Redux: Moving to Edge Compute</h3>
+<div class="flex justify-between items-end">
+<span class="border border-tertiary text-tertiary px-1.5 py-0.5 text-[10px] font-code uppercase">DRAFT</span>
+<span class="text-[10px] font-code text-on-surface-variant">UPDATED: 10m ago</span>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="p-4 border-b border-on-surface border-l-4 border-l-transparent hover:bg-surface-container cursor-pointer transition-colors group">
+<h3 class="font-code text-code text-on-surface group-hover:text-tertiary mb-2 line-clamp-2 leading-tight">&gt; Optimizing the Component Render Pipeline</h3>
+<div class="flex justify-between items-end">
+<span class="border border-outline text-outline px-1.5 py-0.5 text-[10px] font-code uppercase">PUBLISHED</span>
+<span class="text-[10px] font-code text-on-surface-variant">8 MIN READ</span>
+</div>
+</div>
+<!-- Item 3 -->
+<div class="p-4 border-b border-on-surface border-l-4 border-l-transparent hover:bg-surface-container cursor-pointer transition-colors group">
+<h3 class="font-code text-code text-on-surface group-hover:text-tertiary mb-2 line-clamp-2 leading-tight">&gt; Hardware Acceleration in WebGL Environments</h3>
+<div class="flex justify-between items-end">
+<span class="border border-outline text-outline px-1.5 py-0.5 text-[10px] font-code uppercase">PUBLISHED</span>
+<span class="text-[10px] font-code text-on-surface-variant">12 MIN READ</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Right Column: Editor & Meta -->
+<section class="md:col-span-8 flex flex-col gap-6">
+<!-- Action Bar -->
+<div class="flex justify-between items-center border border-on-surface p-4 bg-surface-container-lowest">
+<div class="flex items-center gap-3">
+<span class="w-3 h-3 rounded-none bg-tertiary animate-pulse"></span>
+<span class="font-code text-[12px] uppercase text-on-surface-variant tracking-wider">Status: Editing Draft</span>
+</div>
+<div class="flex gap-4">
+<button class="font-label-md text-label-md uppercase tracking-widest text-on-surface hover:text-tertiary px-4 py-2 border border-transparent hover:border-on-surface transition-all">
+                            PREVIEW
+                        </button>
+<button class="bg-on-surface text-background font-label-md px-6 py-2 uppercase tracking-widest border border-on-surface hover:bg-tertiary hover:border-tertiary transition-colors shadow-[4px_4px_0_0_#4c4546] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0_0_#4c4546]">
+                            SAVE // PUBLISH
+                        </button>
+</div>
+</div>
+<!-- Meta Data Bento -->
+<div class="grid grid-cols-2 gap-gutter">
+<!-- Title Input -->
+<div class="col-span-2 border border-on-surface p-6 flex flex-col justify-end relative bg-surface-dim group">
+<label class="font-code text-[10px] text-on-surface-variant uppercase absolute top-4 left-6">H1_TITLE</label>
+<input class="w-full bg-transparent border-none border-b-2 border-on-surface focus:border-tertiary text-headline-md font-headline-md text-on-surface px-0 py-2 focus:ring-0 mt-6" type="text" value="System Architecture Redux: Moving to Edge Compute"/>
+</div>
+<!-- Category & Tags -->
+<div class="border border-on-surface p-6 flex flex-col gap-6 bg-surface-dim">
+<div class="flex flex-col gap-2">
+<label class="font-code text-[10px] text-on-surface-variant uppercase">DIR // CATEGORY</label>
+<select class="bg-transparent border-b border-on-surface text-code font-code text-on-surface focus:ring-0 focus:border-tertiary px-0 py-2 cursor-pointer">
+<option class="bg-surface text-on-surface">Engineering</option>
+<option class="bg-surface text-on-surface">Design</option>
+<option class="bg-surface text-on-surface">Hardware</option>
+</select>
+</div>
+<div class="flex flex-col gap-2">
+<label class="font-code text-[10px] text-on-surface-variant uppercase">TAGS (CSV)</label>
+<input class="w-full bg-transparent border-none border-b border-on-surface focus:border-tertiary text-code font-code text-on-surface px-0 py-2 focus:ring-0" type="text" value="architecture, edge, performance"/>
+</div>
+</div>
+<!-- Date & Cover -->
+<div class="border border-on-surface p-6 flex flex-col gap-6 bg-surface-dim">
+<div class="flex flex-col gap-2">
+<label class="font-code text-[10px] text-on-surface-variant uppercase">SYS_TIME // PUBLISH DATE</label>
+<input class="bg-transparent border-b border-on-surface text-code font-code text-on-surface focus:ring-0 focus:border-tertiary px-0 py-2" type="date" value="2024-05-12"/>
+</div>
+<div class="flex flex-col gap-2 flex-1">
+<label class="font-code text-[10px] text-on-surface-variant uppercase">HERO_IMG_SRC</label>
+<div class="flex-1 border border-dashed border-outline-variant flex justify-center items-center cursor-pointer hover:border-tertiary hover:bg-surface-container-low transition-colors group">
+<span class="font-code text-[10px] text-on-surface-variant group-hover:text-tertiary uppercase">Click to mount asset</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Markdown Editor -->
+<div class="flex-1 border border-on-surface flex flex-col min-h-[500px]">
+<!-- Toolbar -->
+<div class="bg-surface-container border-b border-on-surface flex items-center px-4 py-2 gap-2 overflow-x-auto no-scrollbar">
+<button class="w-8 h-8 flex items-center justify-center border border-transparent hover:border-on-surface text-on-surface-variant hover:text-on-surface transition-colors">
+<span class="material-symbols-outlined text-[18px]" data-icon="format_bold">format_bold</span>
+</button>
+<button class="w-8 h-8 flex items-center justify-center border border-transparent hover:border-on-surface text-on-surface-variant hover:text-on-surface transition-colors">
+<span class="material-symbols-outlined text-[18px]" data-icon="format_italic">format_italic</span>
+</button>
+<button class="w-8 h-8 flex items-center justify-center border border-transparent hover:border-on-surface text-on-surface-variant hover:text-on-surface transition-colors">
+<span class="material-symbols-outlined text-[18px]" data-icon="code">code</span>
+</button>
+<div class="h-4 w-px bg-on-surface opacity-30 mx-2"></div>
+<button class="w-8 h-8 flex items-center justify-center border border-transparent hover:border-on-surface text-on-surface-variant hover:text-on-surface transition-colors">
+<span class="material-symbols-outlined text-[18px]" data-icon="format_list_bulleted">format_list_bulleted</span>
+</button>
+<button class="w-8 h-8 flex items-center justify-center border border-transparent hover:border-on-surface text-on-surface-variant hover:text-on-surface transition-colors">
+<span class="material-symbols-outlined text-[18px]" data-icon="format_list_numbered">format_list_numbered</span>
+</button>
+<button class="w-8 h-8 flex items-center justify-center border border-transparent hover:border-on-surface text-on-surface-variant hover:text-on-surface transition-colors">
+<span class="material-symbols-outlined text-[18px]" data-icon="image">image</span>
+</button>
+<div class="h-4 w-px bg-on-surface opacity-30 mx-2"></div>
+<button class="ml-auto font-code text-[10px] uppercase border border-on-surface px-2 py-1 hover:bg-on-surface hover:text-background transition-colors">
+                            RAW_MD
+                        </button>
+</div>
+<!-- Editor Area -->
+<div class="flex flex-1 bg-surface-container-lowest relative">
+<!-- Line Numbers -->
+<div class="w-10 border-r border-on-surface bg-surface-dim text-on-surface-variant text-right pr-2 py-4 font-code text-[12px] opacity-40 flex flex-col select-none leading-relaxed">
+<span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span>
+</div>
+<!-- Textarea -->
+<textarea class="flex-1 bg-transparent border-none focus:ring-0 font-code text-code text-on-surface p-4 resize-none outline-none leading-relaxed" placeholder="Initialize buffer..."># Introduction
+
+Migrating from a centralized node architecture to a distributed edge network requires fundamentally rethinking how state is managed across global instances. 
+
+In this document, we will explore the latency tradeoffs and deployment pipelines required to achieve sub-50ms response times globally.
+
+## The Core Problem
+
+Previously, our monolithic database resided in `us-east-1`. Every request from AP-SOUTH incurred a 200ms+ penalty.</textarea></div></div></section></main></div></body></html>

@@ -1,5 +1,6 @@
 <template>
-  <article class="border border-primary bg-surface group flex flex-col relative transition-transform duration-200 brutalist-offset shadow-primary hover:shadow-tertiary brutalist-offset-hover">
+  <article
+    class="border border-primary bg-surface group flex flex-col relative transition-transform duration-200 brutalist-offset shadow-primary hover:shadow-tertiary brutalist-offset-hover">
     <div class="h-10 bg-primary flex items-center justify-between px-4">
       <span class="font-code text-label-md text-on-primary">ID: {{ id }}</span>
       <span class="font-code text-label-md text-on-primary flex items-center gap-1">
@@ -8,20 +9,21 @@
       </span>
     </div>
     <div class="p-4 flex flex-col flex-1">
-      <div class="aspect-[16/9] w-full border border-primary bg-surface-variant mb-4 relative overflow-hidden group-hover:border-tertiary transition-colors">
-        <img
-          :src="imageUrl"
-          :alt="title"
-          class="w-full h-full object-cover filter grayscale group-hover:grayscale-0 transition-all duration-500"
-        />
-        <div class="absolute top-2 right-2 bg-background border border-primary px-2 py-1 font-code text-label-md font-bold text-tertiary">
+      <div
+        class="aspect-[16/9] w-full border border-primary bg-surface-variant mb-4 relative overflow-hidden group-hover:border-tertiary transition-colors">
+        <img :src="imageUrl" :alt="title"
+          class="w-full h-full object-cover filter grayscale group-hover:grayscale-0 transition-all duration-500" />
+        <div
+          class="absolute top-2 right-2 bg-background border border-primary px-2 py-1 font-code text-label-md font-bold text-tertiary">
           {{ rating }}/10
         </div>
       </div>
-      <h2 class="text-headline-md font-headline-md text-primary mb-2 truncate group-hover:text-tertiary transition-colors">
+      <h2
+        class="text-headline-md font-headline-md text-primary mb-2 truncate group-hover:text-tertiary transition-colors">
         {{ title }}
       </h2>
-      <div class="text-label-md font-code text-on-surface-variant mb-4 flex gap-4 border-b border-surface-container-high pb-4">
+      <div
+        class="text-label-md font-code text-on-surface-variant mb-4 flex gap-4 border-b border-surface-container-high pb-4">
         <span v-for="(item, idx) in meta" :key="idx">{{ item }}</span>
       </div>
       <p class="text-body-md font-body-md text-on-surface-variant line-clamp-3 mb-6">
@@ -33,10 +35,9 @@
           <span :class="ratingClass">{{ ratingLabel }}</span>
         </div>
         <RatingBar :rating="rating" />
-        <RouterLink
-          :to="`/media/${id}`"
-          class="mt-3 flex items-center justify-end gap-1 font-code text-code text-on-surface-variant hover:text-tertiary transition-colors uppercase"
-        >ANALYZE <span class="material-symbols-outlined text-[14px]">arrow_forward</span></RouterLink>
+        <RouterLink :to="`/media/${id}`"
+          class="mt-3 flex items-center justify-end gap-1 font-code text-code text-on-surface-variant hover:text-tertiary transition-colors uppercase">
+          ANALYZE <span class="material-symbols-outlined text-[14px]">arrow_forward</span></RouterLink>
       </div>
     </div>
   </article>
