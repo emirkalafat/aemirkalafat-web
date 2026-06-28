@@ -30,14 +30,6 @@
         <span class="material-symbols-outlined text-[16px]">{{ isDark ? 'light_mode' : 'dark_mode' }}</span>
         {{ isDark ? 'LIGHT' : 'DARK' }}
       </button>
-      <div class="mt-4 flex flex-col gap-1">
-        <RouterLink
-          :to="user ? '/admin' : '/login'"
-          class="flex items-center gap-3 p-2 text-label-md font-code text-on-surface-variant hover:text-primary transition-colors router-link-active:text-tertiary">
-          <span class="material-symbols-outlined text-[18px]">account_circle</span>
-          <span>{{ user ? 'Admin' : 'Account' }}</span>
-        </RouterLink>
-      </div>
     </div>
   </nav>
 </template>
@@ -45,11 +37,9 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { RouterLink } from 'vue-router'
-import { useAuth } from '@/composables/useAuth'
 import { useTheme } from '@/composables/useTheme'
 import NavLink from './NavLink.vue'
 
-const { user } = useAuth()
 const { theme, toggle } = useTheme()
 
 const isDark = computed(() => theme.value === 'dark')
