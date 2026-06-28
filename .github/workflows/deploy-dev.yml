@@ -22,10 +22,9 @@ jobs:
       - name: Build
         run: npm run build-only
 
-      - name: Deploy to Firebase Hosting (dev preview)
-        uses: FirebaseExtended/action-hosting-deploy@v0
+      - uses: google-github-actions/auth@v2
         with:
-          repoToken: ${{ secrets.GITHUB_TOKEN }}
-          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_EMIRKLFTWEB }}
-          channelId: dev
-          projectId: emirklftweb
+          credentials_json: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_EMIRKLFTWEB }}
+
+      - name: Deploy to Firebase Hosting (dev channel)
+        run: npx firebase-tools@latest hosting:channel:deploy dev --project emirklftweb --expires 30d
