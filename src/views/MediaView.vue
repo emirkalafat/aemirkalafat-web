@@ -9,29 +9,29 @@
           <button
             @click="activeFilter = null"
             :class="[
-              'border border-primary text-primary px-4 py-2 hover:bg-surface-variant transition-colors uppercase flex items-center gap-2',
-              activeFilter === null ? 'bg-tertiary border-tertiary text-[#1a1a1a]' : ''
+              'border border-primary px-4 py-2 hover:bg-surface-variant transition-colors uppercase flex items-center gap-2',
+              activeFilter === null ? 'bg-tertiary border-tertiary text-[#1a1a1a]' : 'text-primary'
             ]"
           ><span class="material-symbols-outlined text-[16px]">select_all</span> ALL_RECORDS</button>
           <button
             @click="activeFilter = 'MOVIE'"
             :class="[
-              'border border-primary text-primary px-4 py-2 hover:bg-surface-variant transition-colors uppercase flex items-center gap-2',
-              activeFilter === 'MOVIE' ? 'bg-tertiary border-tertiary text-[#1a1a1a]' : ''
+              'border border-primary px-4 py-2 hover:bg-surface-variant transition-colors uppercase flex items-center gap-2',
+              activeFilter === 'MOVIE' ? 'bg-tertiary border-tertiary text-[#1a1a1a]' : 'text-primary'
             ]"
           ><span class="material-symbols-outlined text-[16px]">movie</span> MOVIES</button>
           <button
             @click="activeFilter = 'TV_SERIES'"
             :class="[
-              'border border-primary text-primary px-4 py-2 hover:bg-surface-variant transition-colors uppercase flex items-center gap-2',
-              activeFilter === 'TV_SERIES' ? 'bg-tertiary border-tertiary text-[#1a1a1a]' : ''
+              'border border-primary px-4 py-2 hover:bg-surface-variant transition-colors uppercase flex items-center gap-2',
+              activeFilter === 'TV_SERIES' ? 'bg-tertiary border-tertiary text-[#1a1a1a]' : 'text-primary'
             ]"
           ><span class="material-symbols-outlined text-[16px]">tv</span> TV_SERIES</button>
           <button
             @click="activeFilter = 'TEXT'"
             :class="[
-              'border border-primary text-primary px-4 py-2 hover:bg-surface-variant transition-colors uppercase flex items-center gap-2',
-              activeFilter === 'TEXT' ? 'bg-tertiary border-tertiary text-[#1a1a1a]' : ''
+              'border border-primary px-4 py-2 hover:bg-surface-variant transition-colors uppercase flex items-center gap-2',
+              activeFilter === 'TEXT' ? 'bg-tertiary border-tertiary text-[#1a1a1a]' : 'text-primary'
             ]"
           ><span class="material-symbols-outlined text-[16px]">book</span> TEXT_DATA</button>
           <div class="ml-auto w-full md:w-auto mt-4 md:mt-0 flex border border-primary bg-background focus-within:border-tertiary transition-colors">

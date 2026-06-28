@@ -9,29 +9,29 @@
           <button
             @click="activeFilter = null"
             :class="[
-              'border border-primary text-primary px-4 py-2 hover:bg-surface-variant transition-colors uppercase',
-              activeFilter === null ? 'bg-tertiary border-tertiary text-[#1a1a1a]' : ''
+              'border border-primary px-4 py-2 hover:bg-surface-variant transition-colors uppercase',
+              activeFilter === null ? 'bg-tertiary border-tertiary text-[#1a1a1a]' : 'text-primary'
             ]"
           >[*] ALL</button>
           <button
             @click="activeFilter = 'DEV'"
             :class="[
-              'border border-primary text-primary px-4 py-2 hover:bg-surface-variant transition-colors uppercase',
-              activeFilter === 'DEV' ? 'bg-tertiary border-tertiary text-[#1a1a1a]' : ''
+              'border border-primary px-4 py-2 hover:bg-surface-variant transition-colors uppercase',
+              activeFilter === 'DEV' ? 'bg-tertiary border-tertiary text-[#1a1a1a]' : 'text-primary'
             ]"
           >[DEV]</button>
           <button
             @click="activeFilter = 'E-ENG'"
             :class="[
-              'border border-primary text-primary px-4 py-2 hover:bg-surface-variant transition-colors uppercase',
-              activeFilter === 'E-ENG' ? 'bg-tertiary border-tertiary text-[#1a1a1a]' : ''
+              'border border-primary px-4 py-2 hover:bg-surface-variant transition-colors uppercase',
+              activeFilter === 'E-ENG' ? 'bg-tertiary border-tertiary text-[#1a1a1a]' : 'text-primary'
             ]"
           >[E-ENG]</button>
           <button
             @click="activeFilter = 'THEORY'"
             :class="[
-              'border border-primary text-primary px-4 py-2 hover:bg-surface-variant transition-colors uppercase',
-              activeFilter === 'THEORY' ? 'bg-tertiary border-tertiary text-[#1a1a1a]' : ''
+              'border border-primary px-4 py-2 hover:bg-surface-variant transition-colors uppercase',
+              activeFilter === 'THEORY' ? 'bg-tertiary border-tertiary text-[#1a1a1a]' : 'text-primary'
             ]"
           >[THEORY]</button>
           <div class="ml-auto w-full md:w-auto mt-4 md:mt-0 flex border border-primary bg-background focus-within:border-tertiary transition-colors">

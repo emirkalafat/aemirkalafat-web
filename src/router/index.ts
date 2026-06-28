@@ -16,6 +16,7 @@ import AdminDashboardView from "@/views/admin/AdminDashboardView.vue";
 import AdminBlogView from "@/views/admin/AdminBlogView.vue";
 import AdminProjectsView from "@/views/admin/AdminProjectsView.vue";
 import AdminMediaView from "@/views/admin/AdminMediaView.vue";
+import NotFoundView from "@/views/NotFoundView.vue";
 
 const routes = [
   {
@@ -29,13 +30,17 @@ const routes = [
       { path: "projects/:name", component: ProjectDetailView },
       { path: "blog", component: BlogView },
       { path: "blog/:id", component: BlogDetailView },
-      { path: "status", component: StatusView },
+      // { path: "status", component: StatusView },
       { path: "contact", component: ContactView },
     ],
   },
   {
     path: "/login",
     component: LoginView,
+  },
+  {
+    path: "/:pathMatch(.*)*",
+    component: NotFoundView,
   },
   {
     path: "/admin",

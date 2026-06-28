@@ -3,7 +3,7 @@
     :to="to"
     @click="$emit('navigate')"
     :class="[
-      'flex items-center gap-4 p-3 text-label-md font-code text-on-surface-variant hover:bg-surface-container-high transition-colors',
+      'flex items-center gap-4 p-3 text-label-md font-code hover:bg-surface-container-high transition-colors',
       activeClass
     ]"
   >
@@ -36,7 +36,7 @@ const isActive = computed(() => {
 
 const activeClass = computed(() =>
   isActive.value
-    ? "bg-primary text-white font-bold border-l-4 border-[#a855f7]"
-    : ""
+    ? "bg-primary !text-white dark:!text-black font-bold border-l-4 border-[#a855f7]"
+    : "text-on-surface-variant"
 );
 </script>

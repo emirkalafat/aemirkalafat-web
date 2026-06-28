@@ -18,7 +18,7 @@
           <div class="border-l-4 border-primary pl-4">
             <p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl"
               :class="bioExpanded ? '' : 'line-clamp-2 md:line-clamp-none'">
-              I'm a Computer &amp; Electrical Engineer with a Double Major from Fatih Sultan Mehmet Vakıf University and an Erasmus+ exchange in Electrical &amp; Automation Engineering under my belt. Professionally, I've been building software at talsen team GmbH and previously developed mobile applications at SameUp — always chasing that sweet spot between low-level hardware and high-level software.
+              Hello, <b>Ahmet Emir Kalafat</b>, here. I'm a Computer &amp; Electrical Engineer with a Double Major from Fatih Sultan Mehmet Vakıf University and an Erasmus+ exchange in Electrical &amp; Automation Engineering under my belt. Professionally, I've been building software at talsen team GmbH and previously developed mobile applications at SameUp — always chasing that sweet spot between low-level hardware and high-level software.
             </p>
             <button
               class="md:hidden mt-2 font-code text-code text-tertiary flex items-center gap-1 uppercase"
