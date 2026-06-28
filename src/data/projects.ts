@@ -17,7 +17,7 @@ export interface Stats {
   barColor: string;
 }
 
-export type ChangelogFlag = "ADDED" | "FIXED" | "IMPRV" | "INIT" | "WARN";
+export type ChangelogFlag = string;
 
 export interface ChangelogItem {
   flag: ChangelogFlag;
