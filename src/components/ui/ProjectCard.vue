@@ -124,7 +124,7 @@ const props = defineProps<Props>()
 
 const isOpen = ref(false)
 
-const latestEntry = computed(() => props.changelog.find(e => e.isLatest))
+const latestEntry = computed(() => props.changelog[0] ?? null)
 
 function flagClass(flag: ChangelogFlag) {
   const map: Record<ChangelogFlag, string> = {

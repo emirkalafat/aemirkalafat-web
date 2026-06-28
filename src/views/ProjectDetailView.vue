@@ -92,22 +92,22 @@
             <div class="p-6 flex-1">
               <div class="relative border-l-2 border-primary ml-2 pl-8 flex flex-col gap-10">
                 <div
-                  v-for="entry in project.changelog"
+                  v-for="(entry, entryIdx) in project.changelog"
                   :key="entry.version"
                   class="relative"
                 >
                   <!-- Timeline dot -->
                   <div
                     class="absolute -left-[41px] top-2 w-3 h-3 border-2 border-primary"
-                    :class="entry.isLatest ? 'bg-tertiary' : 'bg-surface-container-lowest'"
+                    :class="entryIdx === 0 ? 'bg-tertiary' : 'bg-surface-container-lowest'"
                   ></div>
                   <!-- Version + date + label -->
                   <div class="flex flex-wrap items-baseline gap-3 mb-1">
                     <span
                       class="font-code text-2xl font-bold leading-none"
-                      :class="entry.isLatest ? 'text-tertiary' : 'text-on-surface'"
+                      :class="entryIdx === 0 ? 'text-tertiary' : 'text-on-surface'"
                     >{{ entry.version }}</span>
-                    <span v-if="entry.isLatest" class="font-code text-code border border-tertiary text-tertiary px-2 py-0.5 text-[11px] uppercase">LATEST</span>
+                    <span v-if="entryIdx === 0" class="font-code text-code border border-tertiary text-tertiary px-2 py-0.5 text-[11px] uppercase">LATEST</span>
                   </div>
                   <div class="flex flex-wrap items-center gap-3 mb-4">
                     <span class="font-code text-code text-on-surface-variant opacity-60">{{ entry.date }}</span>

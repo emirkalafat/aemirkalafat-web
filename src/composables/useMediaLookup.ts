@@ -28,9 +28,11 @@ async function searchTMDB(query: string, type: 'MOVIE' | 'TV_SERIES'): Promise<T
   if (!apiKey) throw new Error('TMDB API key not configured')
 
   const endpoint = type === 'MOVIE' ? 'search/movie' : 'search/tv'
-  const url = `${TMDB_BASE}/${endpoint}?api_key=${apiKey}&query=${encodeURIComponent(query)}`
+  const url = `${TMDB_BASE}/${endpoint}?query=${encodeURIComponent(query)}`
 
-  const res = await fetch(url)
+  const res = await fetch(url, {
+    headers: { accept: 'application/json', Authorization: `Bearer ${apiKey}` }
+  })
   if (!res.ok) throw new Error(`TMDB API error: ${res.status}`)
 
   const data = await res.json()
@@ -48,8 +50,10 @@ async function searchTMDB(query: string, type: 'MOVIE' | 'TV_SERIES'): Promise<T
     // Fetch credits for director
     let director = ''
     try {
-      const creditsUrl = `${TMDB_BASE}/${type === 'MOVIE' ? 'movie' : 'tv'}/${tmdbId}/credits?api_key=${apiKey}`
-      const creditsRes = await fetch(creditsUrl)
+      const creditsUrl = `${TMDB_BASE}/${type === 'MOVIE' ? 'movie' : 'tv'}/${tmdbId}/credits`
+      const creditsRes = await fetch(creditsUrl, {
+        headers: { accept: 'application/json', Authorization: `Bearer ${apiKey}` }
+      })
       if (creditsRes.ok) {
         const creditsData = await creditsRes.json()
         const directorObj = creditsData.crew?.find(

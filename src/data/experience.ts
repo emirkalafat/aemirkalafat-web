@@ -25,7 +25,7 @@ export interface Education {
 
 export const experience: WorkExperience[] = [
   {
-    company: 'talsen team GmbH',
+    company: 'talsen team GmbH - Germany',
     totalDuration: '1 yr 10 mos',
     locationType: 'Remote',
     roles: [

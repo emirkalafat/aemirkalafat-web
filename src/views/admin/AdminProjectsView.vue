@@ -1,39 +1,48 @@
 <template>
-  <div class="p-gutter md:p-margin-desktop flex gap-gutter min-h-[calc(100vh-80px)]">
+  <div class="flex h-full bg-surface">
     <!-- Left: Projects List -->
-    <div class="flex-1 md:max-w-sm border border-on-surface bg-surface-container-lowest flex flex-col">
-      <div class="bg-on-surface text-surface px-4 py-3 border-b border-on-surface flex justify-between items-center font-label-md">
-        <span>INDEX // PROJECTS</span>
-        <button @click="newProject" class="hover:text-tertiary transition-colors">
-          <span class="material-symbols-outlined">add_box</span>
-        </button>
+    <div class="flex-1 md:max-w-sm border-r border-on-surface bg-surface-dim flex flex-col">
+      <div class="px-4 py-4 border-b border-on-surface">
+        <h2 class="font-code text-on-surface font-bold uppercase text-sm mb-4">INDEX // PROJECTS</h2>
+        <input
+          v-model="searchQuery"
+          type="text"
+          placeholder="Search title or ID"
+          class="w-full bg-surface border-b border-on-surface text-on-surface font-code text-sm px-2 py-2 outline-none focus:border-tertiary"
+        />
       </div>
-      <input
-        v-model="searchQuery"
-        placeholder="grep 'project'..."
-        class="p-2 border-b border-on-surface bg-surface-dim font-code text-code text-on-surface focus:outline-none focus:ring-0 px-2 py-2"
-      />
       <div class="flex-1 overflow-y-auto flex flex-col">
         <div
           v-for="project in filteredProjects"
           :key="project.name"
           @click="selectProject(project)"
           :class="[
-            'p-4 border-b border-on-surface border-l-4 cursor-pointer transition-colors',
-            selectedProject?.name === project.name ? 'border-l-tertiary bg-surface-container' : 'border-l-transparent hover:bg-surface-container',
+            'px-4 py-3 border-b border-on-surface/20 cursor-pointer transition-colors hover:bg-surface',
+            selectedProject?.name === project.name ? 'bg-surface-container-highest' : 'bg-surface-dim'
           ]"
         >
-          <h3 class="font-code text-code text-tertiary mb-2 line-clamp-2 leading-tight">&gt; {{ project.name }}</h3>
-          <div class="flex justify-between items-end">
-            <span class="border border-tertiary text-tertiary px-1.5 py-0.5 text-xs font-code uppercase">{{ project.status }}</span>
-            <span class="text-xs font-code text-on-surface-variant">{{ project.version }}</span>
+          <div class="flex justify-between items-start gap-2">
+            <div class="flex-1 min-w-0">
+              <p class="font-code text-sm text-on-surface truncate font-bold">{{ project.name }}</p>
+              <p class="font-code text-xs text-on-surface-variant uppercase">{{ project.status }}</p>
+            </div>
+            <span class="font-code text-xs text-tertiary whitespace-nowrap">{{ project.version }}</span>
           </div>
         </div>
+      </div>
+      <div class="border-t border-on-surface p-4">
+        <button
+          @click="newProject"
+          class="w-full bg-on-surface text-surface border border-on-surface px-4 py-2 font-code font-bold uppercase text-sm hover:bg-tertiary hover:text-on-tertiary transition-colors flex items-center justify-center gap-2"
+        >
+          <span class="material-symbols-outlined text-lg">add</span>
+          <span>NEW</span>
+        </button>
       </div>
     </div>
 
     <!-- Right: Editor -->
-    <div class="flex-1 flex flex-col gap-gutter min-h-[calc(100vh-80px)] overflow-y-auto pb-8">
+    <div class="flex-1 flex flex-col overflow-y-auto pb-8">
       <div v-if="editingProject" class="space-y-gutter">
         <!-- Overview -->
         <div class="border border-on-surface bg-surface-dim p-6 flex flex-col gap-6">
@@ -58,10 +67,7 @@
 
             <div class="flex flex-col gap-2">
               <label class="font-code text-xs text-on-surface-variant uppercase">VERSION</label>
-              <input
-                v-model="editingProject.version"
-                class="bg-transparent border-b border-on-surface focus:border-tertiary text-code font-code text-on-surface px-0 py-2 focus:ring-0 outline-none"
-              />
+              <span class="text-code font-code text-tertiary py-2 border-b border-on-surface/30">{{ editingProject.changelog?.[0]?.version ?? editingProject.version }}</span>
             </div>
 
             <div class="flex flex-col gap-2">
@@ -219,10 +225,12 @@
                   <span class="text-on-surface-variant text-sm">{{ entry.label }}</span>
                 </div>
                 <div class="flex items-center gap-2">
-                  <label class="flex items-center gap-1 cursor-pointer text-xs">
-                    <input type="checkbox" :checked="entry.isLatest" @change="setLatest(i)" class="cursor-pointer" />
-                    <span class="font-code uppercase">LATEST</span>
-                  </label>
+                  <button @click.stop="moveVersion(i, 'up')" :disabled="i === 0" class="text-on-surface-variant hover:text-on-surface disabled:opacity-30 transition-colors p-1">
+                    <span class="material-symbols-outlined text-sm">arrow_upward</span>
+                  </button>
+                  <button @click.stop="moveVersion(i, 'down')" :disabled="i === editingProject.changelog.length - 1" class="text-on-surface-variant hover:text-on-surface disabled:opacity-30 transition-colors p-1">
+                    <span class="material-symbols-outlined text-sm">arrow_downward</span>
+                  </button>
                   <button @click.stop="removeVersion(i)" class="text-error hover:text-error-container transition-colors p-1">
                     <span class="material-symbols-outlined text-sm">close</span>
                   </button>
@@ -231,7 +239,11 @@
 
               <!-- Content -->
               <div v-if="openVersions.has(i)" class="p-4 space-y-3">
-                <div class="grid grid-cols-2 gap-4">
+                <div class="grid grid-cols-3 gap-4">
+                  <div class="flex flex-col gap-2">
+                    <label class="font-code text-xs text-on-surface-variant uppercase">VERSION</label>
+                    <input v-model="entry.version" class="bg-transparent border-b border-on-surface text-code font-code text-on-surface px-0 py-2 focus:ring-0 focus:border-tertiary outline-none" />
+                  </div>
                   <div class="flex flex-col gap-2">
                     <label class="font-code text-xs text-on-surface-variant uppercase">DATE</label>
                     <input v-model="entry.date" type="datetime-local" class="bg-transparent border-b border-on-surface text-code font-code text-on-surface px-0 py-2 focus:ring-0 focus:border-tertiary outline-none text-sm" />
@@ -321,7 +333,7 @@ function newProject() {
     status: 'BETA' as const,
     tags: [],
     description: '',
-    date: new Date().toISOString().split('T')[0],
+    date: new Date().toISOString().split('T')[0] ?? '',
     commit: '',
     language: '' as string | undefined,
     framework: '' as string | undefined,
@@ -378,13 +390,6 @@ function toggleVersion(i: number) {
   }
 }
 
-function setLatest(i: number) {
-  if (!editingProject.value || !editingProject.value.changelog) return
-  editingProject.value.changelog.forEach((entry, idx) => {
-    entry.isLatest = idx === i
-  })
-}
-
 function addVersion() {
   if (!editingProject.value) return
   const newVersion: ChangelogEntry = {
@@ -405,14 +410,26 @@ function removeVersion(i: number) {
   editingProject.value.changelog.splice(i, 1)
 }
 
+function moveVersion(i: number, direction: 'up' | 'down') {
+  if (!editingProject.value) return
+  const changelog = editingProject.value.changelog
+  const j = direction === 'up' ? i - 1 : i + 1
+  if (j < 0 || j >= changelog.length) return
+  changelog.splice(j, 0, ...changelog.splice(i, 1))
+}
+
 function addItem(i: number) {
   if (!editingProject.value) return
-  editingProject.value.changelog[i].items.push({ flag: flags.value[0] || 'ADDED', text: '' })
+  const entry = editingProject.value.changelog[i]
+  if (!entry) return
+  entry.items.push({ flag: flags.value[0] || 'ADDED', text: '' })
 }
 
 function removeItem(versionIdx: number, itemIdx: number) {
   if (!editingProject.value) return
-  editingProject.value.changelog[versionIdx].items.splice(itemIdx, 1)
+  const entry = editingProject.value.changelog[versionIdx]
+  if (!entry) return
+  entry.items.splice(itemIdx, 1)
 }
 
 async function addFlag() {
@@ -429,6 +446,7 @@ async function saveProject() {
   if (!editingProject.value) return
   try {
     const data = editingProject.value
+    data.version = data.changelog?.[0]?.version ?? data.version
     const existing = projects.items.value.find(p => p.name === data.name)
     if (existing) {
       await projects.update(data.name, data)
