@@ -75,11 +75,11 @@
           <!-- Core Review -->
           <div class="xl:col-span-8 border border-primary bg-surface-container-lowest" style="border-left-width: 4px; border-left-color: #BD00FF;">
             <div class="bg-primary px-4 py-2 font-code text-label-md text-on-primary uppercase">CORE_REVIEW.LOG</div>
-            <div class="p-6 flex flex-col gap-4">
+            <div class="p-6 flex flex-col gap-4 max-w-[68ch]">
               <p
                 v-for="(line, i) in descriptionLines"
                 :key="i"
-                class="font-code text-body-md text-on-surface-variant flex gap-3"
+                class="font-body-md text-body-md text-on-surface leading-[1.8] flex gap-3"
               >
                 <span class="text-on-tertiary-container select-none shrink-0">›</span>
                 {{ line }}

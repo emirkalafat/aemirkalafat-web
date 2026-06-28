@@ -31,9 +31,13 @@
             }}</span>
         </div>
         <p class="text-body-md font-body-md text-on-surface-variant">{{ description }}</p>
-        <RouterLink :to="`/projects/${name}`"
-          class="mt-2 inline-flex items-center gap-2 font-code text-code text-primary border border-primary px-4 py-2 hover:bg-primary hover:text-on-primary transition-colors uppercase self-start"
-          @click.stop>VIEW_DETAILS <span class="material-symbols-outlined text-[14px]">arrow_forward</span></RouterLink>
+        <div class="relative group">
+          <div class="absolute inset-0 rounded-sm opacity-0 group-hover:opacity-100 transition-opacity" style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(168, 85, 247, 0.15));"></div>
+          <RouterLink :to="`/projects/${name}`"
+            class="relative mt-2 inline-flex items-center gap-2 font-code text-code text-primary px-4 py-2 hover:text-primary transition-all uppercase"
+            style="border: 1px solid rgb(59 130 246 / 0.6); border-radius: 0.25rem;"
+            @click.stop>VIEW_DETAILS <span class="material-symbols-outlined text-[14px]">arrow_forward</span></RouterLink>
+        </div>
         <div class="flex items-center gap-4 text-label-md font-code text-on-surface-variant mt-2">
           <span class="flex items-center gap-1">
             <span class="material-symbols-outlined text-[16px]">calendar_today</span>

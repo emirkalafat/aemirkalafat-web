@@ -10,28 +10,28 @@
             @click="activeFilter = null"
             :class="[
               'border border-primary text-primary px-4 py-2 hover:bg-surface-variant transition-colors uppercase',
-              { 'bg-tertiary text-on-tertiary border-tertiary': activeFilter === null }
+              activeFilter === null ? 'bg-tertiary border-tertiary text-[#1a1a1a]' : ''
             ]"
           >[*] ALL</button>
           <button
             @click="activeFilter = 'DEV'"
             :class="[
               'border border-primary text-primary px-4 py-2 hover:bg-surface-variant transition-colors uppercase',
-              { 'bg-tertiary text-on-tertiary border-tertiary': activeFilter === 'DEV' }
+              activeFilter === 'DEV' ? 'bg-tertiary border-tertiary text-[#1a1a1a]' : ''
             ]"
           >[DEV]</button>
           <button
             @click="activeFilter = 'E-ENG'"
             :class="[
               'border border-primary text-primary px-4 py-2 hover:bg-surface-variant transition-colors uppercase',
-              { 'bg-tertiary text-on-tertiary border-tertiary': activeFilter === 'E-ENG' }
+              activeFilter === 'E-ENG' ? 'bg-tertiary border-tertiary text-[#1a1a1a]' : ''
             ]"
           >[E-ENG]</button>
           <button
             @click="activeFilter = 'THEORY'"
             :class="[
               'border border-primary text-primary px-4 py-2 hover:bg-surface-variant transition-colors uppercase',
-              { 'bg-tertiary text-on-tertiary border-tertiary': activeFilter === 'THEORY' }
+              activeFilter === 'THEORY' ? 'bg-tertiary border-tertiary text-[#1a1a1a]' : ''
             ]"
           >[THEORY]</button>
           <div class="ml-auto w-full md:w-auto mt-4 md:mt-0 flex border border-primary bg-background focus-within:border-tertiary transition-colors">

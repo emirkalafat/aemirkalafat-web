@@ -36,8 +36,8 @@
             <!-- Overview -->
             <div class="border border-primary bg-surface-container-lowest">
               <div class="bg-primary px-4 py-2 font-code text-label-md text-on-primary uppercase">// OVERVIEW.MD</div>
-              <div class="p-6">
-                <p class="text-body-md font-body-md text-on-surface-variant">{{ project.description }}</p>
+              <div class="p-6 max-w-[68ch]">
+                <p class="text-body-md font-body-md text-on-surface leading-[1.8]">{{ project.description }}</p>
               </div>
             </div>
 

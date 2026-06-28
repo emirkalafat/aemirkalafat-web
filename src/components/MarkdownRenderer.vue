@@ -30,11 +30,11 @@ marked.use({
         3: 'text-lg',
       }
       const sizeClass = sizeMap[level] ?? 'text-base'
-      return `<h${level} id="${id}" class="${sizeClass} font-bold text-on-surface mt-8 mb-4 uppercase tracking-tight">${text}</h${level}>\n`
+      return `<h${level} id="${id}" class="${sizeClass} font-bold text-on-surface mt-8 mb-4 tracking-tight">${text}</h${level}>\n`
     },
 
     paragraph(text: string) {
-      return `<p class="text-base font-body-md text-on-surface leading-relaxed mb-4">${text}</p>\n`
+      return `<p class="text-base font-body-md text-on-surface leading-[1.8] mb-4 first-of-type:text-lg first-of-type:font-semibold">${text}</p>\n`
     },
 
     code(code: string, infostring: string | undefined) {
@@ -125,6 +125,10 @@ const renderedHtml = computed(() => {
 </script>
 
 <style scoped>
+.markdown-content {
+  max-width: 68ch;
+}
+
 :deep(.markdown-content ul ul),
 :deep(.markdown-content ol ol),
 :deep(.markdown-content ul ol),

@@ -5,7 +5,7 @@
       <!-- Hero Section -->
       <section class="grid grid-cols-1 md:grid-cols-12 gap-gutter items-center min-h-[614px]">
         <div class="md:col-span-8 flex flex-col gap-6">
-          <div class="inline-block bg-[#1A1A1A] border border-primary px-4 py-2 self-start">
+          <div class="inline-block bg-surface-container-lowest border border-primary px-4 py-2 self-start">
             <span class="font-code text-code text-tertiary blinking-cursor">&gt; SYSTEM INITIALIZED</span>
           </div>
           <h1 class="font-display text-headline-lg-mobile md:text-display text-on-surface leading-tight">
@@ -76,7 +76,7 @@
           </div>
 
           <!-- Terminal Output Card -->
-          <div class="md:col-span-12 border border-outline bg-[#1A1A1A] p-0">
+          <div class="md:col-span-12 border border-outline bg-surface-container-lowest p-0">
             <div class="bg-primary text-on-primary font-code text-code px-4 py-2 border-b border-outline flex justify-between">
               <span>bash - 80x24</span>
               <span>_ </span>

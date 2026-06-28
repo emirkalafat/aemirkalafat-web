@@ -10,21 +10,21 @@
             @click="activeFilter = null"
             :class="[
               'border border-primary text-primary px-4 py-2 hover:bg-surface-variant transition-colors uppercase',
-              { 'bg-tertiary text-on-tertiary border-tertiary': activeFilter === null }
+              activeFilter === null ? 'bg-tertiary border-tertiary text-[#1a1a1a]' : ''
             ]"
           >[*] ALL</button>
           <button
             @click="activeFilter = 'STABLE'"
             :class="[
               'border border-primary text-primary px-4 py-2 hover:bg-surface-variant transition-colors uppercase',
-              { 'bg-tertiary text-on-tertiary border-tertiary': activeFilter === 'STABLE' }
+              activeFilter === 'STABLE' ? 'bg-tertiary border-tertiary text-[#1a1a1a]' : ''
             ]"
           >STABLE</button>
           <button
             @click="activeFilter = 'BETA'"
             :class="[
               'border border-primary text-primary px-4 py-2 hover:bg-surface-variant transition-colors uppercase',
-              { 'bg-tertiary text-on-tertiary border-tertiary': activeFilter === 'BETA' }
+              activeFilter === 'BETA' ? 'bg-tertiary border-tertiary text-[#1a1a1a]' : ''
             ]"
           >BETA</button>
           <div class="ml-auto w-full md:w-auto mt-4 md:mt-0 flex border border-primary bg-background focus-within:border-tertiary transition-colors">

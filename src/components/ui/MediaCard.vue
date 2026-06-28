@@ -14,7 +14,8 @@
         <img :src="imageUrl" :alt="title"
           class="w-full h-full object-cover filter grayscale group-hover:grayscale-0 transition-all duration-500" />
         <div
-          class="absolute top-2 right-2 bg-background border border-primary px-2 py-1 font-code text-label-md font-bold text-tertiary">
+          class="absolute top-2 right-2 px-2 py-1 font-code text-label-md font-bold text-on-primary rounded-sm"
+          :style="{ background: ratingGradient, border: '1px solid rgb(59 130 246 / 0.4)' }">
           {{ rating }}/10
         </div>
       </div>
@@ -80,6 +81,16 @@ const ratingClass = computed(() => {
     return 'text-primary-fixed-dim'
   } else {
     return 'text-error'
+  }
+})
+
+const ratingGradient = computed(() => {
+  if (props.rating >= 9) {
+    return 'linear-gradient(135deg, rgb(59 130 246 / 0.6), rgb(168 85 247 / 0.6))'
+  } else if (props.rating >= 7) {
+    return 'linear-gradient(135deg, rgb(59 130 246 / 0.5), rgb(59 130 246 / 0.3))'
+  } else {
+    return 'linear-gradient(135deg, rgb(168 85 247 / 0.5), rgb(168 85 247 / 0.3))'
   }
 })
 </script>

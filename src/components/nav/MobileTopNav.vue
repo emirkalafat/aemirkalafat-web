@@ -11,13 +11,19 @@
       <RouterLink to="/projects"
         class="text-label-md font-code text-on-surface hover:text-primary hidden sm:block transition-colors router-link-active:text-tertiary">
         PROJECTS</RouterLink>
-      <button class="text-primary hover:text-tertiary transition-colors">
-        <span class="material-symbols-outlined">terminal</span>
+      <button @click="toggleTheme" class="text-primary hover:text-tertiary transition-colors">
+        <span class="material-symbols-outlined">{{ isDark ? 'light_mode' : 'dark_mode' }}</span>
       </button>
     </div>
   </nav>
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue'
 import { RouterLink } from 'vue-router'
+import { useTheme } from '@/composables/useTheme'
+
+const { theme, toggle } = useTheme()
+const isDark = computed(() => theme.value === 'dark')
+const toggleTheme = toggle
 </script>
