@@ -1,8 +1,6 @@
-export type CategoryType = "DEV" | "E-ENG" | "THEORY";
-
 export interface BlogPost {
   id: string;
-  category: CategoryType;
+  category: string;
   date: string;
   readTime: string;
   title: string;

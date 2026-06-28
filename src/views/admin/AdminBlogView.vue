@@ -8,6 +8,22 @@
           <span class="material-symbols-outlined">add_box</span>
         </button>
       </div>
+
+      <!-- Featured Post Selector -->
+      <div class="px-4 py-3 border-b border-on-surface bg-surface-dim flex flex-col gap-2">
+        <label class="font-code text-xs text-on-surface-variant uppercase">FEATURED</label>
+        <select
+          v-model="featuredPostId"
+          @change="setFeaturedPost"
+          class="bg-transparent border-b border-on-surface text-code font-code text-on-surface focus:ring-0 focus:border-tertiary px-0 py-2 cursor-pointer outline-none"
+        >
+          <option value="">None</option>
+          <option v-for="post in blog.items.value" :key="post.id" :value="post.id">
+            {{ post.title.slice(0, 30) }}{{ post.title.length > 30 ? '...' : '' }}
+          </option>
+        </select>
+      </div>
+
       <input
         v-model="searchQuery"
         placeholder="grep 'title'..."
@@ -49,9 +65,7 @@
             <div class="flex flex-col gap-2">
               <label class="font-code text-xs text-on-surface-variant uppercase">CATEGORY</label>
               <select v-model="selectedPost.category" class="bg-transparent border-b border-on-surface text-code font-code text-on-surface focus:ring-0 focus:border-tertiary px-0 py-2 cursor-pointer outline-none">
-                <option value="DEV">DEV</option>
-                <option value="E-ENG">E-ENG</option>
-                <option value="THEORY">THEORY</option>
+                <option v-for="cat in categories" :key="cat" :value="cat">{{ cat }}</option>
               </select>
             </div>
           </div>
@@ -180,14 +194,17 @@
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue'
 import { useBlog } from '@/composables/useBlog'
+import { useCategories } from '@/composables/useCategories'
 import MarkdownEditor from '@/components/MarkdownEditor.vue'
 import type { BlogPost } from '@/data/blog'
 import { uploadFile, deleteFile, listFiles, type StorageFile } from '@/services/storage'
 
 const blog = useBlog()
+const { categories } = useCategories()
 const searchQuery = ref('')
 const selectedPost = ref<BlogPost | null>(null)
 const fileInputRef = ref<HTMLInputElement>()
+const featuredPostId = ref('')
 
 const postImages = ref<StorageFile[]>([])
 const imagesLoaded = ref(false)
@@ -199,6 +216,14 @@ const filteredPosts = computed(() => {
     p => p.title.toLowerCase().includes(searchQuery.value.toLowerCase()) || p.id.toLowerCase().includes(searchQuery.value.toLowerCase()),
   )
 })
+
+watch(
+  () => blog.items.value,
+  (posts) => {
+    const featured = posts.find(p => p.isFeatured)
+    featuredPostId.value = featured?.id ?? ''
+  }
+)
 
 watch(selectedPost, async (post) => {
   postImages.value = []
@@ -228,6 +253,17 @@ function newPost() {
     imageUrl: '',
     markdown: '',
   }
+}
+
+async function setFeaturedPost() {
+  const updates = blog.items.value.map(post => ({
+    id: post.id,
+    isFeatured: post.id === featuredPostId.value ? true : false,
+  }))
+
+  await Promise.all(
+    updates.map(update => blog.update(update.id, { isFeatured: update.isFeatured }))
+  )
 }
 
 async function handleFileUpload(event: Event) {

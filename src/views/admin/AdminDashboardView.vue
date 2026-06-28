@@ -69,6 +69,13 @@
         <span>ADD_POST</span>
       </RouterLink>
       <button
+        @click="showCategoryManager = !showCategoryManager"
+        class="bg-surface-container-highest text-on-surface border border-on-surface px-6 py-3 font-code font-bold uppercase hover:bg-tertiary hover:text-on-tertiary flex items-center space-x-2 transition-colors"
+      >
+        <span class="material-symbols-outlined text-lg">label</span>
+        <span>MANAGE_CATEGORIES</span>
+      </button>
+      <button
         @click="migrateBlog"
         :disabled="migrating"
         class="bg-surface-container-highest text-on-surface border border-on-surface px-6 py-3 font-code font-bold uppercase hover:bg-tertiary hover:text-on-tertiary flex items-center space-x-2 transition-colors disabled:opacity-50 ml-auto"
@@ -86,6 +93,49 @@
       </button>
     </section>
 
+    <!-- Category Manager -->
+    <section v-if="showCategoryManager" class="border border-on-surface bg-surface-container-lowest p-6">
+      <div class="flex justify-between items-center mb-4 pb-4 border-b border-on-surface">
+        <h3 class="font-code text-on-surface font-bold uppercase">MANAGE_CATEGORIES</h3>
+        <button @click="showCategoryManager = false" class="hover:text-tertiary transition-colors">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+      <div class="space-y-4">
+        <!-- Add Category -->
+        <div class="flex gap-2">
+          <input
+            v-model="newCategory"
+            placeholder="New category name"
+            @keyup.enter="addNewCategory"
+            class="flex-1 bg-surface-dim border-b border-on-surface text-code font-code text-on-surface focus:ring-0 focus:border-tertiary px-2 py-2 outline-none"
+          />
+          <button
+            @click="addNewCategory"
+            class="bg-on-surface text-surface px-4 py-2 font-code font-bold uppercase hover:bg-tertiary transition-colors"
+          >
+            ADD
+          </button>
+        </div>
+        <!-- Category List -->
+        <div class="space-y-2">
+          <div
+            v-for="cat in categories"
+            :key="cat"
+            class="flex justify-between items-center bg-surface-dim border border-on-surface/20 px-4 py-2 font-code text-on-surface"
+          >
+            <span>{{ cat }}</span>
+            <button
+              @click="removeCategory(cat)"
+              class="text-error hover:text-error-container transition-colors"
+            >
+              <span class="material-symbols-outlined text-lg">delete</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- System Info -->
     <section v-if="seedMessage || migrateMessage" class="border border-tertiary bg-surface-container-lowest p-4">
       <p v-if="seedMessage" class="font-code text-code text-tertiary">{{ seedMessage }}</p>
@@ -99,17 +149,21 @@ import { ref } from 'vue'
 import { useBlog } from '@/composables/useBlog'
 import { useProjects } from '@/composables/useProjects'
 import { useMedia } from '@/composables/useMedia'
+import { useCategories } from '@/composables/useCategories'
 import { seedFirestore } from '@/firebase/seed'
 import { migrateBlogContent } from '@/firebase/migrate'
 
 const blog = useBlog()
 const projects = useProjects()
 const media = useMedia()
+const { categories, addCategory, removeCategory } = useCategories()
 
 const seeding = ref(false)
 const seedMessage = ref('')
 const migrating = ref(false)
 const migrateMessage = ref('')
+const showCategoryManager = ref(false)
+const newCategory = ref('')
 
 async function seedDb() {
   seeding.value = true
@@ -136,6 +190,16 @@ async function migrateBlog() {
     migrateMessage.value = '✗ Migration failed: ' + (e as any).message
   } finally {
     migrating.value = false
+  }
+}
+
+async function addNewCategory() {
+  if (!newCategory.value.trim()) return
+  try {
+    await addCategory(newCategory.value.toUpperCase())
+    newCategory.value = ''
+  } catch (e) {
+    console.error('Failed to add category:', e)
   }
 }
 </script>
