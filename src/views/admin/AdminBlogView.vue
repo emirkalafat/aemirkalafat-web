@@ -313,9 +313,20 @@ async function savePost() {
 
 async function deletePost() {
   if (!selectedPost.value) return
-  if (confirm('Delete this post?')) {
+  if (confirm('Delete this post and all its images?')) {
     try {
-      await blog.del(selectedPost.value.id)
+      const postId = selectedPost.value.id
+
+      // Delete all images in the post's folder
+      try {
+        const images = await listFiles(`blog/${postId}`)
+        await Promise.all(images.map(img => deleteFile(img.fullPath)))
+      } catch {
+        // Folder doesn't exist or is already empty — that's fine
+      }
+
+      // Delete the post document
+      await blog.del(postId)
       selectedPost.value = null
     } catch (e) {
       console.error('Delete failed:', e)
