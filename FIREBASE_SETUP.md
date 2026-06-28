@@ -86,13 +86,35 @@ service cloud.firestore {
 3. Replace `YOUR_ADMIN_UID_HERE` with the UID you copied in Step 4
 4. Click **Publish**
 
-## Step 7: Authorize Localhost
+## Step 7: Set Firebase Storage Security Rules
+
+1. Go to **Storage** → **Rules**
+2. Replace the entire rules with this:
+
+```
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /{allPaths=**} {
+      // Anyone can read (public images)
+      allow read: if true;
+      // Only authenticated admin can upload/delete
+      allow write: if request.auth != null && request.auth.uid == "YOUR_ADMIN_UID_HERE";
+    }
+  }
+}
+```
+
+3. Replace `YOUR_ADMIN_UID_HERE` with the same UID used in Firestore rules (Step 6)
+4. Click **Publish**
+
+## Step 8: Authorize Localhost
 
 1. **Authentication** → **Settings** → **Authorized domains**
 2. Verify `localhost` is in the list (it should be by default)
 3. (Later: add your production domain here)
 
-## Step 8: Seed Initial Data
+## Step 9: Seed Initial Data
 
 1. Run the dev server: `npm run dev`
 2. Navigate to `http://localhost:5174/login`
@@ -101,7 +123,7 @@ service cloud.firestore {
 5. Click the **"SEED_DB"** button to import the existing static content into Firestore
 6. Wait for success message (takes a few seconds)
 
-## Step 9: Test the Setup
+## Step 10: Test the Setup
 
 1. Visit `http://localhost:5174/blog`
 2. You should see your blog posts loaded from Firestore

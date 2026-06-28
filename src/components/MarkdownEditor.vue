@@ -20,7 +20,7 @@
         <div class="bg-on-surface text-surface px-4 py-2 font-code text-xs uppercase">Markdown Input</div>
         <textarea
           ref="editorRef"
-          :value="modelValue"
+          :value="modelValue ?? ''"
           @input="$emit('update:modelValue', ($event.target as HTMLTextAreaElement).value)"
           placeholder="Write your markdown here...
 
@@ -56,7 +56,7 @@ const hello = 'world';
     </div>
 
     <!-- Character Count -->
-    <div class="text-xs font-code text-on-surface-variant">{{ modelValue.length }} characters</div>
+    <div class="text-xs font-code text-on-surface-variant">{{ modelValue?.length ?? 0 }} characters</div>
   </div>
 </template>
 

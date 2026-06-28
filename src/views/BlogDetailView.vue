@@ -33,50 +33,11 @@
             />
           </div>
 
-          <!-- Markdown Content (new) or Content Blocks (legacy) -->
-          <div v-if="post.markdown" class="flex flex-col gap-8">
-            <MarkdownRenderer :markdown="post.markdown" />
-          </div>
-          <div v-else-if="post.content" class="flex flex-col gap-8">
-            <template v-for="(block, i) in post.content" :key="i">
-
-              <!-- Paragraph -->
-              <p
-                v-if="block.type === 'paragraph'"
-                class="text-body-lg font-body-lg text-on-surface-variant border-l-2 border-primary pl-4"
-              >{{ block.text }}</p>
-
-              <!-- Heading -->
-              <h2
-                v-else-if="block.type === 'heading'"
-                class="font-headline-md text-headline-md text-on-surface uppercase border-b border-primary pb-3 flex items-center gap-3"
-              >
-                <span class="material-symbols-outlined text-tertiary">{{ block.icon }}</span>
-                {{ block.text }}
-              </h2>
-
-              <!-- Code block -->
-              <div
-                v-else-if="block.type === 'code'"
-                class="border border-surface-variant bg-[#1A1A1A]"
-              >
-                <div class="px-4 py-2 border-b border-surface-variant font-code text-code text-on-surface-variant uppercase flex justify-between items-center">
-                  <span>{{ block.language }}</span>
-                  <span class="material-symbols-outlined text-[16px] opacity-40">content_copy</span>
-                </div>
-                <div class="p-4 overflow-x-auto">
-                  <div
-                    v-for="(line, li) in block.lines"
-                    :key="li"
-                    class="flex gap-4 font-code text-code"
-                  >
-                    <span class="text-on-surface-variant opacity-30 select-none w-5 text-right shrink-0">{{ li + 1 }}</span>
-                    <span class="text-on-surface-variant whitespace-pre">{{ line }}</span>
-                  </div>
-                </div>
-              </div>
-
-            </template>
+          <!-- Markdown Content -->
+          <div class="flex flex-col gap-8">
+            <div class="prose prose-invert max-w-none space-y-6 text-on-surface">
+              <MarkdownRenderer :markdown="post.markdown" />
+            </div>
           </div>
 
           <!-- Related posts -->
@@ -129,6 +90,6 @@ const relatedPosts = computed(() => {
   if (!post.value?.relatedIds) return []
   return post.value.relatedIds
     .map(id => blog.items.value.find(p => p.id === id))
-    .filter(Boolean)
+    .filter((p): p is NonNullable<typeof p> => p != null)
 })
 </script>

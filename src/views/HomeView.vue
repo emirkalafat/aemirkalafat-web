@@ -40,8 +40,8 @@
         <div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
 
           <!-- Hardware Card -->
-          <div class="md:col-span-7 border border-primary flex flex-col min-h-[300px]">
-            <div class="bg-on-surface text-background font-label-md text-label-md uppercase flex justify-between items-center px-4 py-2 border-b border-primary">
+          <div class="md:col-span-7 border border-outline flex flex-col min-h-[300px]">
+            <div class="bg-on-surface text-background font-label-md text-label-md uppercase flex justify-between items-center px-4 py-2 border-b border-outline">
               <span>HW_ENGINEERING</span>
               <span class="material-symbols-outlined">memory</span>
             </div>
@@ -58,8 +58,8 @@
           </div>
 
           <!-- Software Card -->
-          <div class="md:col-span-5 border border-primary flex flex-col min-h-[300px]">
-            <div class="bg-on-surface text-background font-label-md text-label-md uppercase flex justify-between items-center px-4 py-2 border-b border-primary">
+          <div class="md:col-span-5 border border-outline flex flex-col min-h-[300px]">
+            <div class="bg-on-surface text-background font-label-md text-label-md uppercase flex justify-between items-center px-4 py-2 border-b border-outline">
               <span>SW_DEVELOPMENT</span>
               <span class="material-symbols-outlined">code</span>
             </div>
@@ -76,8 +76,8 @@
           </div>
 
           <!-- Terminal Output Card -->
-          <div class="md:col-span-12 border border-primary bg-[#1A1A1A] p-0">
-            <div class="bg-primary text-on-primary font-code text-code px-4 py-2 border-b border-primary flex justify-between">
+          <div class="md:col-span-12 border border-outline bg-[#1A1A1A] p-0">
+            <div class="bg-primary text-on-primary font-code text-code px-4 py-2 border-b border-outline flex justify-between">
               <span>bash - 80x24</span>
               <span>_ </span>
             </div>

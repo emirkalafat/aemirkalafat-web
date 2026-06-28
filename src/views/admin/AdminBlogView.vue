@@ -80,10 +80,76 @@
           </div>
         </div>
 
+        <!-- Image Manager -->
+        <div class="border border-on-surface bg-surface-dim">
+          <div class="bg-on-surface text-surface px-4 py-2 font-code text-xs uppercase flex justify-between items-center">
+            <span>IMAGE ASSETS // {{ selectedPost.id }}</span>
+            <label class="cursor-pointer hover:text-tertiary transition-colors flex items-center gap-1">
+              <span class="material-symbols-outlined text-[18px]">upload</span>
+              <span>UPLOAD</span>
+              <input
+                ref="fileInputRef"
+                type="file"
+                accept="image/*"
+                multiple
+                class="hidden"
+                @change="handleFileUpload"
+              />
+            </label>
+          </div>
+
+          <!-- Upload progress -->
+          <div v-if="uploadingFiles.length" class="px-4 py-3 border-b border-on-surface space-y-1">
+            <div v-for="f in uploadingFiles" :key="f.name" class="flex items-center gap-2 font-code text-xs text-on-surface-variant">
+              <span class="material-symbols-outlined text-[14px] animate-spin">progress_activity</span>
+              <span>{{ f.name }}</span>
+            </div>
+          </div>
+
+          <!-- File list -->
+          <div v-if="postImages.length" class="divide-y divide-on-surface/30">
+            <div
+              v-for="img in postImages"
+              :key="img.fullPath"
+              class="px-4 py-3 flex items-center gap-3"
+            >
+              <img :src="img.url" class="w-12 h-12 object-cover border border-on-surface/30 shrink-0" />
+              <div class="flex-1 min-w-0 flex flex-col gap-0.5">
+                <span class="font-code text-xs text-on-surface truncate">{{ img.name }}</span>
+                <span class="font-code text-[10px] text-on-surface-variant truncate">{{ img.url }}</span>
+              </div>
+              <div class="flex gap-2 shrink-0">
+                <button
+                  @click="copyUrl(img.url)"
+                  :title="copiedUrl === img.url ? 'Copied!' : 'Copy URL'"
+                  class="p-1 hover:text-tertiary transition-colors"
+                >
+                  <span class="material-symbols-outlined text-[18px]">{{ copiedUrl === img.url ? 'check' : 'content_copy' }}</span>
+                </button>
+                <button
+                  @click="removeImage(img.fullPath)"
+                  class="p-1 hover:text-error transition-colors"
+                  title="Delete"
+                >
+                  <span class="material-symbols-outlined text-[18px]">delete</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div v-else-if="!uploadingFiles.length && imagesLoaded" class="px-4 py-6 text-center font-code text-xs text-on-surface-variant">
+            No images uploaded yet
+          </div>
+
+          <div v-if="!imagesLoaded" class="px-4 py-4 text-center font-code text-xs text-on-surface-variant">
+            <span class="material-symbols-outlined text-[14px] animate-spin">progress_activity</span>
+          </div>
+        </div>
+
         <!-- Markdown Editor -->
         <div class="border border-on-surface p-6 bg-surface-dim flex flex-col gap-4">
           <label class="font-code text-xs text-on-surface-variant uppercase">CONTENT (MARKDOWN)</label>
-          <MarkdownEditor v-model="selectedPost.markdown" @update:model-value="selectedPost.markdown = $event" />
+          <MarkdownEditor v-model="selectedPost.markdown" />
         </div>
 
         <!-- Buttons -->
@@ -112,14 +178,21 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { useBlog } from '@/composables/useBlog'
 import MarkdownEditor from '@/components/MarkdownEditor.vue'
 import type { BlogPost } from '@/data/blog'
+import { uploadFile, deleteFile, listFiles, type StorageFile } from '@/services/storage'
 
 const blog = useBlog()
 const searchQuery = ref('')
-const selectedPost = ref<(BlogPost & { markdown: string }) | null>(null)
+const selectedPost = ref<BlogPost | null>(null)
+const fileInputRef = ref<HTMLInputElement>()
+
+const postImages = ref<StorageFile[]>([])
+const imagesLoaded = ref(false)
+const uploadingFiles = ref<{ name: string }[]>([])
+const copiedUrl = ref<string | null>(null)
 
 const filteredPosts = computed(() => {
   return blog.items.value.filter(
@@ -127,21 +200,64 @@ const filteredPosts = computed(() => {
   )
 })
 
+watch(selectedPost, async (post) => {
+  postImages.value = []
+  imagesLoaded.value = false
+  if (!post) return
+  try {
+    postImages.value = await listFiles(`blog/${post.id}`)
+  } catch {
+    // folder doesn't exist yet — that's fine
+  } finally {
+    imagesLoaded.value = true
+  }
+})
+
 function selectPost(post: BlogPost) {
-  selectedPost.value = { ...post, markdown: post.markdown || '' }
+  selectedPost.value = { ...post, markdown: post.markdown ?? '' }
 }
 
 function newPost() {
   selectedPost.value = {
     id: `LOG-${Date.now()}`,
     category: 'DEV' as const,
-    date: new Date().toISOString().split('T')[0],
+    date: new Date().toISOString().slice(0, 10),
     readTime: '5m',
     title: 'New Post',
     description: '',
     imageUrl: '',
     markdown: '',
-  } as BlogPost & { markdown: string }
+  }
+}
+
+async function handleFileUpload(event: Event) {
+  const input = event.target as HTMLInputElement
+  if (!input.files?.length || !selectedPost.value) return
+
+  const files = Array.from(input.files)
+  uploadingFiles.value = files.map(f => ({ name: f.name }))
+
+  await Promise.all(
+    files.map(async file => {
+      const path = `blog/${selectedPost.value!.id}/${Date.now()}_${file.name}`
+      const url = await uploadFile(path, file)
+      postImages.value.push({ name: file.name, fullPath: path, url })
+    }),
+  )
+
+  uploadingFiles.value = []
+  if (fileInputRef.value) fileInputRef.value.value = ''
+}
+
+async function removeImage(fullPath: string) {
+  await deleteFile(fullPath)
+  postImages.value = postImages.value.filter(img => img.fullPath !== fullPath)
+}
+
+function copyUrl(url: string) {
+  navigator.clipboard.writeText(url)
+  copiedUrl.value = url
+  setTimeout(() => { copiedUrl.value = null }, 2000)
 }
 
 async function savePost() {

@@ -7,11 +7,37 @@ const loading = ref(false)
 const error = ref<string | null>(null)
 let unsubscribe: (() => void) | null = null
 
+/**
+ * Normalizes a raw Firestore blog document to ensure `markdown` is always a string.
+ * Old documents stored content under `content` field, sometimes as an array or object.
+ */
+function normalizeBlogPost(raw: any): BlogPost {
+  if (raw.markdown && typeof raw.markdown === 'string') return raw as BlogPost
+
+  let markdown = ''
+  const content = raw.content
+
+  if (typeof content === 'string') {
+    markdown = content
+  } else if (Array.isArray(content)) {
+    markdown = content.filter(Boolean).join('\n\n')
+  } else if (content && typeof content === 'object') {
+    // Ordered by numeric keys if possible, otherwise by insertion order
+    const keys = Object.keys(content).sort((a, b) => {
+      const na = Number(a), nb = Number(b)
+      return isNaN(na) || isNaN(nb) ? a.localeCompare(b) : na - nb
+    })
+    markdown = keys.map(k => content[k]).filter(Boolean).join('\n\n')
+  }
+
+  return { ...raw, markdown } as BlogPost
+}
+
 export function useBlog() {
   onMounted(() => {
     if (!unsubscribe) {
       unsubscribe = subscribe<BlogPost>('blog', data => {
-        items.value = data
+        items.value = (data as any[]).map(normalizeBlogPost);
       })
     }
   })

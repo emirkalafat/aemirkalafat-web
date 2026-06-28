@@ -3,7 +3,7 @@
     <div class="w-full max-w-sm border-2 border-primary bg-surface-container-lowest p-gutter">
       <div class="mb-gutter text-center border-b border-primary pb-gutter">
         <h1 class="text-headline-md font-headline-md text-on-surface uppercase">KALAFAT</h1>
-        <p class="font-code text-code text-on-surface-variant text-xs mt-2">ADMIN_v1.0.4</p>
+        <p class="font-code text-code text-on-surface-variant text-xs mt-2">ADMIN_v1.0.0</p>
       </div>
 
       <form @submit.prevent="handleLogin" class="space-y-gutter">

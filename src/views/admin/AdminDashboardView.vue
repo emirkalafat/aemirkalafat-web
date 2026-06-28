@@ -69,9 +69,17 @@
         <span>ADD_POST</span>
       </RouterLink>
       <button
+        @click="migrateBlog"
+        :disabled="migrating"
+        class="bg-surface-container-highest text-on-surface border border-on-surface px-6 py-3 font-code font-bold uppercase hover:bg-tertiary hover:text-on-tertiary flex items-center space-x-2 transition-colors disabled:opacity-50 ml-auto"
+      >
+        <span class="material-symbols-outlined text-lg">drive_file_move</span>
+        <span>{{ migrating ? 'MIGRATING...' : 'MIGRATE_BLOG' }}</span>
+      </button>
+      <button
         @click="seedDb"
         :disabled="seeding"
-        class="bg-surface-container-highest text-on-surface border border-on-surface px-6 py-3 font-code font-bold uppercase hover:bg-tertiary hover:text-on-tertiary flex items-center space-x-2 transition-colors disabled:opacity-50 ml-auto"
+        class="bg-surface-container-highest text-on-surface border border-on-surface px-6 py-3 font-code font-bold uppercase hover:bg-tertiary hover:text-on-tertiary flex items-center space-x-2 transition-colors disabled:opacity-50"
       >
         <span class="material-symbols-outlined text-lg">cloud_upload</span>
         <span>{{ seeding ? 'SEEDING...' : 'SEED_DB' }}</span>
@@ -79,8 +87,9 @@
     </section>
 
     <!-- System Info -->
-    <section v-if="seedMessage" class="border border-tertiary bg-surface-container-lowest p-4">
-      <p class="font-code text-code text-tertiary">{{ seedMessage }}</p>
+    <section v-if="seedMessage || migrateMessage" class="border border-tertiary bg-surface-container-lowest p-4">
+      <p v-if="seedMessage" class="font-code text-code text-tertiary">{{ seedMessage }}</p>
+      <p v-if="migrateMessage" class="font-code text-code text-tertiary">{{ migrateMessage }}</p>
     </section>
   </div>
 </template>
@@ -91,6 +100,7 @@ import { useBlog } from '@/composables/useBlog'
 import { useProjects } from '@/composables/useProjects'
 import { useMedia } from '@/composables/useMedia'
 import { seedFirestore } from '@/firebase/seed'
+import { migrateBlogContent } from '@/firebase/migrate'
 
 const blog = useBlog()
 const projects = useProjects()
@@ -98,6 +108,8 @@ const media = useMedia()
 
 const seeding = ref(false)
 const seedMessage = ref('')
+const migrating = ref(false)
+const migrateMessage = ref('')
 
 async function seedDb() {
   seeding.value = true
@@ -105,13 +117,25 @@ async function seedDb() {
   try {
     await seedFirestore()
     seedMessage.value = '✓ Database seeded successfully'
-    setTimeout(() => {
-      seedMessage.value = ''
-    }, 3000)
+    setTimeout(() => { seedMessage.value = '' }, 3000)
   } catch (e) {
     seedMessage.value = '✗ Seeding failed: ' + (e as any).message
   } finally {
     seeding.value = false
+  }
+}
+
+async function migrateBlog() {
+  migrating.value = true
+  migrateMessage.value = ''
+  try {
+    const { migrated, skipped } = await migrateBlogContent()
+    migrateMessage.value = `✓ Migration complete — ${migrated} migrated, ${skipped} already up to date`
+    setTimeout(() => { migrateMessage.value = '' }, 5000)
+  } catch (e) {
+    migrateMessage.value = '✗ Migration failed: ' + (e as any).message
+  } finally {
+    migrating.value = false
   }
 }
 </script>

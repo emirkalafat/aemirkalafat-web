@@ -1,7 +1,5 @@
 <template>
-  <div class="prose prose-invert max-w-none space-y-6 text-on-surface">
-    <div v-html="renderedHtml" class="markdown-content"></div>
-  </div>
+  <div class="markdown-content" v-html="renderedHtml"></div>
 </template>
 
 <script setup lang="ts">
@@ -15,6 +13,8 @@ interface Props {
 
 const props = defineProps<Props>()
 
+// marked v12 renderer API is fully positional (not object-based).
+// Signatures: https://marked.js.org/using_pro#renderer
 marked.setOptions({
   breaks: true,
   gfm: true,
@@ -22,82 +22,99 @@ marked.setOptions({
 
 marked.use({
   renderer: {
-    heading(args: any) {
-      const { text, depth } = args
-      const id = text.toLowerCase().replace(/\s+/g, '-')
-      return `<h${depth} id="${id}" class="font-headline-${depth === 1 ? 'lg' : depth === 2 ? 'md' : 'sm'} text-headline-${depth === 1 ? 'lg-mobile' : depth === 2 ? 'md' : 'sm'} font-bold text-on-surface mt-8 mb-4 uppercase tracking-tight">${text}</h${depth}>`
-    },
-    paragraph(args: any) {
-      const { text } = args
-      return `<p class="text-body-md font-body-md text-on-surface leading-relaxed">${text}</p>`
-    },
-    code(args: any) {
-      const { text, language } = args
-      const lang = language || 'plaintext'
-      let highlighted = text
-      try {
-        highlighted = hljs.highlight(text, { language: lang }).value
-      } catch {
-        highlighted = hljs.highlight(text, { language: 'plaintext' }).value
+    heading(text: string, level: number) {
+      const id = text.toLowerCase().replace(/<[^>]+>/g, '').replace(/\s+/g, '-')
+      const sizeMap: Record<number, string> = {
+        1: 'text-2xl lg:text-3xl',
+        2: 'text-xl lg:text-2xl',
+        3: 'text-lg',
       }
-      return `<div class="bg-surface-dim border border-on-surface my-4 rounded-sm overflow-x-auto">
-        <div class="bg-on-surface text-surface px-4 py-2 font-code text-xs uppercase">${lang}</div>
-        <pre class="p-4 font-code text-sm leading-relaxed"><code class="language-${lang}">${highlighted}</code></pre>
-      </div>`
+      const sizeClass = sizeMap[level] ?? 'text-base'
+      return `<h${level} id="${id}" class="${sizeClass} font-bold text-on-surface mt-8 mb-4 uppercase tracking-tight">${text}</h${level}>\n`
     },
-    codespan(args: any) {
-      const { text } = args
-      return `<code class="bg-surface-dim text-tertiary font-code text-sm px-2 py-1 rounded-sm">${text}</code>`
+
+    paragraph(text: string) {
+      return `<p class="text-base font-body-md text-on-surface leading-relaxed mb-4">${text}</p>\n`
     },
-    blockquote(args: any) {
-      const { text } = args
-      return `<blockquote class="border-l-4 border-tertiary pl-4 py-2 italic text-on-surface-variant">${text}</blockquote>`
+
+    code(code: string, infostring: string | undefined) {
+      const lang = (infostring || 'plaintext').split(' ')[0]
+      let highlighted = code
+      try {
+        highlighted = hljs.highlight(code, { language: lang }).value
+      } catch {
+        try {
+          highlighted = hljs.highlight(code, { language: 'plaintext' }).value
+        } catch {
+          highlighted = code
+        }
+      }
+      return `<div class="bg-surface-dim border border-on-surface my-6 overflow-x-auto">
+<div class="bg-on-surface text-surface px-4 py-2 font-code text-xs uppercase">${lang}</div>
+<pre class="p-4 font-code text-sm leading-relaxed overflow-x-auto"><code class="hljs language-${lang}">${highlighted}</code></pre>
+</div>\n`
     },
-    list(args: any) {
-      const { items, ordered } = args
+
+    codespan(code: string) {
+      return `<code class="bg-surface-dim text-tertiary font-code text-sm px-2 py-0.5">${code}</code>`
+    },
+
+    blockquote(quote: string) {
+      return `<blockquote class="border-l-4 border-tertiary pl-4 py-2 italic text-on-surface-variant my-4">${quote}</blockquote>\n`
+    },
+
+    list(body: string, ordered: boolean, start: number | '') {
       const tag = ordered ? 'ol' : 'ul'
       const listClass = ordered ? 'list-decimal' : 'list-disc'
-      return `<${tag} class="${listClass} list-inside space-y-2 text-body-md font-body-md text-on-surface ml-4">${items.join('')}</${tag}>`
+      const startAttr = ordered && start && start !== 1 ? ` start="${start}"` : ''
+      return `<${tag}${startAttr} class="${listClass} list-outside ml-6 space-y-1 my-4 text-base text-on-surface">\n${body}</${tag}>\n`
     },
-    listitem(args: any) {
-      const { text } = args
-      return `<li>${text}</li>`
+
+    listitem(text: string, task: boolean, checked: boolean) {
+      if (task) {
+        const chk = `<input type="checkbox" ${checked ? 'checked' : ''} disabled class="mr-2 align-middle" />`
+        return `<li class="leading-relaxed">${chk}${text}</li>\n`
+      }
+      return `<li class="leading-relaxed">${text}</li>\n`
     },
-    image(args: any) {
-      const { href, text, title } = args
-      return `<img src="${href}" alt="${text}" title="${title}" class="my-6 max-w-full h-auto border border-on-surface rounded-sm" />`
+
+    link(href: string, title: string | null | undefined, text: string) {
+      const titleAttr = title ? ` title="${title}"` : ''
+      return `<a href="${href}"${titleAttr} class="text-tertiary hover:text-primary underline transition-colors" target="_blank" rel="noopener noreferrer">${text}</a>`
     },
-    link(args: any) {
-      const { href, text, title } = args
-      return `<a href="${href}" title="${title}" class="text-tertiary hover:text-primary underline transition-colors">${text}</a>`
+
+    image(href: string, title: string | null, text: string) {
+      const titleAttr = title ? ` title="${title}"` : ''
+      return `<img src="${href}" alt="${text}"${titleAttr} class="my-6 max-w-full h-auto border border-on-surface" />\n`
     },
+
     hr() {
-      return `<hr class="my-8 border-t border-on-surface/30" />`
+      return `<hr class="my-8 border-t border-on-surface/30" />\n`
     },
-    table(args: any) {
-      const { header, rows } = args
+
+    table(header: string, body: string) {
       return `<div class="overflow-x-auto my-6">
-        <table class="w-full border border-on-surface">
-          <thead class="bg-on-surface text-surface">${header}</thead>
-          <tbody class="divide-y divide-on-surface">${rows.join('')}</tbody>
-        </table>
-      </div>`
+<table class="w-full border border-on-surface">
+<thead class="bg-on-surface text-surface">${header}</thead>
+<tbody class="divide-y divide-on-surface/30">${body}</tbody>
+</table>
+</div>\n`
     },
-    tablerow(args: any) {
-      const { text } = args
-      return `<tr>${text}</tr>`
+
+    tablerow(content: string) {
+      return `<tr>${content}</tr>\n`
     },
-    tablecell(args: any) {
-      const { text, flags } = args
+
+    tablecell(content: string, flags: { header: boolean; align: 'center' | 'left' | 'right' | null }) {
       const tag = flags.header ? 'th' : 'td'
-      const align = flags.align ? `text-${flags.align}` : ''
-      return `<${tag} class="p-3 ${align}">${text}</${tag}>`
+      const align = flags.align ? ` class="text-${flags.align} p-3"` : ' class="p-3"'
+      return `<${tag}${align}>${content}</${tag}>\n`
     },
   },
 })
 
 const renderedHtml = computed(() => {
-  if (!props.markdown) return ''
+  if (!props.markdown?.trim()) return ''
   try {
     return marked(props.markdown) as string
   } catch (e) {
@@ -108,19 +125,12 @@ const renderedHtml = computed(() => {
 </script>
 
 <style scoped>
-:deep(.markdown-content) {
-  /* Base typography already applied via Tailwind classes in renderer */
-}
-
-:deep(.markdown-content h1),
-:deep(.markdown-content h2),
-:deep(.markdown-content h3) {
-  margin-top: 1.5em;
-  margin-bottom: 0.5em;
-}
-
-:deep(.markdown-content p) {
-  margin-bottom: 1em;
+:deep(.markdown-content ul ul),
+:deep(.markdown-content ol ol),
+:deep(.markdown-content ul ol),
+:deep(.markdown-content ol ul) {
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
 }
 
 :deep(.markdown-content code) {
