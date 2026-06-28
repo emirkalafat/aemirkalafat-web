@@ -3,28 +3,42 @@
     <main class="flex-1 flex flex-col pt-24 lg:pt-margin-desktop px-margin-mobile md:px-margin-desktop gap-16 max-w-7xl mx-auto w-full pb-margin-desktop">
 
       <!-- Hero Section -->
-      <section class="grid grid-cols-1 md:grid-cols-12 gap-gutter items-center min-h-[614px]">
+      <section class="grid grid-cols-1 md:grid-cols-12 gap-gutter items-center pt-4 md:min-h-[614px]">
         <div class="md:col-span-8 flex flex-col gap-6">
           <div class="inline-block bg-surface-container-lowest border border-primary px-4 py-2 self-start">
             <span class="font-code text-code text-tertiary blinking-cursor">&gt; SYSTEM INITIALIZED</span>
           </div>
-          <h1 class="font-display text-headline-lg-mobile md:text-display text-on-surface leading-tight">
-            ENGINEERING <br/>
-            <span class="text-transparent" style="-webkit-text-stroke: 1px #e5e2e1;">AT THE SILICON</span> <br/>
-            LEVEL.
+          <h1 class="font-display text-headline-lg md:text-display text-on-surface leading-tight">
+            FROM <br/>
+            <span class="text-transparent" style="-webkit-text-stroke: 1px rgb(var(--color-on-surface));">CIRCUITS</span> <br/>
+            TO CODE.
           </h1>
-          <p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl border-l-4 border-primary pl-4">
-            I'm a Computer &amp; Electrical Engineer with a Double Major from Fatih Sultan Mehmet Vakıf University and an Erasmus+ exchange in Electrical &amp; Automation Engineering under my belt. Professionally, I've been building software at talsen team GmbH and previously developed mobile applications at SameUp — always chasing that sweet spot between low-level hardware and high-level software.
-          </p>
-          <div class="flex flex-wrap gap-4 mt-8">
+
+          <!-- Description: collapsible on mobile, always visible on desktop -->
+          <div class="border-l-4 border-primary pl-4">
+            <p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl"
+              :class="bioExpanded ? '' : 'line-clamp-2 md:line-clamp-none'">
+              I'm a Computer &amp; Electrical Engineer with a Double Major from Fatih Sultan Mehmet Vakıf University and an Erasmus+ exchange in Electrical &amp; Automation Engineering under my belt. Professionally, I've been building software at talsen team GmbH and previously developed mobile applications at SameUp — always chasing that sweet spot between low-level hardware and high-level software.
+            </p>
+            <button
+              class="md:hidden mt-2 font-code text-code text-tertiary flex items-center gap-1 uppercase"
+              @click="bioExpanded = !bioExpanded">
+              <span class="material-symbols-outlined text-[14px]">{{ bioExpanded ? 'expand_less' : 'expand_more' }}</span>
+              {{ bioExpanded ? 'Read less' : 'Read more' }}
+            </button>
+          </div>
+
+          <div class="flex flex-wrap gap-4 mt-4 md:mt-8">
             <a href="/cv.pdf" target="_blank" rel="noopener"
               class="bg-primary text-on-primary border border-primary font-label-md text-label-md px-8 py-4 uppercase hover:bg-tertiary hover:text-on-tertiary hover:border-tertiary hover:-translate-x-1 hover:-translate-y-1 hover:shadow-[4px_4px_0px_#BD00FF] transition-all duration-100 flex items-center gap-2">
               <span class="material-symbols-outlined text-[18px]">download</span>
               Download CV
             </a>
-            <button class="border border-primary text-primary hover:bg-primary hover:text-on-primary font-label-md text-label-md px-8 py-4 uppercase transition-colors">
-              View Source
-            </button>
+            <a href="https://github.com/emirkalafat" target="_blank" rel="noopener"
+              class="border border-primary text-primary hover:bg-primary hover:text-on-primary font-label-md text-label-md px-8 py-4 uppercase transition-colors flex items-center gap-2">
+              <span class="material-symbols-outlined text-[18px]">code</span>
+              GitHub
+            </a>
           </div>
         </div>
         <div class="md:col-span-4 relative h-64 md:h-full hidden md:flex items-end min-h-[300px] border border-primary overflow-hidden bg-surface-container">
@@ -125,7 +139,10 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue'
 import ExperienceCard from '@/components/ui/ExperienceCard.vue'
 import EducationCard from '@/components/ui/EducationCard.vue'
 import { experience, education } from '@/data/experience'
+
+const bioExpanded = ref(false)
 </script>
