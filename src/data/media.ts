@@ -16,6 +16,7 @@ export interface MediaCardData {
   date: string;
   isCompleted?: boolean;
   metrics?: MediaMetrics;
+  externalUrl?: string;
 }
 
 export const seedMediaCards: MediaCardData[] = [
