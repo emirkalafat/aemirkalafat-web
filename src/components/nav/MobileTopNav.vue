@@ -47,50 +47,11 @@
 
     <!-- Nav Links -->
     <div class="flex-1 overflow-y-auto py-4 flex flex-col gap-2 px-4">
-      <RouterLink
-        to="/"
-        @click="isOpen = false"
-        class="flex items-center gap-4 p-3 text-label-md font-code text-on-surface-variant hover:bg-surface-container-high transition-colors router-link-active:bg-primary router-link-active:text-on-primary router-link-active:font-bold router-link-active:border-l-4 router-link-active:border-[#a855f7]"
-      >
-        <span class="material-symbols-outlined">home</span>
-        <span>Home</span>
-      </RouterLink>
-
-      <RouterLink
-        to="/media"
-        @click="isOpen = false"
-        class="flex items-center gap-4 p-3 text-label-md font-code text-on-surface-variant hover:bg-surface-container-high transition-colors router-link-active:bg-primary router-link-active:text-on-primary router-link-active:font-bold router-link-active:border-l-4 router-link-active:border-[#a855f7]"
-      >
-        <span class="material-symbols-outlined">movie</span>
-        <span>Media</span>
-      </RouterLink>
-
-      <RouterLink
-        to="/projects"
-        @click="isOpen = false"
-        class="flex items-center gap-4 p-3 text-label-md font-code text-on-surface-variant hover:bg-surface-container-high transition-colors router-link-active:bg-primary router-link-active:text-on-primary router-link-active:font-bold router-link-active:border-l-4 router-link-active:border-[#a855f7]"
-      >
-        <span class="material-symbols-outlined">developer_board</span>
-        <span>Projects</span>
-      </RouterLink>
-
-      <RouterLink
-        to="/blog"
-        @click="isOpen = false"
-        class="flex items-center gap-4 p-3 text-label-md font-code text-on-surface-variant hover:bg-surface-container-high transition-colors router-link-active:bg-primary router-link-active:text-on-primary router-link-active:font-bold router-link-active:border-l-4 router-link-active:border-[#a855f7]"
-      >
-        <span class="material-symbols-outlined">article</span>
-        <span>Blog</span>
-      </RouterLink>
-
-      <RouterLink
-        to="/status"
-        @click="isOpen = false"
-        class="flex items-center gap-4 p-3 text-label-md font-code text-on-surface-variant hover:bg-surface-container-high transition-colors router-link-active:bg-primary router-link-active:text-on-primary router-link-active:font-bold router-link-active:border-l-4 router-link-active:border-[#a855f7]"
-      >
-        <span class="material-symbols-outlined">sensors</span>
-        <span>Status</span>
-      </RouterLink>
+      <NavLink to="/" icon="home" label="Home" @navigate="isOpen = false" />
+      <NavLink to="/media" icon="movie" label="Media" @navigate="isOpen = false" />
+      <NavLink to="/projects" icon="developer_board" label="Projects" @navigate="isOpen = false" />
+      <NavLink to="/blog" icon="article" label="Blog" @navigate="isOpen = false" />
+      <NavLink to="/status" icon="sensors" label="Status" @navigate="isOpen = false" />
     </div>
 
     <!-- Footer -->
@@ -131,6 +92,7 @@ import { computed, ref, watch, onMounted, onUnmounted } from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
 import { useAuth } from '@/composables/useAuth'
 import { useTheme } from '@/composables/useTheme'
+import NavLink from './NavLink.vue'
 
 const { user } = useAuth()
 const { theme, toggle } = useTheme()
