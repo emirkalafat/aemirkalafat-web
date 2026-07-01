@@ -2,11 +2,11 @@ import { ref, onMounted, onUnmounted } from 'vue'
 
 // Public-facing URLs for each service — keyed by monitor name (as shown in Uptime Kuma).
 // These are what users click to visit the service, NOT the internal monitoring URLs.
-const SERVICE_LINKS: Record<string, string> = {
-  Jellyfin: 'https://izle.aemirkalafat.com',
-  Seerr: 'https://istek.aemirkalafat.com',
-  'Minecraft Servers Hub': 'https://minecraft.aemirkalafat.com',
-}
+const SERVICE_LINKS: Record<string, string | undefined> = {
+  Jellyfin: "https://izle.aemirkalafat.com",
+  Seerr: "https://istek.aemirkalafat.com",
+  "Minecraft Servers Hub": undefined,
+};
 
 export interface StatusPageConfig {
   slug: string

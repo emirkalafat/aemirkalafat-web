@@ -16,6 +16,7 @@ const routes = [
       { path: "blog/:id", component: () => import("@/views/BlogDetailView.vue") },
       { path: "contact", component: () => import("@/views/ContactView.vue") },
       { path: "status", component: () => import("@/views/StatusView.vue") },
+      //{ path: "minecraft", component: () => import("@/views/MinecraftView.vue") },
     ],
   },
   {

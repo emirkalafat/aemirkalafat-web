@@ -14,6 +14,8 @@ interface ImportMetaEnv {
   readonly VITE_FIREBASE_APP_ID: string
   readonly VITE_STATUS_PAGE_URL?: string
   readonly VITE_STATUS_REFRESH_INTERVAL?: string
+  readonly VITE_CRAFTY_API_URL?: string
+  readonly VITE_CRAFTY_REFRESH_INTERVAL?: string
 }
 
 interface ImportMeta {
