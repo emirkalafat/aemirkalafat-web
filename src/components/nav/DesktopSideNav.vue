@@ -15,17 +15,15 @@
       <NavLink to="/projects" icon="developer_board" label="Projects" />
       <NavLink to="/blog" icon="article" label="Blog" />
       <NavLink to="/media" icon="movie" label="Media" />
-      <!-- <NavLink to="/status" icon="sensors" label="Status" /> -->
+      <NavLink to="/status" icon="sensors" label="Status" />
     </div>
     <div class="p-4 border-t-2 border-primary flex flex-col gap-2">
-      <RouterLink
-        to="/contact"
+      <RouterLink to="/contact"
         class="w-full bg-surface border border-primary text-primary hover:bg-secondary-container hover:text-on-secondary-container transition-colors py-2 text-label-md font-code flex justify-center items-center gap-2 brutalist-offset shadow-tertiary hover:shadow-tertiary">
         <span class="material-symbols-outlined text-[16px]">mail</span>
         CONTACT
       </RouterLink>
-      <button
-        @click="toggleTheme"
+      <button @click="toggleTheme"
         class="w-full bg-surface border border-primary text-primary hover:bg-secondary-container hover:text-on-secondary-container transition-colors py-2 text-label-md font-code flex justify-center items-center gap-2 brutalist-offset shadow-tertiary hover:shadow-tertiary">
         <span class="material-symbols-outlined text-[16px]">{{ isDark ? 'light_mode' : 'dark_mode' }}</span>
         {{ isDark ? 'LIGHT' : 'DARK' }}

@@ -13,11 +13,23 @@
     </PageHeader>
 
     <section class="flex-1 p-margin-mobile lg:p-margin-desktop bg-surface-container-lowest">
-      <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 lg:gap-8">
+      <div v-if="loading" class="flex items-center justify-center h-64">
+        <p class="text-on-surface-variant">Loading status...</p>
+      </div>
+      <div v-else-if="error" class="flex items-center justify-center h-64">
+        <div class="text-center">
+          <p class="text-error font-code text-label-lg mb-2">{{ error }}</p>
+          <p class="text-on-surface-variant text-body-md">Status page unavailable</p>
+        </div>
+      </div>
+      <div v-else-if="services.length === 0" class="flex items-center justify-center h-64">
+        <p class="text-on-surface-variant">No services available</p>
+      </div>
+      <div v-else class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 lg:gap-8">
         <article
           v-for="service in services"
           :key="service.name"
-          class="bg-surface-container-lowest border relative group flex flex-col"
+          class="bg-surface-container-lowest border relative group flex flex-col brutalist-offset-hover shadow-tertiary transition-[box-shadow]"
           :class="service.status === 'OUTAGE'
             ? 'border-2 border-error-container'
             : 'border-primary'"
@@ -35,18 +47,37 @@
               :class="service.status === 'OUTAGE' ? 'text-on-error' : 'text-on-primary'"
             >{{ service.name }}</span>
             <div class="flex items-center gap-2">
+              <!-- Default: status text + indicator dot -->
               <span
                 class="font-code text-code"
-                :class="service.status === 'OUTAGE' ? 'text-on-error' : 'text-on-primary'"
+                :class="[
+                  service.status === 'OUTAGE' ? 'text-on-error' : 'text-on-primary',
+                  service.url ? 'group-hover:hidden' : ''
+                ]"
               >{{ service.status }}</span>
               <span
                 v-if="service.status === 'OPERATIONAL'"
                 class="w-2 h-2 bg-on-tertiary-container animate-pulse"
+                :class="service.url ? 'group-hover:hidden' : ''"
               ></span>
               <span
                 v-else
                 class="w-2 h-2 bg-on-error animate-ping"
+                :class="service.url ? 'group-hover:hidden' : ''"
               ></span>
+              <!-- Hover: VISIT link -->
+              <a
+                v-if="service.url"
+                :href="service.url"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="font-code text-code hidden group-hover:flex items-center gap-1"
+                :class="service.status === 'OUTAGE' ? 'text-on-error' : 'text-on-primary'"
+                @click.stop
+              >
+                <span class="material-symbols-outlined text-[13px]">open_in_new</span>
+                VISIT
+              </a>
             </div>
           </div>
 
@@ -73,35 +104,52 @@
             </div>
 
             <!-- Sparkline -->
-            <div class="relative h-16 w-full border border-surface-variant bg-background overflow-hidden">
-              <!-- Vertical grid lines -->
-              <div
-                class="absolute inset-0 opacity-20"
-                style="background-image: linear-gradient(to right, #353535 1px, transparent 1px); background-size: 10% 100%;"
-              ></div>
-              <!-- SVG Sparkline -->
-              <svg class="absolute inset-0 w-full h-full" viewBox="0 0 100 20" preserveAspectRatio="none">
-                <!-- Fill area (operational only) -->
-                <polygon
-                  v-if="service.status === 'OPERATIONAL'"
-                  :points="`${service.sparklinePoints} 100,20 0,20`"
-                  fill="rgba(76,214,255,0.08)"
-                />
-                <!-- Line -->
-                <polyline
-                  :points="service.sparklinePoints"
-                  fill="none"
-                  :stroke="service.status === 'OUTAGE' ? '#ffb4ab' : '#4cd6ff'"
-                  stroke-width="1"
-                  vector-effect="non-scaling-stroke"
-                  :class="service.status === 'OPERATIONAL' ? 'sparkline-path' : ''"
-                />
-              </svg>
-              <!-- Error overlay label -->
-              <div
-                v-if="service.errorLabel"
-                class="absolute bottom-1 right-1 font-code text-code text-error bg-background px-1"
-              >{{ service.errorLabel }}</div>
+            <div class="flex flex-col gap-1">
+              <div class="relative h-16 w-full border border-surface-variant bg-background overflow-hidden">
+                <!-- Vertical grid lines -->
+                <div
+                  class="absolute inset-0 opacity-20"
+                  style="background-image: linear-gradient(to right, #353535 1px, transparent 1px); background-size: 10% 100%;"
+                ></div>
+                <!-- SVG Sparkline -->
+                <svg class="absolute inset-0 w-full h-full" viewBox="0 0 100 20" preserveAspectRatio="none">
+                  <!-- Down/maintenance column overlays -->
+                  <template v-for="(pt, i) in service.sparklineData" :key="i">
+                    <rect
+                      v-if="pt.status !== 1"
+                      :x="pt.x - (100 / service.sparklineData.length) / 2"
+                      :width="100 / service.sparklineData.length"
+                      y="0"
+                      height="20"
+                      :fill="pt.status === 0 ? 'rgba(255,180,171,0.35)' : 'rgba(255,220,100,0.2)'"
+                    />
+                  </template>
+                  <!-- Ping baseline guide -->
+                  <line x1="0" y1="18" x2="100" y2="18" stroke="rgba(255,255,255,0.06)" stroke-width="0.5" vector-effect="non-scaling-stroke" />
+                  <!-- Ping line — breaks at non-up segments, spikes up = high latency = bad -->
+                  <path
+                    :d="buildLinePath(service.sparklineData)"
+                    fill="none"
+                    stroke="#4cd6ff"
+                    stroke-width="1"
+                    vector-effect="non-scaling-stroke"
+                  />
+                  <!-- Max ping axis label (top-left) -->
+                  <text x="1" y="5" font-size="3.5" font-family="monospace" fill="rgba(76,214,255,0.5)">{{ service.sparklineMaxPing }}ms</text>
+                  <!-- Zero baseline label (bottom-left) -->
+                  <text x="1" y="19.5" font-size="3.5" font-family="monospace" fill="rgba(76,214,255,0.5)">0ms</text>
+                </svg>
+                <!-- Error overlay label -->
+                <div
+                  v-if="service.errorLabel"
+                  class="absolute bottom-1 right-1 font-code text-code text-error bg-background px-1"
+                >{{ service.errorLabel }}</div>
+              </div>
+              <!-- Time axis -->
+              <div class="flex justify-between">
+                <span class="font-code text-code text-on-surface-variant opacity-60">-24H</span>
+                <span class="font-code text-code text-on-surface-variant opacity-60">NOW</span>
+              </div>
             </div>
           </div>
         </article>
@@ -112,61 +160,23 @@
 
 <script setup lang="ts">
 import PageHeader from '@/components/ui/PageHeader.vue'
+import { useStatus, type SparklinePoint } from '@/composables/useStatus'
 
-interface ServiceData {
-  name: string
-  status: 'OPERATIONAL' | 'OUTAGE'
-  uptime: string
-  latency: string
-  sparklinePoints: string
-  errorLabel?: string
+const { services, overallUptime, loading, error } = useStatus()
+
+function buildLinePath(data: SparklinePoint[]): string {
+  let path = ''
+  let moveTo = true
+  for (const pt of data) {
+    if (pt.status === 1 && pt.ping !== null) {
+      path += moveTo
+        ? `M ${pt.x.toFixed(1)},${pt.y.toFixed(1)} `
+        : `L ${pt.x.toFixed(1)},${pt.y.toFixed(1)} `
+      moveTo = false
+    } else {
+      moveTo = true
+    }
+  }
+  return path.trim()
 }
-
-const services: ServiceData[] = [
-  {
-    name: 'API_GATEWAY',
-    status: 'OPERATIONAL',
-    uptime: '99.999%',
-    latency: '12ms',
-    sparklinePoints: '0,15 10,12 20,14 30,8 40,10 50,7 60,9 70,6 80,8 90,5 100,7',
-  },
-  {
-    name: 'BUILD_SERVER',
-    status: 'OPERATIONAL',
-    uptime: '99.997%',
-    latency: '45ms',
-    sparklinePoints: '0,16 10,14 20,15 30,11 40,13 50,10 60,12 70,9 80,11 90,8 100,10',
-  },
-  {
-    name: 'DATA_PIPELINE',
-    status: 'OPERATIONAL',
-    uptime: '99.981%',
-    latency: '128ms',
-    sparklinePoints: '0,14 10,16 20,12 30,14 40,10 50,13 60,9 70,12 80,8 90,11 100,9',
-  },
-  {
-    name: 'AUTH_MODULE',
-    status: 'OPERATIONAL',
-    uptime: '99.994%',
-    latency: '8ms',
-    sparklinePoints: '0,13 10,11 20,13 30,9 40,12 50,8 60,11 70,7 80,10 90,6 100,8',
-  },
-  {
-    name: 'MEDIA_CACHE',
-    status: 'OPERATIONAL',
-    uptime: '99.972%',
-    latency: '67ms',
-    sparklinePoints: '0,15 10,13 20,16 30,12 40,14 50,11 60,13 70,10 80,12 90,9 100,11',
-  },
-  {
-    name: 'LOG_AGGREGATOR',
-    status: 'OUTAGE',
-    uptime: '87.3%',
-    latency: 'TIMEOUT',
-    sparklinePoints: '0,10 10,10 20,10 30,10 40,10 50,10 60,15 70,18 80,19 90,19 100,19',
-    errorLabel: 'CONNECTION_REFUSED',
-  },
-]
-
-const overallUptime = '99.998%'
 </script>
