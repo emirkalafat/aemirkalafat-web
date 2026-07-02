@@ -171,8 +171,13 @@ export function useStatus() {
       if (!isBackground) loading.value = true
       if (!isBackground) error.value = null
 
-      const pageUrl = `/api/status-page/${slug}`
-      const hbUrl = `/api/status-page/heartbeat/${slug}`
+      const baseUrl = import.meta.env.VITE_STATUS_PAGE_URL
+      if (!baseUrl) {
+        throw new Error('VITE_STATUS_PAGE_URL not configured')
+      }
+
+      const pageUrl = `${baseUrl}/api/status-page/${slug}`
+      const hbUrl = `${baseUrl}/api/status-page/heartbeat/${slug}`
 
       const [pageRes, hbRes] = await Promise.all([fetch(pageUrl), fetch(hbUrl)])
 
