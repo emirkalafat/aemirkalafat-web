@@ -41,7 +41,7 @@
       </div>
       <div>
         <h1 class="text-headline-md font-headline-md text-on-surface text-[20px] leading-tight">KALAFAT</h1>
-        <p class="text-label-md font-code text-on-surface-variant">v6.0.0-july</p>
+        <p class="text-label-md font-code text-on-surface-variant">v6.0.1-july</p>
       </div>
     </div>
 
@@ -51,6 +51,8 @@
       <NavLink to="/projects" icon="developer_board" label="Projects" @navigate="isOpen = false" />
       <NavLink to="/blog" icon="article" label="Blog" @navigate="isOpen = false" />
       <NavLink to="/media" icon="movie" label="Media" @navigate="isOpen = false" />
+      <NavLink to="/status" icon="sensors" label="Status" @navigate="isOpen = false" />
+      <!-- <NavLink to="/minecraft" icon="stadia_controller" label="Minecraft" @navigate="isOpen = false" /> -->
     </div>
 
     <!-- Footer -->
