@@ -31,9 +31,10 @@ jobs:
           VITE_TMDB_API_KEY: ${{ secrets.VITE_TMDB_API_KEY }}
           VITE_GOOGLE_BOOKS_API_KEY: ${{ secrets.VITE_GOOGLE_BOOKS_API_KEY }}
 
-      - uses: google-github-actions/auth@v2
+      - name: Deploy to Firebase Hosting
+        uses: FirebaseExtended/action-hosting-deploy@v0
         with:
-          credentials_json: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_EMIRKLFTWEB }}
-
-      - name: Deploy to Firebase Hosting (live)
-        run: npx firebase-tools@latest hosting:channel:deploy live --project emirklftweb
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_EMIRKLFTWEB }}
+          projectId: emirklftweb
+          channelId: live
