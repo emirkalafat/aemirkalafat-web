@@ -5,7 +5,7 @@ import { ref, onMounted, onUnmounted } from 'vue'
 const SERVICE_LINKS: Record<string, string | undefined> = {
   Jellyfin: "https://izle.aemirkalafat.com",
   Seerr: "https://istek.aemirkalafat.com",
-  "Minecraft Servers Hub": undefined,
+  "Minecraft Servers Hub": "https://crafty.aemirkalafat.com/status",
 };
 
 export interface StatusPageConfig {
@@ -164,10 +164,12 @@ export function useStatus() {
 
   const slug = 'main'
 
-  async function fetchStatus() {
+  // Background refreshes update the numbers in place — only the very first
+  // load shows the full-page loading/error state so the page doesn't flash.
+  async function fetchStatus(isBackground = false) {
     try {
-      loading.value = true
-      error.value = null
+      if (!isBackground) loading.value = true
+      if (!isBackground) error.value = null
 
       const pageUrl = `/api/status-page/${slug}`
       const hbUrl = `/api/status-page/heartbeat/${slug}`
@@ -183,12 +185,17 @@ export function useStatus() {
       const data = mapStatusData(page, hb)
       services.value = data.services
       overallUptime.value = data.overallUptime
+      error.value = null
       console.log('Status loaded successfully:', { services: services.value.length, uptime: overallUptime.value })
     } catch (e) {
-      error.value = e instanceof Error ? e.message : String(e)
       console.error('Failed to fetch status:', e)
+      // Keep showing the last known-good data on a background refresh failure
+      // instead of replacing it with a full-page error state.
+      if (!isBackground || services.value.length === 0) {
+        error.value = e instanceof Error ? e.message : String(e)
+      }
     } finally {
-      loading.value = false
+      if (!isBackground) loading.value = false
     }
   }
 
@@ -198,7 +205,7 @@ export function useStatus() {
     await fetchStatus()
 
     const refreshMs = Number(import.meta.env.VITE_STATUS_REFRESH_INTERVAL) || 300000
-    refreshInterval = setInterval(fetchStatus, refreshMs)
+    refreshInterval = setInterval(() => fetchStatus(true), refreshMs)
   })
 
   onUnmounted(() => {

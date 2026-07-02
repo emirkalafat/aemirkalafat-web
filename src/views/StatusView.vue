@@ -121,9 +121,8 @@
       </div>
 
       <!-- Minecraft Servers Section -->
-      <!--
-        <div v-if="mcServers.length > 0 || mcLoading || mcError" class="mt-12">
-        <h2 class="text-headline-lg font-headline-lg text-on-surface mb-6 uppercase font-code">Minecraft Servers</h2>
+      <div v-if="mcServers.length > 0 || mcLoading || mcError" class="mt-12">
+        <h2 class="text-headline-md font-headline-md text-on-surface mb-6 uppercase font-code">Minecraft Servers</h2>
 
         <div v-if="mcLoading" class="flex items-center justify-center h-48">
           <p class="text-on-surface-variant">Loading servers...</p>
@@ -138,7 +137,6 @@
           <MinecraftServerCard v-for="server in mcServers" :key="server.id" :server="server" />
         </div>
       </div>
-      -->
     </section>
   </div>
 </template>
