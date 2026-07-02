@@ -25,8 +25,9 @@
       <div v-else-if="servers.length === 0" class="flex items-center justify-center h-64">
         <p class="text-on-surface-variant">No servers available</p>
       </div>
-      <div v-else class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 lg:gap-8">
-        <MinecraftServerCard v-for="server in servers" :key="server.id" :server="server" />
+      <div v-else class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 grid-flow-row-dense gap-6 lg:gap-8">
+        <MinecraftServerCard v-for="server in servers" :key="server.id" :server="server"
+          :class="server.state === 'ONLINE' ? 'row-span-2' : ''" />
       </div>
     </section>
   </div>

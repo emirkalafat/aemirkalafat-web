@@ -133,8 +133,9 @@
             <p class="text-on-surface-variant text-body-md">Failed to load Minecraft servers</p>
           </div>
         </div>
-        <div v-else class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 lg:gap-8">
-          <MinecraftServerCard v-for="server in mcServers" :key="server.id" :server="server" />
+        <div v-else class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 grid-flow-row-dense gap-6 lg:gap-8">
+          <MinecraftServerCard v-for="server in mcServers" :key="server.id" :server="server"
+            :class="server.state === 'ONLINE' ? 'row-span-2' : ''" />
         </div>
       </div>
     </section>

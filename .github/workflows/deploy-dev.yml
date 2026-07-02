@@ -30,6 +30,8 @@ jobs:
           VITE_FIREBASE_APP_ID: ${{ secrets.VITE_FIREBASE_APP_ID }}
           VITE_TMDB_API_KEY: ${{ secrets.VITE_TMDB_API_KEY }}
           VITE_GOOGLE_BOOKS_API_KEY: ${{ secrets.VITE_GOOGLE_BOOKS_API_KEY }}
+          VITE_STATUS_PAGE_URL: ${{ vars.VITE_STATUS_PAGE_URL }}
+          VITE_CRAFTY_API_URL: ${{ vars.VITE_CRAFTY_API_URL }}
 
       - uses: google-github-actions/auth@v2
         with:

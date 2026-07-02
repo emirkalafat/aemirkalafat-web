@@ -23,6 +23,16 @@ export interface MinecraftServer {
   players: string
   version: string
   desc: string
+  address?: string
+}
+
+// Server connect addresses — keyed by world_name (as shown in Crafty). These are
+// what players paste into their Minecraft client's "Add Server" dialog, NOT
+// the internal Crafty management URL.
+const CONNECT_ADDRESSES: Record<string, string | undefined> = {
+  'Vanilla': 'vanilla.aemirkalafat.com',
+  'Hardcore': 'hardcore.aemirkalafat.com',
+  'Linggango': 'modded.aemirkalafat.com',
 }
 
 function mapCraftyServer(server: CraftyStatusServer): MinecraftServer {
@@ -33,6 +43,7 @@ function mapCraftyServer(server: CraftyStatusServer): MinecraftServer {
     players: `${server.online} / ${server.max}`,
     version: server.running ? server.version : 'N/A',
     desc: server.running ? server.desc : '',
+    address: CONNECT_ADDRESSES[server.world_name],
   }
 }
 
