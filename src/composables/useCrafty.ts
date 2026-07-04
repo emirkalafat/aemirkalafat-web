@@ -30,9 +30,9 @@ export interface MinecraftServer {
 // what players paste into their Minecraft client's "Add Server" dialog, NOT
 // the internal Crafty management URL.
 const CONNECT_ADDRESSES: Record<string, string | undefined> = {
-  'Vanilla': 'vanilla.aemirkalafat.com',
-  'Hardcore': 'hardcore.aemirkalafat.com',
-  'Linggango': 'modded.aemirkalafat.com',
+  'Vanilla': 'minecraft.aemirkalafat.com:25565',
+  'Hardcore': 'minecraft.aemirkalafat.com:25566',
+  'Linggango': 'minecraft.aemirkalafat.com:25567',
 }
 
 function mapCraftyServer(server: CraftyStatusServer): MinecraftServer {
