@@ -77,7 +77,12 @@ export function useCrafty() {
 
       servers.value = body.data
         .map(mapCraftyServer)
-        .sort((a, b) => Number(b.state === 'ONLINE') - Number(a.state === 'ONLINE'))
+        .sort((a, b) => {
+          const aIsHub = a.state === 'ONLINE' && a.name.toUpperCase() === 'HUB'
+          const bIsHub = b.state === 'ONLINE' && b.name.toUpperCase() === 'HUB'
+          if (aIsHub !== bIsHub) return Number(bIsHub) - Number(aIsHub)
+          return Number(b.state === 'ONLINE') - Number(a.state === 'ONLINE')
+        })
       error.value = null
       console.log('Crafty servers loaded successfully:', { count: servers.value.length })
     } catch (e) {
