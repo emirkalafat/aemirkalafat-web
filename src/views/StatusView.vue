@@ -23,7 +23,24 @@
       <div v-else-if="services.length === 0" class="flex items-center justify-center h-64">
         <p class="text-on-surface-variant">No services available</p>
       </div>
-      <div v-else class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 lg:gap-8">
+      <div v-else class="flex flex-col gap-6 lg:gap-8">
+        <!-- Legend -->
+        <div class="flex flex-wrap items-center gap-x-6 gap-y-2 font-code text-code text-on-surface-variant uppercase">
+          <div class="flex items-center gap-2">
+            <span class="w-2.5 h-2.5 bg-on-tertiary-container"></span>
+            <span>Operational</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="w-2.5 h-2.5" style="background-color: rgba(255, 220, 100, 0.6)"></span>
+            <span>Maintenance</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="w-2.5 h-2.5 bg-error"></span>
+            <span>Outage</span>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 lg:gap-8">
         <article v-for="service in services" :key="service.name"
           class="bg-surface-container-lowest border relative group flex flex-col brutalist-offset-hover shadow-tertiary transition-[box-shadow]"
           :class="service.status === 'OUTAGE'
@@ -90,7 +107,8 @@
                   <template v-for="(pt, i) in service.sparklineData" :key="i">
                     <rect v-if="pt.status !== 1" :x="pt.x - (100 / service.sparklineData.length) / 2"
                       :width="100 / service.sparklineData.length" y="0" height="20"
-                      :fill="pt.status === 0 ? 'rgba(255,180,171,0.35)' : 'rgba(255,220,100,0.2)'" />
+                      :fill="pt.status === 0 ? 'rgba(255,180,171,0.35)' : 'rgba(255,220,100,0.2)'"><title>{{ pt.status
+                        === 0 ? 'Outage' : 'Maintenance' }}</title></rect>
                   </template>
                   <!-- Ping baseline guide -->
                   <line x1="0" y1="18" x2="100" y2="18" stroke="rgba(255,255,255,0.06)" stroke-width="0.5"
@@ -118,6 +136,7 @@
             </div>
           </div>
         </article>
+        </div>
       </div>
 
       <!-- Minecraft Servers Section -->
