@@ -42,7 +42,7 @@
 
         <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 lg:gap-8">
           <article v-for="service in services" :key="service.name"
-            class="bg-surface-container-lowest border relative group flex flex-col brutalist-offset-hover shadow-tertiary transition-[box-shadow]"
+            class="bg-surface-container-lowest border relative group flex flex-col brutalist-offset-hover shadow-cyber-purple transition-[box-shadow]"
             :class="service.status === 'OUTAGE'
               ? 'border-2 border-error-container'
               : 'border-primary'">
