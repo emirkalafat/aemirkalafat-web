@@ -52,13 +52,13 @@
 
       <!-- Experience Section -->
       <section class="flex flex-col gap-8">
-        <h2 class="font-headline-md text-headline-md border-b-2 border-primary pb-2 uppercase w-full">Experience.Log()</h2>
+        <h2 class="font-headline-md text-headline-md border-b-2 border-tertiary pb-2 uppercase w-full">Experience.Log()</h2>
         <div class="flex flex-col gap-gutter">
           <ExperienceCard v-for="exp in experience" :key="exp.company" v-bind="exp" />
         </div>
 
         <!-- Projects CTA -->
-        <div class="border border-primary bg-surface-container-lowest flex flex-col md:flex-row items-center justify-between gap-6 p-gutter mt-4">
+        <div class="border border-primary bg-surface-container-lowest flex flex-col md:flex-row items-center justify-between gap-6 p-gutter mt-4 transition-transform duration-200 brutalist-offset shadow-primary brutalist-offset-hover">
           <div class="flex flex-col gap-2">
             <p class="font-label-md text-label-md text-tertiary font-code uppercase">Projects.ls()</p>
             <p class="font-body-md text-body-md text-on-surface-variant max-w-lg">
@@ -66,7 +66,7 @@
             </p>
           </div>
           <RouterLink to="/projects"
-            class="shrink-0 flex items-center gap-2 bg-on-surface text-background font-label-md text-label-md px-8 py-4 uppercase hover:-translate-x-1 hover:-translate-y-1 hover:shadow-[4px_4px_0px_#BD00FF] transition-all duration-100">
+            class="shrink-0 flex items-center gap-2 bg-on-surface text-background font-label-md text-label-md px-8 py-4 uppercase brutalist-offset-hover shadow-tertiary transition-[box-shadow]">
             <span class="material-symbols-outlined text-[18px]">folder_open</span>
             View Projects
           </RouterLink>
@@ -75,7 +75,7 @@
 
       <!-- Education Section -->
       <section class="flex flex-col gap-8">
-        <h2 class="font-headline-md text-headline-md border-b-2 border-primary pb-2 uppercase w-full">Education.Stack()</h2>
+        <h2 class="font-headline-md text-headline-md border-b-2 border-cyber-purple pb-2 uppercase w-full">Education.Stack()</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-gutter">
           <EducationCard v-for="edu in education" :key="edu.institution + edu.degree" v-bind="edu" />
         </div>
@@ -84,7 +84,7 @@
       <!-- Terminal Output Card -->
       <section class="flex flex-col gap-8">
         <h2 class="font-headline-md text-headline-md border-b-2 border-primary pb-2 uppercase w-full">System.Status()</h2>
-        <div class="border border-outline bg-surface-container-lowest p-0">
+        <div class="border border-outline bg-surface-container p-0">
           <div class="bg-primary text-on-primary font-code text-code px-4 py-2 border-b border-outline flex justify-between">
             <span>bash - 80x24</span>
             <span>_ </span>
