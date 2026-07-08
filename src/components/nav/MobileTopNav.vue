@@ -60,7 +60,7 @@
       <RouterLink
         to="/contact"
         @click="isOpen = false"
-        class="w-full bg-surface border border-primary text-primary hover:bg-secondary-container hover:text-on-secondary-container transition-colors py-2 text-label-md font-code flex justify-center items-center gap-2 brutalist-offset shadow-tertiary hover:shadow-tertiary"
+        class="w-full bg-surface border border-primary text-primary hover:bg-secondary-container hover:text-on-secondary-container transition-colors py-2 text-label-md font-code flex justify-center items-center gap-2 brutalist-offset-hover shadow-tertiary"
       >
         <span class="material-symbols-outlined text-[16px]">mail</span>
         CONTACT
@@ -68,7 +68,7 @@
 
       <button
         @click="toggleTheme"
-        class="w-full bg-surface border border-primary text-primary hover:bg-secondary-container hover:text-on-secondary-container transition-colors py-2 text-label-md font-code flex justify-center items-center gap-2 brutalist-offset shadow-tertiary hover:shadow-tertiary"
+        class="w-full bg-surface border border-primary text-primary hover:bg-secondary-container hover:text-on-secondary-container transition-colors py-2 text-label-md font-code flex justify-center items-center gap-2 brutalist-offset-hover shadow-tertiary"
       >
         <span class="material-symbols-outlined text-[16px]">{{ isDark ? 'light_mode' : 'dark_mode' }}</span>
         {{ isDark ? 'LIGHT' : 'DARK' }}
