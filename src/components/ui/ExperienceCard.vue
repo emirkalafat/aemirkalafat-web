@@ -1,5 +1,5 @@
 <template>
-  <article class="border border-outline bg-surface-container-lowest flex flex-col">
+  <article class="border border-tertiary bg-surface-container-lowest flex flex-col transition-transform duration-200 brutalist-offset shadow-tertiary brutalist-offset-hover">
     <!-- Card Header -->
     <div class="bg-on-surface text-background px-4 py-2 flex justify-between items-center">
       <div class="flex flex-col gap-1 flex-1">

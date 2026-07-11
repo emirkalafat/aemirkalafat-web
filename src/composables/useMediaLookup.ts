@@ -66,7 +66,7 @@ async function searchTMDB(query: string, type: 'MOVIE' | 'TV_SERIES'): Promise<T
     }
 
     const meta: string[] = []
-    if (director) meta.push(`DIR: ${director}`)
+    if (director) meta.push(`DIRECTOR: ${director}`)
     if (year) meta.push(`YEAR: ${year}`)
 
     const externalUrl = `https://www.themoviedb.org/${type === 'MOVIE' ? 'movie' : 'tv'}/${tmdbId}`

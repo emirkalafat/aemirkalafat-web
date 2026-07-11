@@ -1,5 +1,5 @@
 <template>
-  <article class="border border-outline bg-surface-container-lowest flex flex-col">
+  <article class="border border-cyber-purple bg-surface-container-lowest flex flex-col transition-transform duration-200 brutalist-offset shadow-cyber-purple brutalist-offset-hover">
     <!-- Card Header -->
     <div class="bg-on-surface text-background px-4 py-2 flex justify-between items-center">
       <h3 class="text-headline-md font-headline-md uppercase tracking-tight">{{ institution }}</h3>

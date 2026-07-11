@@ -209,14 +209,14 @@
             <div class="px-6 py-4">
               <h3 class="font-code text-xs text-on-surface-variant font-bold uppercase mb-4">IMAGE</h3>
               <div class="mb-4">
-                <img
-                  v-if="editingCard.imageUrl"
-                  :src="editingCard.imageUrl"
-                  :alt="editingCard.title"
-                  class="w-full max-w-xs max-h-64 object-cover border border-on-surface/30"
-                />
-                <div v-else class="w-full max-w-xs h-48 bg-surface-dim border border-on-surface/30 flex items-center justify-center">
-                  <span class="font-code text-xs text-on-surface-variant">NO_IMAGE</span>
+                <div class="w-40 aspect-[2/3] bg-surface-dim border border-on-surface/30 overflow-hidden flex items-center justify-center">
+                  <img
+                    v-if="editingCard.imageUrl"
+                    :src="editingCard.imageUrl"
+                    :alt="editingCard.title"
+                    class="w-full h-full object-cover"
+                  />
+                  <span v-else class="font-code text-xs text-on-surface-variant">NO_IMAGE</span>
                 </div>
               </div>
               <label class="block font-code text-xs text-on-surface-variant uppercase mb-1">IMAGE_URL</label>
@@ -356,7 +356,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, toRaw } from 'vue'
 import { useMedia } from '@/composables/useMedia'
 import { useMediaLookup } from '@/composables/useMediaLookup'
 import type { MediaCardData, MediaMetrics } from '@/data/media'
@@ -394,8 +394,10 @@ const filteredCards = computed(() => {
 
 function selectCard(card: MediaCardData) {
   selectedCard.value = card
-  editingCard.value = structuredClone(card)
-  metricsData.value = card.metrics || { narrativeArch: 0, aestheticExec: 0, coherenceRating: 0 }
+  editingCard.value = structuredClone(toRaw(card))
+  metricsData.value = card.metrics
+    ? structuredClone(toRaw(card.metrics))
+    : { narrativeArch: 0, aestheticExec: 0, coherenceRating: 0 }
   lookupQuery.value = ''
   lookupResults.value = []
   lookupError.value = ''

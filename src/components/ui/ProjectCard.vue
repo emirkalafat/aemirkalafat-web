@@ -30,23 +30,26 @@
             : 'border border-[#ffaa00] text-[#ffaa00]'">{{ status === 'STABLE' ? 'STABLE' : 'BETA / UNSTABLE'
             }}</span>
         </div>
-        <p class="text-body-md font-body-md text-on-surface-variant">{{ description }}</p>
-        <div class="relative group">
-          <div class="absolute inset-0 rounded-sm opacity-0 group-hover:opacity-100 transition-opacity" style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(168, 85, 247, 0.15));"></div>
-          <RouterLink :to="`/projects/${name}`"
-            class="relative mt-2 inline-flex items-center gap-2 font-code text-code text-primary px-4 py-2 hover:text-primary transition-all uppercase"
-            style="border: 1px solid rgb(59 130 246 / 0.6); border-radius: 0.25rem;"
-            @click.stop>VIEW_DETAILS <span class="material-symbols-outlined text-[14px]">arrow_forward</span></RouterLink>
-        </div>
-        <div class="flex items-center gap-4 text-label-md font-code text-on-surface-variant mt-2">
-          <span class="flex items-center gap-1">
-            <span class="material-symbols-outlined text-[16px]">calendar_today</span>
-            {{ date }}
-          </span>
-          <span class="flex items-center gap-1">
-            <span class="material-symbols-outlined text-[16px]">commit</span>
-            {{ commit }}
-          </span>
+        <p class="text-body-md font-body-md text-on-surface-variant line-clamp-3 min-h-[4.8em]">{{ description }}</p>
+        <!-- Footer: date (left) + VIEW_DETAILS (right), pinned to bottom -->
+        <div class="mt-auto pt-2 flex flex-wrap items-center justify-between gap-4">
+          <div class="flex items-center gap-4 text-label-md font-code text-on-surface-variant">
+            <span class="flex items-center gap-1">
+              <span class="material-symbols-outlined text-[16px]">calendar_today</span>
+              {{ date }}
+            </span>
+            <span class="flex items-center gap-1">
+              <span class="material-symbols-outlined text-[16px]">commit</span>
+              {{ commit }}
+            </span>
+          </div>
+          <div class="relative group shrink-0">
+            <div class="absolute inset-0 rounded-sm opacity-0 group-hover:opacity-100 transition-opacity" style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(168, 85, 247, 0.15));"></div>
+            <RouterLink :to="`/projects/${name}`"
+              class="relative inline-flex items-center gap-2 font-code text-code text-primary px-4 py-2 hover:text-primary transition-all uppercase"
+              style="border: 1px solid rgb(59 130 246 / 0.6); border-radius: 0.25rem;"
+              @click.stop>VIEW_DETAILS <span class="material-symbols-outlined text-[14px]">arrow_forward</span></RouterLink>
+          </div>
         </div>
       </div>
 
@@ -63,9 +66,9 @@
         <div class="flex flex-wrap items-baseline gap-3 mb-3">
           <span class="font-code font-bold text-tertiary text-sm">{{ latestEntry.version }}</span>
           <span class="font-code text-code text-on-surface-variant">{{ latestEntry.label }}</span>
-          <span class="font-code text-code text-on-surface-variant opacity-50 text-xs">{{ latestEntry.date }}</span>
+          <span class="font-code text-code text-on-surface-variant opacity-50 text-xs">{{ formatDateOnly(latestEntry.date) }}</span>
         </div>
-        <div class="flex flex-col gap-2 border-l border-surface-variant ml-2 pl-4">
+        <div class="flex flex-col gap-2 border-l border-surface-variant ml-2 pl-4 max-h-60 overflow-y-auto">
           <div v-for="(item, idx) in latestEntry.items" :key="idx" class="flex items-start gap-2 font-code text-code">
             <span class="shrink-0 font-bold" :class="flagClass(item.flag)">[{{ item.flag }}]</span>
             <span class="text-on-surface-variant">{{ item.text }}</span>
@@ -78,6 +81,7 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue'
+import { formatDateOnly } from '@/utils/date'
 
 interface Tag {
   label: string
