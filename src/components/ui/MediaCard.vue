@@ -1,6 +1,7 @@
 <template>
-  <article
-    class="border border-primary bg-surface group flex flex-col relative transition-transform duration-200 brutalist-offset shadow-primary hover:shadow-tertiary brutalist-offset-hover">
+  <RouterLink :to="`/media/${id}`" class="block">
+    <article
+      class="border border-primary bg-surface group flex flex-col relative transition-transform duration-200 brutalist-offset shadow-primary hover:shadow-tertiary brutalist-offset-hover cursor-pointer">
     <div class="h-10 bg-primary flex items-center justify-between px-4">
       <span class="font-code text-label-md text-on-primary">ID: {{ id }}</span>
       <span class="font-code text-label-md text-on-primary flex items-center gap-1">
@@ -40,17 +41,19 @@
             <span :class="ratingClass">{{ ratingLabel }}</span>
           </div>
           <RatingBar :rating="rating" />
-          <RouterLink :to="`/media/${id}`"
-            class="mt-2 flex items-center justify-end gap-1 font-code text-code text-on-surface-variant hover:text-tertiary transition-colors uppercase">
-            ANALYZE <span class="material-symbols-outlined text-[14px]">arrow_forward</span></RouterLink>
+          <div class="mt-2 flex items-center justify-end gap-1 font-code text-code text-on-surface-variant group-hover:text-tertiary transition-colors uppercase">
+            ANALYZE <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+          </div>
         </div>
       </div>
     </div>
   </article>
+  </RouterLink>
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue'
+import { RouterLink } from 'vue-router'
 import RatingBar from './RatingBar.vue'
 
 interface Props {
