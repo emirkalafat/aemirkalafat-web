@@ -21,8 +21,8 @@
       >
         <div
           :class="tierColor.fill"
-          class="absolute inset-y-0 left-0 transition-[width] duration-150"
-          :style="{ width: segment + '%' }"
+          class="absolute inset-0 transition-opacity duration-150"
+          :style="{ opacity: segment }"
         />
       </div>
     </div>
@@ -77,11 +77,14 @@ const tierColor = computed(() => {
   }
 })
 
+// Her kutu ya tam dolu (opaklık 1) ya boş; yalnızca kesirli değere denk gelen
+// tek kutu ara opaklık alır. Örn. 5.6 → ilk 5 kutu opaklık 1, 6. kutu 0.6.
+// Animasyon sırasında animatedRating 0'dan yükseldikçe kutular sırayla soluktan
+// tam opaklığa çıkar (su dolumu değil, opaklık artışı).
 const segments = computed(() => {
   const segs: number[] = []
   for (let i = 0; i < 10; i++) {
-    const fillPct = Math.min(Math.max(animatedRating.value - i, 0), 1) * 100
-    segs.push(fillPct)
+    segs.push(Math.min(Math.max(animatedRating.value - i, 0), 1))
   }
   return segs
 })
