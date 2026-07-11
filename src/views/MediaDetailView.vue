@@ -67,14 +67,7 @@
               </div>
 
               <!-- AGGREGATE_SCORE -->
-              <div class="md:col-span-1 border-2 border-tertiary bg-surface-container-lowest p-6 flex flex-col items-center justify-center brutalist-offset shadow-tertiary">
-                <p class="font-code text-code text-on-surface-variant uppercase tracking-widest mb-4 text-xs">AGGREGATE_SCORE</p>
-                <div class="flex items-end gap-1 leading-none">
-                  <span class="font-code font-bold text-tertiary" style="font-size: 3.5rem; line-height: 1;">{{ card.rating }}</span>
-                  <span class="font-code text-on-surface-variant text-lg mb-1">/10</span>
-                </div>
-                <p class="font-code text-code text-tertiary uppercase mt-3 text-xs">{{ card.ratingLabel }}</p>
-              </div>
+              <ScoreMeter :rating="card.rating" :label="card.ratingLabel" class="md:col-span-1" />
 
             </div>
 
@@ -129,6 +122,7 @@
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import PageHeader from '@/components/ui/PageHeader.vue'
+import ScoreMeter from '@/components/ui/ScoreMeter.vue'
 import { useMedia } from '@/composables/useMedia'
 
 const route = useRoute()
