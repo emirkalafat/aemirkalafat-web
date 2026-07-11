@@ -60,7 +60,7 @@
             class="font-code text-label-md mb-6"
             :class="group.isLatest ? 'text-tertiary' : 'text-on-surface-variant'"
           >{{ group.label }}</div>
-          <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-gutter">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-gutter">
             <MediaCard
               v-for="card in group.cards"
               :key="card.id"

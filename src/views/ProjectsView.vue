@@ -44,7 +44,7 @@
 
     <!-- Project List -->
     <section class="flex-1 p-margin-mobile lg:p-margin-desktop bg-surface-container-lowest">
-      <div class="flex flex-col gap-6">
+      <div class="grid grid-cols-1 xl:grid-cols-2 gap-6 items-start">
         <ProjectCard
           v-for="project in filteredProjects"
           :key="project.name"
@@ -52,7 +52,7 @@
         />
         <div
           v-if="filteredProjects.length === 0"
-          class="border border-primary bg-surface p-8 text-center"
+          class="col-span-full border border-primary bg-surface p-8 text-center"
         >
           <p class="text-body-md font-code text-on-surface-variant">[NO_RESULTS_FOUND]</p>
         </div>

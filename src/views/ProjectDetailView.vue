@@ -51,7 +51,7 @@
                   :href="link.url"
                   class="flex items-center gap-3 font-code text-code text-on-surface-variant hover:text-tertiary transition-colors py-3 border-b border-surface-variant last:border-0"
                 >
-                  <span class="material-symbols-outlined text-[16px]">{{ link.icon }}</span>
+                  <LinkIcon :icon="link.icon" />
                   {{ link.label }}
                   <span class="ml-auto material-symbols-outlined text-[14px] opacity-40">arrow_forward</span>
                 </a>
@@ -110,7 +110,7 @@
                     <span v-if="entryIdx === 0" class="font-code text-code border border-tertiary text-tertiary px-2 py-0.5 text-[11px] uppercase">LATEST</span>
                   </div>
                   <div class="flex flex-wrap items-center gap-3 mb-4">
-                    <span class="font-code text-code text-on-surface-variant opacity-60">{{ entry.date }}</span>
+                    <span class="font-code text-code text-on-surface-variant opacity-60">{{ formatDateOnly(entry.date) }}</span>
                     <span class="font-code text-code text-on-surface-variant">// {{ entry.label }}</span>
                   </div>
                   <!-- Items -->
@@ -139,7 +139,9 @@
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import PageHeader from '@/components/ui/PageHeader.vue'
+import LinkIcon from '@/components/ui/LinkIcon.vue'
 import { useProjects } from '@/composables/useProjects'
+import { formatDateOnly } from '@/utils/date'
 import type { ChangelogFlag } from '@/data/projects'
 
 const route = useRoute()
