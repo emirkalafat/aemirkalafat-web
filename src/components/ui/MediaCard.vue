@@ -8,37 +8,42 @@
         {{ type }}
       </span>
     </div>
-    <div class="p-4 flex flex-col flex-1">
+    <div class="p-4 flex gap-4 flex-1">
+      <!-- Poster (left, fixed) -->
       <div
-        class="aspect-[2/3] w-full border border-primary bg-surface-variant mb-4 relative overflow-hidden group-hover:border-tertiary transition-colors">
+        class="w-24 sm:w-28 shrink-0 aspect-[2/3] border border-primary bg-surface-variant relative overflow-hidden group-hover:border-tertiary transition-colors">
         <img :src="imageUrl" :alt="title"
           class="w-full h-full object-cover filter grayscale group-hover:grayscale-0 transition-all duration-500" />
         <div
-          class="absolute top-2 right-2 px-2 py-1 font-code text-label-md font-bold text-on-primary rounded-sm"
+          class="absolute top-1 right-1 px-1.5 py-0.5 font-code text-[10px] font-bold text-on-primary rounded-sm"
           :style="{ background: ratingGradient, border: '1px solid rgb(59 130 246 / 0.4)' }">
           {{ rating }}/10
         </div>
       </div>
-      <h2
-        class="text-headline-md font-headline-md text-primary mb-2 truncate group-hover:text-tertiary transition-colors">
-        {{ title }}
-      </h2>
-      <div
-        class="text-label-md font-code text-on-surface-variant mb-4 flex gap-4 border-b border-surface-container-high pb-4">
-        <span v-for="(item, idx) in meta" :key="idx">{{ item }}</span>
-      </div>
-      <p class="text-body-md font-body-md text-on-surface-variant line-clamp-3 mb-6">
-        {{ description }}
-      </p>
-      <div class="mt-auto pt-4 border-t border-primary">
-        <div class="flex justify-between font-code text-label-md mb-2">
-          <span class="text-primary">SYSTEM_RATING</span>
-          <span :class="ratingClass">{{ ratingLabel }}</span>
+
+      <!-- Content (right, flex) -->
+      <div class="flex-1 min-w-0 flex flex-col">
+        <h2
+          class="text-headline-md font-headline-md text-primary mb-1 truncate group-hover:text-tertiary transition-colors">
+          {{ title }}
+        </h2>
+        <div
+          class="text-label-md font-code text-on-surface-variant mb-2 flex flex-wrap gap-x-3 gap-y-0.5">
+          <span v-for="(item, idx) in meta" :key="idx">{{ item }}</span>
         </div>
-        <RatingBar :rating="rating" />
-        <RouterLink :to="`/media/${id}`"
-          class="mt-3 flex items-center justify-end gap-1 font-code text-code text-on-surface-variant hover:text-tertiary transition-colors uppercase">
-          ANALYZE <span class="material-symbols-outlined text-[14px]">arrow_forward</span></RouterLink>
+        <p class="text-body-md font-body-md text-on-surface-variant line-clamp-2">
+          {{ description }}
+        </p>
+        <div class="mt-auto pt-3 border-t border-primary">
+          <div class="flex justify-between font-code text-label-md mb-2">
+            <span class="text-primary">SYSTEM_RATING</span>
+            <span :class="ratingClass">{{ ratingLabel }}</span>
+          </div>
+          <RatingBar :rating="rating" />
+          <RouterLink :to="`/media/${id}`"
+            class="mt-2 flex items-center justify-end gap-1 font-code text-code text-on-surface-variant hover:text-tertiary transition-colors uppercase">
+            ANALYZE <span class="material-symbols-outlined text-[14px]">arrow_forward</span></RouterLink>
+        </div>
       </div>
     </div>
   </article>

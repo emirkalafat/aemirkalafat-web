@@ -13,10 +13,6 @@
       <span class="font-code text-on-surface-variant text-lg">/10</span>
     </div>
 
-    <div v-if="label" :class="[tierColor.border, tierColor.fill]" class="px-4 py-2 border-2 font-code font-bold uppercase text-sm tracking-wide text-on-surface">
-      {{ label }}
-    </div>
-
     <div class="w-full flex gap-[3px]">
       <div
         v-for="(segment, idx) in segments"
