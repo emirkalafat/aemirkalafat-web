@@ -79,9 +79,8 @@
               <p
                 v-for="(line, i) in descriptionLines"
                 :key="i"
-                class="font-body-md text-body-md text-on-surface leading-[1.8] flex gap-3"
+                class="font-body-md text-body-md text-on-surface leading-[1.8]"
               >
-                <span class="text-on-tertiary-container select-none shrink-0">›</span>
                 {{ line }}
               </p>
             </div>
@@ -147,7 +146,7 @@ const analysisTitle = computed(() => card.value ? `${card.value.title}_ANALYSIS`
 
 const descriptionLines = computed(() => {
   if (!card.value) return []
-  return card.value.description.split('. ').filter(Boolean).map(s => s.endsWith('.') ? s : s + '.')
+  return card.value.description.split(/\n+/).map(s => s.trim()).filter(Boolean)
 })
 
 const metricEntries = computed((): [string, number][] => {
