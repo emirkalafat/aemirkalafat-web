@@ -356,7 +356,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, toRaw } from 'vue'
 import { useMedia } from '@/composables/useMedia'
 import { useMediaLookup } from '@/composables/useMediaLookup'
 import type { MediaCardData, MediaMetrics } from '@/data/media'
@@ -394,8 +394,10 @@ const filteredCards = computed(() => {
 
 function selectCard(card: MediaCardData) {
   selectedCard.value = card
-  editingCard.value = structuredClone(card)
-  metricsData.value = card.metrics || { narrativeArch: 0, aestheticExec: 0, coherenceRating: 0 }
+  editingCard.value = structuredClone(toRaw(card))
+  metricsData.value = card.metrics
+    ? structuredClone(toRaw(card.metrics))
+    : { narrativeArch: 0, aestheticExec: 0, coherenceRating: 0 }
   lookupQuery.value = ''
   lookupResults.value = []
   lookupError.value = ''
