@@ -10,7 +10,7 @@
     </div>
     <div class="p-4 flex flex-col flex-1">
       <div
-        class="aspect-[16/9] w-full border border-primary bg-surface-variant mb-4 relative overflow-hidden group-hover:border-tertiary transition-colors">
+        class="aspect-[2/3] w-full border border-primary bg-surface-variant mb-4 relative overflow-hidden group-hover:border-tertiary transition-colors">
         <img :src="imageUrl" :alt="title"
           class="w-full h-full object-cover filter grayscale group-hover:grayscale-0 transition-all duration-500" />
         <div
