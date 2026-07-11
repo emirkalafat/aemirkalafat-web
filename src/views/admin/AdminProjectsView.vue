@@ -246,7 +246,7 @@
                   </div>
                   <div class="flex flex-col gap-2">
                     <label class="font-code text-xs text-on-surface-variant uppercase">DATE</label>
-                    <input v-model="entry.date" type="datetime-local" class="bg-transparent border-b border-on-surface text-code font-code text-on-surface px-0 py-2 focus:ring-0 focus:border-tertiary outline-none text-sm" />
+                    <input v-model="entry.date" type="date" class="bg-transparent border-b border-on-surface text-code font-code text-on-surface px-0 py-2 focus:ring-0 focus:border-tertiary outline-none text-sm" />
                   </div>
                   <div class="flex flex-col gap-2">
                     <label class="font-code text-xs text-on-surface-variant uppercase">LABEL</label>
@@ -299,9 +299,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, toRaw } from 'vue'
 import { useProjects } from '@/composables/useProjects'
 import { useProjectSettings } from '@/composables/useProjectSettings'
+import { formatDateOnly } from '@/utils/date'
 import type { Project, Tag, ChangelogEntry } from '@/data/projects'
 
 const projects = useProjects()
@@ -321,7 +322,12 @@ const filteredProjects = computed(() => {
 
 function selectProject(project: Project) {
   selectedProject.value = project
-  editingProject.value = structuredClone(project)
+  const clone = structuredClone(toRaw(project))
+  // Normalize any legacy datetime values to date-only so the date input binds
+  // correctly. Only the editing clone is touched; stored data stays untouched
+  // until the project is explicitly saved.
+  clone.changelog?.forEach(entry => { entry.date = formatDateOnly(entry.date) })
+  editingProject.value = clone
   openVersions.value.clear()
 }
 
@@ -395,7 +401,7 @@ function addVersion() {
   const newVersion: ChangelogEntry = {
     version: 'v0.0.1',
     label: 'New Release',
-    date: new Date().toISOString(),
+    date: new Date().toISOString().split('T')[0] ?? '',
     isLatest: false,
     items: [],
   }
