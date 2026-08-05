@@ -49,6 +49,7 @@
                   v-for="link in project.links"
                   :key="link.label"
                   :href="link.url"
+                  @click="trackProjectLinkClick(project.name, link.label, link.url)"
                   class="flex items-center gap-3 font-code text-code text-on-surface-variant hover:text-tertiary transition-colors py-3 border-b border-surface-variant last:border-0"
                 >
                   <LinkIcon :icon="link.icon" />
@@ -149,7 +150,7 @@ const route = useRoute()
 const projects = useProjects()
 const project = computed(() => projects.items.value.find(p => p.name === route.params.name))
 
-const { trackProjectView } = useAnalytics()
+const { trackProjectView, trackProjectLinkClick } = useAnalytics()
 watch(project, p => {
   if (p) trackProjectView(p.name)
 }, { immediate: true })

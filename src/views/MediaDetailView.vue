@@ -52,7 +52,9 @@
               <div class="md:col-span-2 border border-primary bg-surface-container-lowest flex flex-col">
                 <div class="bg-primary px-4 py-2 font-code text-label-md text-on-primary uppercase flex justify-between items-center">
                   <span>SYS_METADATA</span>
-                  <a v-if="card.externalUrl" :href="card.externalUrl" target="_blank" rel="noopener noreferrer" class="bg-tertiary text-on-tertiary px-3 py-1 font-code text-xs uppercase hover:bg-on-tertiary hover:text-tertiary transition-colors">
+                  <a v-if="card.externalUrl" :href="card.externalUrl" target="_blank" rel="noopener noreferrer"
+                    @click="trackMediaSourceClick(card.id, card.title, card.externalUrl)"
+                    class="bg-tertiary text-on-tertiary px-3 py-1 font-code text-xs uppercase hover:bg-on-tertiary hover:text-tertiary transition-colors">
                     VIEW_SOURCE
                   </a>
                 </div>
@@ -130,7 +132,7 @@ const route = useRoute()
 const media = useMedia()
 const card = computed(() => media.items.value.find(c => c.id === route.params.id))
 
-const { trackMediaView } = useAnalytics()
+const { trackMediaView, trackMediaSourceClick } = useAnalytics()
 watch(card, c => {
   if (c) trackMediaView(c.id, c.title, c.type)
 }, { immediate: true })

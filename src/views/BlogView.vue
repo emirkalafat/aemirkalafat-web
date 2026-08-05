@@ -7,28 +7,28 @@
       <template #filters>
         <div class="flex flex-wrap gap-4 items-center font-code text-label-md">
           <button
-            @click="activeFilter = null"
+            @click="selectFilter(null)"
             :class="[
               'border border-primary px-4 py-2 hover:bg-surface-variant transition-colors uppercase',
               activeFilter === null ? 'bg-tertiary border-tertiary text-[#1a1a1a]' : 'text-primary'
             ]"
           >[*] ALL</button>
           <button
-            @click="activeFilter = 'DEV'"
+            @click="selectFilter('DEV')"
             :class="[
               'border border-primary px-4 py-2 hover:bg-surface-variant transition-colors uppercase',
               activeFilter === 'DEV' ? 'bg-tertiary border-tertiary text-[#1a1a1a]' : 'text-primary'
             ]"
           >[DEV]</button>
           <button
-            @click="activeFilter = 'E-ENG'"
+            @click="selectFilter('E-ENG')"
             :class="[
               'border border-primary px-4 py-2 hover:bg-surface-variant transition-colors uppercase',
               activeFilter === 'E-ENG' ? 'bg-tertiary border-tertiary text-[#1a1a1a]' : 'text-primary'
             ]"
           >[E-ENG]</button>
           <button
-            @click="activeFilter = 'THEORY'"
+            @click="selectFilter('THEORY')"
             :class="[
               'border border-primary px-4 py-2 hover:bg-surface-variant transition-colors uppercase',
               activeFilter === 'THEORY' ? 'bg-tertiary border-tertiary text-[#1a1a1a]' : 'text-primary'
@@ -187,17 +187,24 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import PageHeader from '@/components/ui/PageHeader.vue'
 import { useBlog } from '@/composables/useBlog'
+import { useAnalytics } from '@/composables/useAnalytics'
 import type { BlogPost } from '@/data/blog'
 
 const blog = useBlog()
+const { trackFilterSelect, trackSearch } = useAnalytics()
 
 type FilterType = null | 'DEV' | 'E-ENG' | 'THEORY'
 
 const activeFilter = ref<FilterType>(null)
 const searchQuery = ref('')
+
+function selectFilter(value: FilterType) {
+  activeFilter.value = value
+  trackFilterSelect('blog', value ?? 'ALL')
+}
 
 const matchesQuery = (post: BlogPost) => {
   const q = searchQuery.value.toLowerCase()
@@ -221,4 +228,10 @@ const filteredRegularPosts = computed(() => {
 const showWidePost = computed(() => {
   return widePost.value && matchesCategory(widePost.value) && matchesQuery(widePost.value)
 })
+
+const totalResultsCount = computed(() =>
+  (showFeatured.value ? 1 : 0) + filteredRegularPosts.value.length + (showWidePost.value ? 1 : 0)
+)
+
+watch(searchQuery, q => trackSearch('blog', q, totalResultsCount.value))
 </script>

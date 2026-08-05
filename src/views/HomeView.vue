@@ -30,11 +30,13 @@
 
           <div class="flex flex-wrap gap-4 mt-4 md:mt-8">
             <a href="/cv.pdf" target="_blank" rel="noopener"
+              @click="trackCvDownload"
               class="bg-primary text-on-primary border border-primary font-label-md text-label-md px-8 py-4 uppercase hover:bg-tertiary hover:text-on-tertiary hover:border-tertiary hover:-translate-x-1 hover:-translate-y-1 hover:shadow-[4px_4px_0px_#BD00FF] transition-all duration-100 flex items-center gap-2">
               <span class="material-symbols-outlined text-[18px]">download</span>
               Download CV
             </a>
             <a href="https://github.com/emirkalafat" target="_blank" rel="noopener"
+              @click="trackSocialClick('github', 'hero')"
               class="border border-primary text-primary hover:bg-primary hover:text-on-primary font-label-md text-label-md px-8 py-4 uppercase transition-colors flex items-center gap-2">
               <span class="material-symbols-outlined text-[18px]">code</span>
               GitHub
@@ -143,6 +145,8 @@ import { ref } from 'vue'
 import ExperienceCard from '@/components/ui/ExperienceCard.vue'
 import EducationCard from '@/components/ui/EducationCard.vue'
 import { experience, education } from '@/data/experience'
+import { useAnalytics } from '@/composables/useAnalytics'
 
 const bioExpanded = ref(false)
+const { trackCvDownload, trackSocialClick } = useAnalytics()
 </script>

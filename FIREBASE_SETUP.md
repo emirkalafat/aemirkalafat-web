@@ -140,7 +140,19 @@ The app reports to Google Analytics (GA4) via the Firebase Analytics SDK (`src/f
 - `view_project` on `/projects/:name` — `project_name` param.
 - `view_blog_post` on `/blog/:id` — `blog_id`, `blog_title`, `blog_category` params.
 - `view_media` on `/media/:id` — `media_id`, `media_title`, `media_type` params.
+- `project_link_click` — clicking a project's ACCESS_PORTAL link (demo/repo/store) — `project_name`, `link_label`, `link_url`.
+- `media_source_click` — clicking VIEW_SOURCE on a media detail page — `media_id`, `media_title`, `external_url`.
+- `status_service_visit` — clicking VISIT on a status page service card — `service_name`, `url`.
+- `minecraft_address_copy` — copying a Minecraft server address — `server_name`.
+- `social_click` — GitHub/LinkedIn/source links in the footer and hero — `platform`, `location` (`footer` | `hero`).
+- `cv_download` — clicking "Download CV" on the home page.
+- `contact_form_submit`, then `contact_form_success` or `contact_form_error` — contact form usage (no PII in params).
+- `filter_select` — category/status filter buttons on the Projects/Blog/Media list pages — `list`, `filter_value`.
+- `search` — search box usage on the same three list pages, debounced 800ms — `list`, `search_term`, `results_count`.
+- `theme_toggle` — dark/light switch — `new_theme`.
+- All tracking helpers live in `src/composables/useAnalytics.ts`.
 - **Country** is automatic — GA4 derives it from IP geolocation for every event, no extra code needed. It shows up in Reports → Demographics → Geographic details (or Realtime → Geography).
+- Not tracked on purpose: admin panel CRUD actions and login/logout — single-user, internal-only flows that add no analytical value in GA4.
 
 **Setup steps:**
 1. In [Firebase Console](https://console.firebase.google.com/) → your project → **Project Settings** → **Integrations**, confirm Google Analytics is linked (it already is for `emirklftweb` / `aemirkalafat-web`).

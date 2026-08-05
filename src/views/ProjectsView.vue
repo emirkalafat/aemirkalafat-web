@@ -7,21 +7,21 @@
       <template #filters>
         <div class="flex flex-wrap gap-4 items-center font-code text-label-md">
           <button
-            @click="activeFilter = null"
+            @click="selectFilter(null)"
             :class="[
               'border border-primary px-4 py-2 hover:bg-surface-variant transition-colors uppercase',
               activeFilter === null ? 'bg-tertiary border-tertiary text-[#1a1a1a]' : 'text-primary'
             ]"
           >[*] ALL</button>
           <button
-            @click="activeFilter = 'STABLE'"
+            @click="selectFilter('STABLE')"
             :class="[
               'border border-primary px-4 py-2 hover:bg-surface-variant transition-colors uppercase',
               activeFilter === 'STABLE' ? 'bg-tertiary border-tertiary text-[#1a1a1a]' : 'text-primary'
             ]"
           >STABLE</button>
           <button
-            @click="activeFilter = 'BETA'"
+            @click="selectFilter('BETA')"
             :class="[
               'border border-primary px-4 py-2 hover:bg-surface-variant transition-colors uppercase',
               activeFilter === 'BETA' ? 'bg-tertiary border-tertiary text-[#1a1a1a]' : 'text-primary'
@@ -62,17 +62,24 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import PageHeader from '@/components/ui/PageHeader.vue'
 import ProjectCard from '@/components/ui/ProjectCard.vue'
 import { useProjects } from '@/composables/useProjects'
+import { useAnalytics } from '@/composables/useAnalytics'
 
 const projects = useProjects()
+const { trackFilterSelect, trackSearch } = useAnalytics()
 
 type FilterType = null | 'STABLE' | 'BETA'
 
 const activeFilter = ref<FilterType>(null)
 const searchQuery = ref('')
+
+function selectFilter(value: FilterType) {
+  activeFilter.value = value
+  trackFilterSelect('projects', value ?? 'ALL')
+}
 
 const filteredProjects = computed(() => {
   return projects.items.value.filter(p => {
@@ -82,4 +89,6 @@ const filteredProjects = computed(() => {
     return matchesFilter && matchesSearch
   })
 })
+
+watch(searchQuery, q => trackSearch('projects', q, filteredProjects.value.length))
 </script>
