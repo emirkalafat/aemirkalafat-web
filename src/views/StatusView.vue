@@ -74,7 +74,8 @@
                     class="w-2 h-2 bg-on-tertiary-container animate-pulse"></span>
                   <span v-else class="w-2 h-2 bg-on-error animate-ping"></span>
                 </div>
-                <a :href="service.url" target="_blank" rel="noopener noreferrer" @click.stop
+                <a :href="service.url" target="_blank" rel="noopener noreferrer"
+                  @click.stop="trackStatusServiceVisit(service.name, service.url!)"
                   class="col-start-1 row-start-1 font-code text-code flex items-center gap-1 opacity-0 invisible transition-opacity group-hover:opacity-100 group-hover:visible"
                   :class="service.status === 'OUTAGE' ? 'text-on-error' : 'text-on-primary'">
                   <span class="material-symbols-outlined text-[13px]">open_in_new</span>
@@ -176,9 +177,11 @@ import PageHeader from '@/components/ui/PageHeader.vue'
 import MinecraftServerCard from '@/components/ui/MinecraftServerCard.vue'
 import { useStatus, type SparklinePoint } from '@/composables/useStatus'
 import { useCrafty } from '@/composables/useCrafty'
+import { useAnalytics } from '@/composables/useAnalytics'
 
 const { services, overallUptime, loading, error } = useStatus()
 const { servers: mcServers, loading: mcLoading, error: mcError } = useCrafty()
+const { trackStatusServiceVisit } = useAnalytics()
 
 function buildLinePath(data: SparklinePoint[]): string {
   let path = ''

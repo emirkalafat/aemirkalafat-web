@@ -9,14 +9,17 @@
         <a
           href="https://github.com/emirkalafat"
           target="_blank" rel="noopener"
+          @click="trackSocialClick('github', 'footer')"
           class="text-label-md font-code text-on-surface-variant hover:text-tertiary transition-colors">GITHUB</a>
         <a
           href="https://www.linkedin.com/in/aemirkalafat/"
           target="_blank" rel="noopener"
+          @click="trackSocialClick('linkedin', 'footer')"
           class="text-label-md font-code text-on-surface-variant hover:text-tertiary transition-colors">LINKEDIN</a>
         <a
           href="https://github.com/emirkalafat/aemirkalafat-web"
           target="_blank" rel="noopener"
+          @click="trackSocialClick('source', 'footer')"
           class="text-label-md font-code text-on-surface-variant hover:text-tertiary transition-colors">SOURCE</a>
       </div>
       <div class="text-label-md font-code text-tertiary flex items-center gap-2">
@@ -27,4 +30,7 @@
 </template>
 
 <script setup lang="ts">
+import { useAnalytics } from '@/composables/useAnalytics'
+
+const { trackSocialClick } = useAnalytics()
 </script>

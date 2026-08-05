@@ -131,6 +131,46 @@ service firebase.storage {
 4. Add or edit a post
 5. Return to `/blog` — the changes should appear live
 
+## Analytics Setup
+
+The app reports to Google Analytics (GA4) via the Firebase Analytics SDK (`src/firebase/index.ts`, `src/composables/useAnalytics.ts`).
+
+**What's tracked:**
+- `page_view` on every route change (`src/router/index.ts`) — path + title. This is how "which page" stats show up.
+- `view_project` on `/projects/:name` — `project_name` param.
+- `view_blog_post` on `/blog/:id` — `blog_id`, `blog_title`, `blog_category` params.
+- `view_media` on `/media/:id` — `media_id`, `media_title`, `media_type` params.
+- `project_link_click` — clicking a project's ACCESS_PORTAL link (demo/repo/store) — `project_name`, `link_label`, `link_url`.
+- `media_source_click` — clicking VIEW_SOURCE on a media detail page — `media_id`, `media_title`, `external_url`.
+- `status_service_visit` — clicking VISIT on a status page service card — `service_name`, `url`.
+- `minecraft_address_copy` — copying a Minecraft server address — `server_name`.
+- `social_click` — GitHub/LinkedIn/source links in the footer and hero — `platform`, `location` (`footer` | `hero`).
+- `cv_download` — clicking "Download CV" on the home page.
+- `contact_form_submit`, then `contact_form_success` or `contact_form_error` — contact form usage (no PII in params).
+- `filter_select` — category/status filter buttons on the Projects/Blog/Media list pages — `list`, `filter_value`.
+- `search` — search box usage on the same three list pages, debounced 800ms — `list`, `search_term`, `results_count`.
+- `theme_toggle` — dark/light switch — `new_theme`.
+- All tracking helpers live in `src/composables/useAnalytics.ts`.
+- **Country** is automatic — GA4 derives it from IP geolocation for every event, no extra code needed. It shows up in Reports → Demographics → Geographic details (or Realtime → Geography).
+- Not tracked on purpose: admin panel CRUD actions and login/logout — single-user, internal-only flows that add no analytical value in GA4.
+
+**Setup steps:**
+1. In [Firebase Console](https://console.firebase.google.com/) → your project → **Project Settings** → **Integrations**, confirm Google Analytics is linked (it already is for `emirklftweb` / `aemirkalafat-web`).
+2. Copy the `measurementId` (format `G-XXXXXXXXXX`) from **Project Settings** → your Web App's config, or run:
+   ```
+   firebase apps:sdkconfig WEB <appId> --project <projectId>
+   ```
+3. Add it to `.env`:
+   ```
+   VITE_FIREBASE_MEASUREMENT_ID=G-XXXXXXXXXX
+   ```
+4. Deploy (`firebase deploy --only hosting`). Analytics silently no-ops in dev/environments where `isSupported()` returns false (e.g. ad blockers, unsupported browsers) — it won't throw.
+
+**Verifying it's working:**
+- Firebase Console → **Analytics** → **DebugView** (enable debug mode via a browser extension like "Google Analytics Debugger", or open with `?debug_mode=true` — no, GA4 uses `gtag('config', ..., {debug_mode: true})`; easiest is the "Google Analytics Debugger" Chrome extension while browsing the live site).
+- Or just check **Realtime** report a minute after visiting the site — you should see yourself as an active user with your country and current page.
+- Full reports (by page, by event, by country) take up to 24–48h to populate in standard (non-Realtime) reports.
+
 ## Troubleshooting
 
 **"Giriş başarısız" (Login failed) error:**

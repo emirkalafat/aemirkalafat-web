@@ -7,28 +7,28 @@
       <template #filters>
         <div class="flex flex-wrap gap-4 items-center font-code text-label-md">
           <button
-            @click="activeFilter = null"
+            @click="selectFilter(null)"
             :class="[
               'border border-primary px-4 py-2 hover:bg-surface-variant transition-colors uppercase flex items-center gap-2',
               activeFilter === null ? 'bg-tertiary border-tertiary text-[#1a1a1a]' : 'text-primary'
             ]"
           ><span class="material-symbols-outlined text-[16px]">select_all</span> ALL_RECORDS</button>
           <button
-            @click="activeFilter = 'MOVIE'"
+            @click="selectFilter('MOVIE')"
             :class="[
               'border border-primary px-4 py-2 hover:bg-surface-variant transition-colors uppercase flex items-center gap-2',
               activeFilter === 'MOVIE' ? 'bg-tertiary border-tertiary text-[#1a1a1a]' : 'text-primary'
             ]"
           ><span class="material-symbols-outlined text-[16px]">movie</span> MOVIES</button>
           <button
-            @click="activeFilter = 'TV_SERIES'"
+            @click="selectFilter('TV_SERIES')"
             :class="[
               'border border-primary px-4 py-2 hover:bg-surface-variant transition-colors uppercase flex items-center gap-2',
               activeFilter === 'TV_SERIES' ? 'bg-tertiary border-tertiary text-[#1a1a1a]' : 'text-primary'
             ]"
           ><span class="material-symbols-outlined text-[16px]">tv</span> TV_SERIES</button>
           <button
-            @click="activeFilter = 'TEXT'"
+            @click="selectFilter('TEXT')"
             :class="[
               'border border-primary px-4 py-2 hover:bg-surface-variant transition-colors uppercase flex items-center gap-2',
               activeFilter === 'TEXT' ? 'bg-tertiary border-tertiary text-[#1a1a1a]' : 'text-primary'
@@ -84,18 +84,25 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import PageHeader from '@/components/ui/PageHeader.vue'
 import MediaCard from '@/components/ui/MediaCard.vue'
 import { useMedia } from '@/composables/useMedia'
+import { useAnalytics } from '@/composables/useAnalytics'
 import type { MediaCardData } from '@/data/media'
 
 const media = useMedia()
+const { trackFilterSelect, trackSearch } = useAnalytics()
 
 type FilterType = 'MOVIE' | 'TV_SERIES' | 'TEXT' | null
 
 const activeFilter = ref<FilterType>(null)
 const searchQuery = ref('')
+
+function selectFilter(value: FilterType) {
+  activeFilter.value = value
+  trackFilterSelect('media', value ?? 'ALL')
+}
 
 const filteredCards = computed(() => {
   return media.items.value.filter(card => {
@@ -105,6 +112,8 @@ const filteredCards = computed(() => {
     return matchesFilter && matchesSearch
   })
 })
+
+watch(searchQuery, q => trackSearch('media', q, filteredCards.value.length))
 
 const groupedCards = computed(() => {
   const groups = new Map<string, { label: string; cards: MediaCardData[] }>()

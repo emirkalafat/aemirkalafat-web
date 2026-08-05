@@ -49,6 +49,7 @@
                   v-for="link in project.links"
                   :key="link.label"
                   :href="link.url"
+                  @click="trackProjectLinkClick(project.name, link.label, link.url)"
                   class="flex items-center gap-3 font-code text-code text-on-surface-variant hover:text-tertiary transition-colors py-3 border-b border-surface-variant last:border-0"
                 >
                   <LinkIcon :icon="link.icon" />
@@ -136,17 +137,23 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import PageHeader from '@/components/ui/PageHeader.vue'
 import LinkIcon from '@/components/ui/LinkIcon.vue'
 import { useProjects } from '@/composables/useProjects'
+import { useAnalytics } from '@/composables/useAnalytics'
 import { formatDateOnly } from '@/utils/date'
 import type { ChangelogFlag } from '@/data/projects'
 
 const route = useRoute()
 const projects = useProjects()
 const project = computed(() => projects.items.value.find(p => p.name === route.params.name))
+
+const { trackProjectView, trackProjectLinkClick } = useAnalytics()
+watch(project, p => {
+  if (p) trackProjectView(p.name)
+}, { immediate: true })
 
 function flagClass(flag: ChangelogFlag) {
   const map: Record<ChangelogFlag, string> = {

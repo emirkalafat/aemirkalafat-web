@@ -76,15 +76,21 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import PageHeader from '@/components/ui/PageHeader.vue'
 import MarkdownRenderer from '@/components/MarkdownRenderer.vue'
 import { useBlog } from '@/composables/useBlog'
+import { useAnalytics } from '@/composables/useAnalytics'
 
 const route = useRoute()
 const blog = useBlog()
 const post = computed(() => blog.items.value.find(p => p.id === route.params.id))
+
+const { trackBlogView } = useAnalytics()
+watch(post, p => {
+  if (p) trackBlogView(p.id, p.title, p.category)
+}, { immediate: true })
 
 const relatedPosts = computed(() => {
   if (!post.value?.relatedIds) return []

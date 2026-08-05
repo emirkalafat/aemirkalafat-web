@@ -52,7 +52,9 @@
               <div class="md:col-span-2 border border-primary bg-surface-container-lowest flex flex-col">
                 <div class="bg-primary px-4 py-2 font-code text-label-md text-on-primary uppercase flex justify-between items-center">
                   <span>SYS_METADATA</span>
-                  <a v-if="card.externalUrl" :href="card.externalUrl" target="_blank" rel="noopener noreferrer" class="bg-tertiary text-on-tertiary px-3 py-1 font-code text-xs uppercase hover:bg-on-tertiary hover:text-tertiary transition-colors">
+                  <a v-if="card.externalUrl" :href="card.externalUrl" target="_blank" rel="noopener noreferrer"
+                    @click="trackMediaSourceClick(card.id, card.title, card.externalUrl)"
+                    class="bg-tertiary text-on-tertiary px-3 py-1 font-code text-xs uppercase hover:bg-on-tertiary hover:text-tertiary transition-colors">
                     VIEW_SOURCE
                   </a>
                 </div>
@@ -119,15 +121,21 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import PageHeader from '@/components/ui/PageHeader.vue'
 import ScoreMeter from '@/components/ui/ScoreMeter.vue'
 import { useMedia } from '@/composables/useMedia'
+import { useAnalytics } from '@/composables/useAnalytics'
 
 const route = useRoute()
 const media = useMedia()
 const card = computed(() => media.items.value.find(c => c.id === route.params.id))
+
+const { trackMediaView, trackMediaSourceClick } = useAnalytics()
+watch(card, c => {
+  if (c) trackMediaView(c.id, c.title, c.type)
+}, { immediate: true })
 
 const analysisTitle = computed(() => card.value ? `${card.value.title}_ANALYSIS` : 'MEDIA_ANALYSIS')
 

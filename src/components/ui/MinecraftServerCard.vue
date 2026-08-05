@@ -67,17 +67,20 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import type { MinecraftServer } from '@/composables/useCrafty'
+import { useAnalytics } from '@/composables/useAnalytics'
 
 const props = defineProps<{
   server: MinecraftServer
 }>()
 
 const copied = ref(false)
+const { trackMinecraftAddressCopy } = useAnalytics()
 
 async function copyAddress() {
   if (!props.server.address) return
   await navigator.clipboard.writeText(props.server.address)
   copied.value = true
+  trackMinecraftAddressCopy(props.server.name)
   setTimeout(() => (copied.value = false), 1500)
 }
 </script>

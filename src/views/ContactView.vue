@@ -77,6 +77,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { RouterLink } from 'vue-router'
+import { useAnalytics } from '@/composables/useAnalytics'
 
 const formData = ref({
   email: '',
@@ -86,10 +87,12 @@ const formData = ref({
 
 const isSending = ref(false)
 const statusMessage = ref('')
+const { trackContactFormSubmit, trackContactFormResult } = useAnalytics()
 
 async function sendEmail() {
   isSending.value = true
   statusMessage.value = ''
+  trackContactFormSubmit()
 
   try {
     // mailto link açma alternatifi - gerçek backend implementasyonunda
@@ -101,6 +104,7 @@ async function sendEmail() {
     window.location.href = mailtoLink
 
     statusMessage.value = '✓ Opening email client...'
+    trackContactFormResult(true)
 
     // Clear form
     setTimeout(() => {
@@ -110,6 +114,7 @@ async function sendEmail() {
     }, 2000)
   } catch (error) {
     statusMessage.value = '✗ Error: ' + (error as any).message
+    trackContactFormResult(false, (error as any).message)
     isSending.value = false
   }
 }

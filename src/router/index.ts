@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import { useAuth } from "@/composables/useAuth";
+import { useAnalytics } from "@/composables/useAnalytics";
 import DefaultLayout from "@/layouts/DefaultLayout.vue";
 
 const routes = [
@@ -61,6 +62,11 @@ router.beforeEach(async (to, _from, next) => {
   } else {
     next();
   }
+});
+
+router.afterEach((to) => {
+  const { trackPageView } = useAnalytics();
+  trackPageView(to.fullPath, document.title);
 });
 
 export default router;

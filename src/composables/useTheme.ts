@@ -1,4 +1,5 @@
 import { ref } from 'vue'
+import { useAnalytics } from './useAnalytics'
 
 type Theme = 'light' | 'dark'
 
@@ -32,6 +33,7 @@ function createTheme() {
     theme.value = newTheme
     apply(newTheme)
     localStorage.setItem('theme', newTheme)
+    useAnalytics().trackThemeToggle(newTheme)
   }
 
   return { theme, init, toggle }
