@@ -136,17 +136,23 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import PageHeader from '@/components/ui/PageHeader.vue'
 import LinkIcon from '@/components/ui/LinkIcon.vue'
 import { useProjects } from '@/composables/useProjects'
+import { useAnalytics } from '@/composables/useAnalytics'
 import { formatDateOnly } from '@/utils/date'
 import type { ChangelogFlag } from '@/data/projects'
 
 const route = useRoute()
 const projects = useProjects()
 const project = computed(() => projects.items.value.find(p => p.name === route.params.name))
+
+const { trackProjectView } = useAnalytics()
+watch(project, p => {
+  if (p) trackProjectView(p.name)
+}, { immediate: true })
 
 function flagClass(flag: ChangelogFlag) {
   const map: Record<ChangelogFlag, string> = {

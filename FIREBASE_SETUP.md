@@ -131,6 +131,34 @@ service firebase.storage {
 4. Add or edit a post
 5. Return to `/blog` — the changes should appear live
 
+## Analytics Setup
+
+The app reports to Google Analytics (GA4) via the Firebase Analytics SDK (`src/firebase/index.ts`, `src/composables/useAnalytics.ts`).
+
+**What's tracked:**
+- `page_view` on every route change (`src/router/index.ts`) — path + title. This is how "which page" stats show up.
+- `view_project` on `/projects/:name` — `project_name` param.
+- `view_blog_post` on `/blog/:id` — `blog_id`, `blog_title`, `blog_category` params.
+- `view_media` on `/media/:id` — `media_id`, `media_title`, `media_type` params.
+- **Country** is automatic — GA4 derives it from IP geolocation for every event, no extra code needed. It shows up in Reports → Demographics → Geographic details (or Realtime → Geography).
+
+**Setup steps:**
+1. In [Firebase Console](https://console.firebase.google.com/) → your project → **Project Settings** → **Integrations**, confirm Google Analytics is linked (it already is for `emirklftweb` / `aemirkalafat-web`).
+2. Copy the `measurementId` (format `G-XXXXXXXXXX`) from **Project Settings** → your Web App's config, or run:
+   ```
+   firebase apps:sdkconfig WEB <appId> --project <projectId>
+   ```
+3. Add it to `.env`:
+   ```
+   VITE_FIREBASE_MEASUREMENT_ID=G-XXXXXXXXXX
+   ```
+4. Deploy (`firebase deploy --only hosting`). Analytics silently no-ops in dev/environments where `isSupported()` returns false (e.g. ad blockers, unsupported browsers) — it won't throw.
+
+**Verifying it's working:**
+- Firebase Console → **Analytics** → **DebugView** (enable debug mode via a browser extension like "Google Analytics Debugger", or open with `?debug_mode=true` — no, GA4 uses `gtag('config', ..., {debug_mode: true})`; easiest is the "Google Analytics Debugger" Chrome extension while browsing the live site).
+- Or just check **Realtime** report a minute after visiting the site — you should see yourself as an active user with your country and current page.
+- Full reports (by page, by event, by country) take up to 24–48h to populate in standard (non-Realtime) reports.
+
 ## Troubleshooting
 
 **"Giriş başarısız" (Login failed) error:**

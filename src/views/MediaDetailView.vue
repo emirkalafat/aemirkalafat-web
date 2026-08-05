@@ -119,15 +119,21 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import PageHeader from '@/components/ui/PageHeader.vue'
 import ScoreMeter from '@/components/ui/ScoreMeter.vue'
 import { useMedia } from '@/composables/useMedia'
+import { useAnalytics } from '@/composables/useAnalytics'
 
 const route = useRoute()
 const media = useMedia()
 const card = computed(() => media.items.value.find(c => c.id === route.params.id))
+
+const { trackMediaView } = useAnalytics()
+watch(card, c => {
+  if (c) trackMediaView(c.id, c.title, c.type)
+}, { immediate: true })
 
 const analysisTitle = computed(() => card.value ? `${card.value.title}_ANALYSIS` : 'MEDIA_ANALYSIS')
 
