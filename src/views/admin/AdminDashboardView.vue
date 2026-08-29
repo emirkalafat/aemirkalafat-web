@@ -97,7 +97,7 @@
     <section v-if="showCategoryManager" class="border border-on-surface bg-surface-container-lowest p-6">
       <div class="flex justify-between items-center mb-4 pb-4 border-b border-on-surface">
         <h3 class="font-code text-on-surface font-bold uppercase">MANAGE_CATEGORIES</h3>
-        <button @click="showCategoryManager = false" class="hover:text-tertiary transition-colors">
+        <button @click="showCategoryManager = false" class="hover:text-tertiary-text transition-colors">
           <span class="material-symbols-outlined">close</span>
         </button>
       </div>
@@ -138,8 +138,8 @@
 
     <!-- System Info -->
     <section v-if="seedMessage || migrateMessage" class="border border-tertiary bg-surface-container-lowest p-4">
-      <p v-if="seedMessage" class="font-code text-code text-tertiary">{{ seedMessage }}</p>
-      <p v-if="migrateMessage" class="font-code text-code text-tertiary">{{ migrateMessage }}</p>
+      <p v-if="seedMessage" class="font-code text-code text-tertiary-text">{{ seedMessage }}</p>
+      <p v-if="migrateMessage" class="font-code text-code text-tertiary-text">{{ migrateMessage }}</p>
     </section>
 
     <!-- Data Migration -->

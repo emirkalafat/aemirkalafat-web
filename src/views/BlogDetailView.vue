@@ -3,7 +3,7 @@
     <PageHeader :title="post?.title ?? 'SYS_LOGS'">
       <template #filters>
         <div v-if="post" class="flex flex-wrap gap-3 font-code text-code">
-          <span class="border border-tertiary text-tertiary px-2 py-0.5 uppercase">[{{ post.category }}]</span>
+          <span class="border border-tertiary text-tertiary-text px-2 py-0.5 uppercase">[{{ post.category }}]</span>
           <span class="text-on-surface-variant">{{ post.date }}</span>
           <span class="text-on-surface-variant">READ_TIME: {{ post.readTime }}</span>
           <span class="text-on-surface-variant">SYS_LOG: {{ post.id }}</span>
@@ -43,7 +43,7 @@
           <!-- Related posts -->
           <div v-if="relatedPosts.length" class="mt-16 pt-8 border-t-2 border-primary">
             <h2 class="font-headline-md text-headline-md text-on-surface uppercase mb-8 flex items-center gap-3">
-              <span class="material-symbols-outlined text-tertiary">link</span>
+              <span class="material-symbols-outlined text-tertiary-text">link</span>
               RELATED_LOGS
             </h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-gutter">
@@ -58,9 +58,9 @@
                   <span>{{ rel.id }}</span>
                 </div>
                 <div class="p-6 flex-1 flex flex-col gap-3">
-                  <h3 class="font-headline-md text-on-surface group-hover:text-tertiary transition-colors uppercase leading-tight" style="font-size: 1.1rem;">{{ rel.title }}</h3>
+                  <h3 class="font-headline-md text-on-surface group-hover:text-tertiary-text transition-colors uppercase leading-tight" style="font-size: 1.1rem;">{{ rel.title }}</h3>
                   <p class="text-body-md font-body-md text-on-surface-variant line-clamp-2 flex-1">{{ rel.description }}</p>
-                  <div class="font-code text-code text-tertiary flex items-center gap-1 mt-auto">
+                  <div class="font-code text-code text-tertiary-text flex items-center gap-1 mt-auto">
                     READ_LOG
                     <span class="material-symbols-outlined text-[14px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
                   </div>

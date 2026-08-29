@@ -5,7 +5,7 @@
       <template #filters>
         <div class="flex items-center gap-3 bg-surface-container-lowest border border-primary px-4 py-3 self-start">
           <span class="w-2 h-2 bg-on-tertiary-container animate-pulse"></span>
-          <span class="font-code text-code text-tertiary uppercase">Overall Uptime: {{ overallUptime }}</span>
+          <span class="font-code text-code text-tertiary-text uppercase">Overall Uptime: {{ overallUptime }}</span>
         </div>
       </template>
     </PageHeader>
@@ -97,7 +97,7 @@
                 <div class="text-right">
                   <p class="font-code text-code text-on-surface-variant uppercase mb-1">Latency</p>
                   <p class="font-code text-body-lg"
-                    :class="service.status === 'OUTAGE' ? 'text-error' : 'text-tertiary'">
+                    :class="service.status === 'OUTAGE' ? 'text-error' : 'text-tertiary-text'">
                     {{
                       service.latency }}</p>
                 </div>

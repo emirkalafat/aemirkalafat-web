@@ -20,7 +20,7 @@
       <!-- Content (right, flex) -->
       <div class="flex-1 min-w-0 flex flex-col">
         <h2
-          class="text-headline-md font-headline-md text-primary mb-1 truncate group-hover:text-tertiary transition-colors">
+          class="text-headline-md font-headline-md text-primary mb-1 truncate group-hover:text-tertiary-text transition-colors">
           {{ title }}
         </h2>
         <div
@@ -46,7 +46,7 @@
             >{{ rating.toFixed(1) }}<span class="text-on-surface-variant text-sm font-normal">/10</span></span>
             <RatingBar :rating="rating" class="flex-1" :class="isPerfect && 'rating-perfect'" />
           </div>
-          <div class="mt-2 flex items-center justify-end gap-1 font-code text-code text-on-surface-variant group-hover:text-tertiary transition-colors uppercase">
+          <div class="mt-2 flex items-center justify-end gap-1 font-code text-code text-on-surface-variant group-hover:text-tertiary-text transition-colors uppercase">
             ANALYZE <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
           </div>
         </div>
@@ -91,7 +91,7 @@ const isPerfect = computed(() => props.rating >= 9.5)
 
 const tierColor = computed(() => {
   if (props.rating >= 9) {
-    return { text: 'text-tertiary', border: 'border-tertiary' }
+    return { text: 'text-tertiary-text', border: 'border-tertiary' }
   } else if (props.rating >= 7) {
     return { text: 'text-rating-good', border: 'border-rating-good' }
   } else if (props.rating >= 5) {

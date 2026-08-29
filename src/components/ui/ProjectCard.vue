@@ -23,7 +23,7 @@
         <div class="flex flex-wrap gap-2">
           <span v-for="tag in tags" :key="tag.label" class="px-2 py-0.5 text-label-md font-code text-xs uppercase"
             :class="tag.type === 'software'
-              ? 'border border-tertiary text-tertiary'
+              ? 'border border-tertiary text-tertiary-text'
               : 'border border-cyber-purple text-cyber-purple'">{{ tag.label }}</span>
           <span class="px-2 py-0.5 text-label-md font-code text-xs uppercase font-bold" :class="status === 'STABLE'
             ? 'bg-primary text-on-primary'
@@ -59,12 +59,12 @@
 
     <!-- Collapsible Changelog — latest entry only -->
     <div v-show="isOpen" class="border-t border-surface-variant bg-surface p-gutter">
-      <h4 class="text-label-md font-code text-tertiary mb-4 uppercase flex items-center gap-2">
+      <h4 class="text-label-md font-code text-tertiary-text mb-4 uppercase flex items-center gap-2">
         <span class="material-symbols-outlined text-[18px]">history</span> Latest Changes
       </h4>
       <template v-if="latestEntry">
         <div class="flex flex-wrap items-baseline gap-3 mb-3">
-          <span class="font-code font-bold text-tertiary text-sm">{{ latestEntry.version }}</span>
+          <span class="font-code font-bold text-tertiary-text text-sm">{{ latestEntry.version }}</span>
           <span class="font-code text-code text-on-surface-variant">{{ latestEntry.label }}</span>
           <span class="font-code text-code text-on-surface-variant opacity-50 text-xs">{{ formatDateOnly(latestEntry.date) }}</span>
         </div>
@@ -132,7 +132,7 @@ const latestEntry = computed(() => props.changelog[0] ?? null)
 
 function flagClass(flag: ChangelogFlag) {
   const map: Record<ChangelogFlag, string> = {
-    ADDED: 'text-tertiary',
+    ADDED: 'text-tertiary-text',
     FIXED: 'text-[#4ade80]',
     IMPRV: 'text-primary',
     INIT: 'text-on-surface-variant',

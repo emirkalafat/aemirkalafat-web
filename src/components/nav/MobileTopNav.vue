@@ -6,10 +6,10 @@
       ROOT@PORTFOLIO:~#
     </div>
     <div class="flex gap-4 items-center">
-      <button @click="toggleTheme" class="text-primary hover:text-tertiary transition-colors">
+      <button @click="toggleTheme" class="text-primary hover:text-tertiary-text transition-colors">
         <span class="material-symbols-outlined">{{ isDark ? 'light_mode' : 'dark_mode' }}</span>
       </button>
-      <button @click="isOpen = !isOpen" class="text-primary hover:text-tertiary transition-colors lg:hidden">
+      <button @click="isOpen = !isOpen" class="text-primary hover:text-tertiary-text transition-colors lg:hidden">
         <span class="material-symbols-outlined">{{ isOpen ? 'close' : 'menu' }}</span>
       </button>
     </div>

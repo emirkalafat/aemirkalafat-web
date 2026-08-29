@@ -10,19 +10,19 @@
           href="https://github.com/emirkalafat"
           target="_blank" rel="noopener"
           @click="trackSocialClick('github', 'footer')"
-          class="text-label-md font-code text-on-surface-variant hover:text-tertiary transition-colors">GITHUB</a>
+          class="text-label-md font-code text-on-surface-variant hover:text-tertiary-text transition-colors">GITHUB</a>
         <a
           href="https://www.linkedin.com/in/aemirkalafat/"
           target="_blank" rel="noopener"
           @click="trackSocialClick('linkedin', 'footer')"
-          class="text-label-md font-code text-on-surface-variant hover:text-tertiary transition-colors">LINKEDIN</a>
+          class="text-label-md font-code text-on-surface-variant hover:text-tertiary-text transition-colors">LINKEDIN</a>
         <a
           href="https://github.com/emirkalafat/aemirkalafat-web"
           target="_blank" rel="noopener"
           @click="trackSocialClick('source', 'footer')"
-          class="text-label-md font-code text-on-surface-variant hover:text-tertiary transition-colors">SOURCE</a>
+          class="text-label-md font-code text-on-surface-variant hover:text-tertiary-text transition-colors">SOURCE</a>
       </div>
-      <div class="text-label-md font-code text-tertiary flex items-center gap-2">
+      <div class="text-label-md font-code text-tertiary-text flex items-center gap-2">
         <span class="w-2 h-2 bg-tertiary animate-ping inline-block rounded-none"></span> SYSTEM_ONLINE
       </div>
     </div>

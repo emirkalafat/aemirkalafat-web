@@ -26,7 +26,7 @@
               <p class="font-code text-sm text-on-surface truncate font-bold">{{ project.name }}</p>
               <p class="font-code text-xs text-on-surface-variant uppercase">{{ project.status }}</p>
             </div>
-            <span class="font-code text-xs text-tertiary whitespace-nowrap">{{ project.version }}</span>
+            <span class="font-code text-xs text-tertiary-text whitespace-nowrap">{{ project.version }}</span>
           </div>
         </div>
       </div>
@@ -67,7 +67,7 @@
 
             <div class="flex flex-col gap-2">
               <label class="font-code text-xs text-on-surface-variant uppercase">VERSION</label>
-              <span class="text-code font-code text-tertiary py-2 border-b border-on-surface/30">{{ editingProject.changelog?.[0]?.version ?? editingProject.version }}</span>
+              <span class="text-code font-code text-tertiary-text py-2 border-b border-on-surface/30">{{ editingProject.changelog?.[0]?.version ?? editingProject.version }}</span>
             </div>
 
             <div class="flex flex-col gap-2">
@@ -272,7 +272,7 @@
           </div>
           <div class="flex gap-2 mt-2">
             <button @click="addVersion" class="bg-on-surface text-surface px-3 py-1 font-code text-xs uppercase hover:bg-tertiary transition-colors">+ ADD_VERSION</button>
-            <button @click="toggleJsonImport" class="border border-on-surface text-on-surface px-3 py-1 font-code text-xs uppercase hover:border-tertiary hover:text-tertiary transition-colors">+ ADD_VERSION_JSON</button>
+            <button @click="toggleJsonImport" class="border border-on-surface text-on-surface px-3 py-1 font-code text-xs uppercase hover:border-tertiary hover:text-tertiary-text transition-colors">+ ADD_VERSION_JSON</button>
           </div>
 
           <div v-if="showJsonImport" class="border border-on-surface/20 bg-surface-container p-3 flex flex-col gap-2">

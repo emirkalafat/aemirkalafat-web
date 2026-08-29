@@ -6,7 +6,7 @@
       <section class="grid grid-cols-1 md:grid-cols-12 gap-gutter items-center pt-4 md:min-h-[614px]">
         <div class="md:col-span-8 flex flex-col gap-6">
           <div class="inline-block bg-surface-container-lowest border border-primary px-4 py-2 self-start">
-            <span class="font-code text-code text-tertiary blinking-cursor">&gt; SYSTEM INITIALIZED</span>
+            <span class="font-code text-code text-tertiary-text blinking-cursor">&gt; SYSTEM INITIALIZED</span>
           </div>
           <h1 class="font-display text-headline-lg md:text-display text-on-surface leading-tight">
             FROM <br/>
@@ -21,7 +21,7 @@
               Hello, <b>Ahmet Emir Kalafat</b>, here. I'm a Computer &amp; Electrical Engineer with a Double Major from Fatih Sultan Mehmet Vakıf University and an Erasmus+ exchange in Electrical &amp; Automation Engineering under my belt. Professionally, I've been building software at talsen team GmbH and previously developed mobile applications at SameUp — always chasing that sweet spot between low-level hardware and high-level software.
             </p>
             <button
-              class="md:hidden mt-2 font-code text-code text-tertiary flex items-center gap-1 uppercase"
+              class="md:hidden mt-2 font-code text-code text-tertiary-text flex items-center gap-1 uppercase"
               @click="bioExpanded = !bioExpanded">
               <span class="material-symbols-outlined text-[14px]">{{ bioExpanded ? 'expand_less' : 'expand_more' }}</span>
               {{ bioExpanded ? 'Read less' : 'Read more' }}
@@ -62,7 +62,7 @@
         <!-- Projects CTA -->
         <div class="border border-primary bg-surface-container-lowest flex flex-col md:flex-row items-center justify-between gap-6 p-gutter mt-4 transition-transform duration-200 brutalist-offset shadow-primary brutalist-offset-hover">
           <div class="flex flex-col gap-2">
-            <p class="font-label-md text-label-md text-tertiary font-code uppercase">Projects.ls()</p>
+            <p class="font-label-md text-label-md text-tertiary-text font-code uppercase">Projects.ls()</p>
             <p class="font-body-md text-body-md text-on-surface-variant max-w-lg">
               Want to see what I actually build? Check out my projects — side quests, experiments, and things that (mostly) work in production.
             </p>
@@ -93,43 +93,43 @@
           </div>
           <div class="p-4 font-code text-code text-on-surface-variant flex flex-col gap-2 h-auto overflow-y-auto">
             <div class="flex gap-4">
-              <span class="text-tertiary select-none">1</span>
+              <span class="text-tertiary-text select-none">1</span>
               <span class="text-primary">$ ./compile_career.sh</span>
             </div>
             <div class="flex gap-4">
-              <span class="text-tertiary select-none">2</span>
+              <span class="text-tertiary-text select-none">2</span>
               <span>[INFO] Stacking education modules...</span>
             </div>
             <div class="flex gap-4">
-              <span class="text-tertiary select-none">3</span>
+              <span class="text-tertiary-text select-none">3</span>
               <span>[✓] FSMVU: Double Major in Computer Engineering (2021-2026)</span>
             </div>
             <div class="flex gap-4">
-              <span class="text-tertiary select-none">4</span>
+              <span class="text-tertiary-text select-none">4</span>
               <span>[✓] Erasmus+ Exchange: Electrical &amp; Automation Eng (2023)</span>
             </div>
             <div class="flex gap-4">
-              <span class="text-tertiary select-none">5</span>
+              <span class="text-tertiary-text select-none">5</span>
               <span>[INFO] Loading career experience buffer...</span>
             </div>
             <div class="flex gap-4">
-              <span class="text-tertiary select-none">6</span>
+              <span class="text-tertiary-text select-none">6</span>
               <span>[✓] talsen team GmbH: Full-stack Developer (1 yr 10 mos)</span>
             </div>
             <div class="flex gap-4">
-              <span class="text-tertiary select-none">7</span>
+              <span class="text-tertiary-text select-none">7</span>
               <span>[✓] SameUp: Mobile Dev Trailblazer (1 yr 2 mos)</span>
             </div>
             <div class="flex gap-4">
-              <span class="text-tertiary select-none">8</span>
+              <span class="text-tertiary-text select-none">8</span>
               <span>[INFO] Skill matrix compiled: Hardware + Software fusion ⚡</span>
             </div>
             <div class="flex gap-4">
-              <span class="text-tertiary select-none">9</span>
+              <span class="text-tertiary-text select-none">9</span>
               <span class="text-error">[WARN] Coffee levels depleted. System unstable without caffeine.</span>
             </div>
             <div class="flex gap-4">
-              <span class="text-tertiary select-none">10</span>
+              <span class="text-tertiary-text select-none">10</span>
               <span class="text-primary blinking-cursor">$ </span>
             </div>
           </div>

@@ -9,7 +9,7 @@
   >
     <p class="font-code text-code text-on-surface-variant uppercase tracking-widest text-xs flex items-center gap-1.5">
       AGGREGATE_SCORE
-      <span v-if="isPerfect" class="text-tertiary rating-perfect-text">★ PERFECT</span>
+      <span v-if="isPerfect" class="text-tertiary-text rating-perfect-text">★ PERFECT</span>
     </p>
 
     <div class="flex items-end gap-1 leading-none">
@@ -63,7 +63,7 @@ const isPerfect = computed(() => props.rating >= 9.5)
 const tierColor = computed(() => {
   if (props.rating >= 9) {
     return {
-      text: 'text-tertiary',
+      text: 'text-tertiary-text',
       border: 'border-tertiary',
       shadow: 'shadow-tertiary',
       fill: 'bg-tertiary',
