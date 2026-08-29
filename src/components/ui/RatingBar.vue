@@ -18,7 +18,9 @@ const barColorClass = computed(() => {
   if (props.rating >= 9) {
     return 'bg-tertiary'
   } else if (props.rating >= 7) {
-    return 'bg-primary-fixed-dim'
+    return 'bg-rating-good'
+  } else if (props.rating >= 5) {
+    return 'bg-rating-average'
   } else {
     return 'bg-error'
   }

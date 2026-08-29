@@ -56,6 +56,8 @@ export default {
         'tertiary': 'rgb(var(--color-tertiary) / <alpha-value>)',
         'on-secondary-container': 'rgb(var(--color-on-secondary-container) / <alpha-value>)',
         'cyber-purple': '#BD00FF',
+        'rating-average': 'rgb(var(--color-rating-average) / <alpha-value>)',
+        'rating-good': 'rgb(var(--color-rating-good) / <alpha-value>)',
       },
       borderRadius: {
         'DEFAULT': '0.25rem',

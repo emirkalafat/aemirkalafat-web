@@ -2,7 +2,7 @@
   <div class="flex-1 flex flex-col">
     <PageHeader
       title="MEDIA_REVIEWS.LOG"
-      description="Structured analysis of visual and textual data streams. Evaluating narrative architecture, aesthetic execution, and systemic coherence across multiple media formats."
+      description="My personal log of movies, TV series, and books — rated and reviewed as I watch and read them, with honest notes on what's worth your time."
     >
       <template #filters>
         <div class="flex flex-wrap gap-4 items-center font-code text-label-md">

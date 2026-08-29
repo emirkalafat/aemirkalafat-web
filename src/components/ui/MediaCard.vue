@@ -17,6 +17,7 @@
           class="w-full h-full object-cover filter grayscale group-hover:grayscale-0 transition-all duration-500" />
         <div
           class="absolute top-1 right-1 px-1.5 py-0.5 font-code text-[10px] font-bold text-on-primary rounded-sm"
+          :class="isPerfect && 'rating-perfect'"
           :style="{ background: ratingGradient, border: '1px solid rgb(59 130 246 / 0.4)' }">
           {{ rating }}/10
         </div>
@@ -82,11 +83,15 @@ const typeIcon = computed(() => {
   }
 })
 
+const isPerfect = computed(() => props.rating >= 10)
+
 const ratingClass = computed(() => {
   if (props.rating >= 9) {
     return 'text-tertiary'
   } else if (props.rating >= 7) {
-    return 'text-primary-fixed-dim'
+    return 'text-rating-good'
+  } else if (props.rating >= 5) {
+    return 'text-rating-average'
   } else {
     return 'text-error'
   }
@@ -94,11 +99,13 @@ const ratingClass = computed(() => {
 
 const ratingGradient = computed(() => {
   if (props.rating >= 9) {
-    return 'linear-gradient(135deg, rgb(59 130 246 / 0.6), rgb(168 85 247 / 0.6))'
+    return 'linear-gradient(135deg, rgb(8 145 178 / 0.75), rgb(56 189 248 / 0.55))'
   } else if (props.rating >= 7) {
-    return 'linear-gradient(135deg, rgb(59 130 246 / 0.5), rgb(59 130 246 / 0.3))'
+    return 'linear-gradient(135deg, rgb(147 51 234 / 0.65), rgb(147 51 234 / 0.35))'
+  } else if (props.rating >= 5) {
+    return 'linear-gradient(135deg, rgb(217 119 6 / 0.7), rgb(217 119 6 / 0.4))'
   } else {
-    return 'linear-gradient(135deg, rgb(168 85 247 / 0.5), rgb(168 85 247 / 0.3))'
+    return 'linear-gradient(135deg, rgb(239 68 68 / 0.65), rgb(239 68 68 / 0.35))'
   }
 })
 </script>
