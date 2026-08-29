@@ -12,15 +12,9 @@
     <div class="p-4 flex gap-4 flex-1">
       <!-- Poster (left, fixed) -->
       <div
-        class="w-24 sm:w-28 shrink-0 aspect-[2/3] border border-primary bg-surface-variant relative overflow-hidden group-hover:border-tertiary transition-colors">
+        class="w-28 sm:w-36 shrink-0 aspect-[2/3] border border-primary bg-surface-variant relative overflow-hidden group-hover:border-tertiary transition-colors">
         <img :src="imageUrl" :alt="title"
           class="w-full h-full object-cover filter grayscale group-hover:grayscale-0 transition-all duration-500" />
-        <div
-          class="absolute top-1 right-1 px-1.5 py-0.5 font-code text-[10px] font-bold text-on-primary rounded-sm"
-          :class="isPerfect && 'rating-perfect'"
-          :style="{ background: ratingGradient, border: '1px solid rgb(59 130 246 / 0.4)' }">
-          {{ rating }}/10
-        </div>
       </div>
 
       <!-- Content (right, flex) -->
@@ -33,15 +27,25 @@
           class="text-label-md font-code text-on-surface-variant mb-2 flex flex-wrap gap-x-3 gap-y-0.5">
           <span v-for="(item, idx) in meta" :key="idx">{{ item }}</span>
         </div>
-        <p class="text-body-md font-body-md text-on-surface-variant line-clamp-2">
+        <p class="text-body-md font-body-md text-on-surface-variant line-clamp-2 min-h-[3.25rem]">
           {{ description }}
         </p>
         <div class="mt-auto pt-3 border-t border-primary">
-          <div class="flex justify-between font-code text-label-md mb-2">
-            <span class="text-primary">SYSTEM_RATING</span>
-            <span :class="ratingClass">{{ ratingLabel }}</span>
+          <div class="flex items-center justify-between mb-2">
+            <span class="font-code text-[10px] tracking-widest text-on-surface-variant uppercase">SYSTEM_RATING</span>
+            <span
+              class="font-code text-[10px] font-bold uppercase px-2 py-0.5 border"
+              :class="[tierColor.text, tierColor.border]"
+            >{{ ratingLabel }}</span>
           </div>
-          <RatingBar :rating="rating" />
+          <div class="flex items-center gap-3">
+            <span
+              class="font-code font-bold leading-none shrink-0 tabular-nums"
+              style="font-size: 2rem;"
+              :class="[tierColor.text, isPerfect && 'rating-perfect-text']"
+            >{{ rating.toFixed(1) }}<span class="text-on-surface-variant text-sm font-normal">/10</span></span>
+            <RatingBar :rating="rating" class="flex-1" :class="isPerfect && 'rating-perfect'" />
+          </div>
           <div class="mt-2 flex items-center justify-end gap-1 font-code text-code text-on-surface-variant group-hover:text-tertiary transition-colors uppercase">
             ANALYZE <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
           </div>
@@ -83,29 +87,17 @@ const typeIcon = computed(() => {
   }
 })
 
-const isPerfect = computed(() => props.rating >= 10)
+const isPerfect = computed(() => props.rating >= 9.5)
 
-const ratingClass = computed(() => {
+const tierColor = computed(() => {
   if (props.rating >= 9) {
-    return 'text-tertiary'
+    return { text: 'text-tertiary', border: 'border-tertiary' }
   } else if (props.rating >= 7) {
-    return 'text-rating-good'
+    return { text: 'text-rating-good', border: 'border-rating-good' }
   } else if (props.rating >= 5) {
-    return 'text-rating-average'
+    return { text: 'text-rating-average', border: 'border-rating-average' }
   } else {
-    return 'text-error'
-  }
-})
-
-const ratingGradient = computed(() => {
-  if (props.rating >= 9) {
-    return 'linear-gradient(135deg, rgb(8 145 178 / 0.75), rgb(56 189 248 / 0.55))'
-  } else if (props.rating >= 7) {
-    return 'linear-gradient(135deg, rgb(147 51 234 / 0.65), rgb(147 51 234 / 0.35))'
-  } else if (props.rating >= 5) {
-    return 'linear-gradient(135deg, rgb(217 119 6 / 0.7), rgb(217 119 6 / 0.4))'
-  } else {
-    return 'linear-gradient(135deg, rgb(239 68 68 / 0.65), rgb(239 68 68 / 0.35))'
+    return { text: 'text-error', border: 'border-error' }
   }
 })
 </script>

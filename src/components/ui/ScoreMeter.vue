@@ -58,7 +58,7 @@ const animatedRating = ref(0)
 
 const displayRating = computed(() => animatedRating.value.toFixed(1))
 
-const isPerfect = computed(() => props.rating >= 10)
+const isPerfect = computed(() => props.rating >= 9.5)
 
 const tierColor = computed(() => {
   if (props.rating >= 9) {

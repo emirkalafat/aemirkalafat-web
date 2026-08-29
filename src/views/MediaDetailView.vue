@@ -137,7 +137,7 @@ watch(card, c => {
   if (c) trackMediaView(c.id, c.title, c.type)
 }, { immediate: true })
 
-const analysisTitle = computed(() => card.value ? `${card.value.title}_ANALYSIS` : 'MEDIA_ANALYSIS')
+const analysisTitle = computed(() => card.value ? card.value.title : 'MEDIA_ANALYSIS')
 
 const descriptionLines = computed(() => {
   if (!card.value) return []

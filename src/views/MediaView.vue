@@ -46,6 +46,26 @@
             </button>
           </div>
         </div>
+
+        <div class="flex flex-wrap gap-2 items-center font-code text-label-md mt-4 pt-4 border-t border-outline-variant">
+          <span class="text-on-surface-variant uppercase text-xs tracking-widest mr-1">SCORE_FILTER:</span>
+          <button
+            v-for="rf in RATING_FILTERS"
+            :key="rf.value"
+            @click="selectRatingFilter(rf.value)"
+            :title="`Rating ${rf.range}`"
+            :class="[
+              'border px-3 py-1.5 transition-colors uppercase flex items-center gap-1.5 text-xs',
+              activeRatingFilter === rf.value
+                ? [rf.activeBg, rf.activeBorder, 'text-[#1a1a1a]']
+                : 'border-outline-variant text-on-surface-variant hover:border-primary hover:text-primary'
+            ]"
+          >
+            <span class="material-symbols-outlined text-[14px]">{{ rf.icon }}</span>
+            {{ rf.label }}
+            <span class="opacity-60">{{ rf.range }}</span>
+          </button>
+        </div>
       </template>
     </PageHeader>
 
@@ -95,21 +115,45 @@ const media = useMedia()
 const { trackFilterSelect, trackSearch } = useAnalytics()
 
 type FilterType = 'MOVIE' | 'TV_SERIES' | 'TEXT' | null
+type RatingTier = 'BAD' | 'AVERAGE' | 'GOOD' | 'GREAT'
 
 const activeFilter = ref<FilterType>(null)
+const activeRatingFilter = ref<RatingTier | null>(null)
 const searchQuery = ref('')
+
+// Sabit puan aralıkları — admin panelden değiştirilemez, ScoreMeter/RatingBar/MediaCard
+// bileşenlerindeki renk kademeleriyle (kötü/ortalama/güzel/harika) birebir eşleşir.
+const RATING_FILTERS: { value: RatingTier; label: string; range: string; icon: string; activeBg: string; activeBorder: string }[] = [
+  { value: 'BAD', label: 'BAD', range: '1-4', icon: 'sentiment_dissatisfied', activeBg: 'bg-error', activeBorder: 'border-error' },
+  { value: 'AVERAGE', label: 'AVERAGE', range: '5-6', icon: 'sentiment_neutral', activeBg: 'bg-rating-average', activeBorder: 'border-rating-average' },
+  { value: 'GOOD', label: 'GOOD', range: '7-8', icon: 'sentiment_satisfied', activeBg: 'bg-rating-good', activeBorder: 'border-rating-good' },
+  { value: 'GREAT', label: 'GREAT', range: '9-10', icon: 'stars', activeBg: 'bg-tertiary', activeBorder: 'border-tertiary' },
+]
+
+function ratingTier(rating: number): RatingTier {
+  if (rating >= 9) return 'GREAT'
+  if (rating >= 7) return 'GOOD'
+  if (rating >= 5) return 'AVERAGE'
+  return 'BAD'
+}
 
 function selectFilter(value: FilterType) {
   activeFilter.value = value
   trackFilterSelect('media', value ?? 'ALL')
 }
 
+function selectRatingFilter(value: RatingTier) {
+  activeRatingFilter.value = activeRatingFilter.value === value ? null : value
+  trackFilterSelect('media', `rating:${activeRatingFilter.value ?? 'ALL'}`)
+}
+
 const filteredCards = computed(() => {
   return media.items.value.filter(card => {
     const matchesFilter = !activeFilter.value || card.type === activeFilter.value
+    const matchesRating = !activeRatingFilter.value || ratingTier(card.rating) === activeRatingFilter.value
     const q = searchQuery.value.toLowerCase()
     const matchesSearch = !q || card.title.toLowerCase().includes(q) || card.description.toLowerCase().includes(q)
-    return matchesFilter && matchesSearch
+    return matchesFilter && matchesRating && matchesSearch
   })
 })
 
