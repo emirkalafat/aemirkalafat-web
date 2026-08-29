@@ -4,6 +4,21 @@ User-facing release notes. Written in plain language for site visitors.
 
 ---
 
+## v7.0.0 — 2026-08-29
+
+**Media ratings, rebuilt**
+
+- **ADDED** — Ratings on the media page now use four distinct colors (red, orange, purple, cyan) grouped as bad / average / good / great, so a score's quality is clear at a glance — no more washed-out gray tier.
+- **ADDED** — A new score filter on the media page lets you jump straight to bad, average, good, or great reviews.
+- **ADDED** — Standout scores (9.5 and up) now get a subtle animated glow, both on media cards and on a review's detail page.
+- **IMPRV** — The rating on each media card is now bigger, bolder, and front and center instead of a tiny corner badge.
+- **IMPRV** — Media cards now line up evenly in height, even when a review has no description yet.
+- **IMPRV** — Poster thumbnails on media cards are a bit larger and easier to see.
+- **IMPRV** — Rewrote the media page intro to actually explain what the page is: personal reviews of the movies, shows, and books I've watched and read.
+- **FIXED** — A review's detail page title no longer runs together with "_ANALYSIS" on narrow screens.
+
+---
+
 ## v6.1.0 — 2026-07-11
 
 **Media & projects overhaul**

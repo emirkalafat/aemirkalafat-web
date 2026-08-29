@@ -270,7 +270,25 @@
               </div>
             </div>
           </div>
-          <button @click="addVersion" class="self-start bg-on-surface text-surface px-3 py-1 font-code text-xs uppercase hover:bg-tertiary transition-colors mt-2">+ ADD_VERSION</button>
+          <div class="flex gap-2 mt-2">
+            <button @click="addVersion" class="bg-on-surface text-surface px-3 py-1 font-code text-xs uppercase hover:bg-tertiary transition-colors">+ ADD_VERSION</button>
+            <button @click="toggleJsonImport" class="border border-on-surface text-on-surface px-3 py-1 font-code text-xs uppercase hover:border-tertiary hover:text-tertiary transition-colors">+ ADD_VERSION_JSON</button>
+          </div>
+
+          <div v-if="showJsonImport" class="border border-on-surface/20 bg-surface-container p-3 flex flex-col gap-2">
+            <label class="font-code text-xs text-on-surface-variant uppercase">PASTE_JSON (single entry or array)</label>
+            <textarea
+              v-model="jsonInput"
+              rows="6"
+              placeholder='{"version":"v1.2.0","label":"New Release","date":"2026-08-29","items":[{"flag":"ADDED","text":"..."}]}'
+              class="bg-transparent border border-on-surface text-code font-code text-on-surface px-2 py-2 focus:ring-0 focus:border-tertiary outline-none text-sm resize-y"
+            ></textarea>
+            <p v-if="jsonError" class="text-error text-xs font-code">{{ jsonError }}</p>
+            <div class="flex gap-2">
+              <button @click="addVersionFromJson" class="bg-tertiary text-on-tertiary px-3 py-1 font-code text-xs uppercase hover:opacity-90 transition-colors">IMPORT</button>
+              <button @click="toggleJsonImport" class="text-on-surface-variant hover:text-on-surface px-3 py-1 font-code text-xs uppercase transition-colors">CANCEL</button>
+            </div>
+          </div>
         </div>
 
         <!-- Actions -->
@@ -314,6 +332,9 @@ const editingProject = ref<Project | null>(null)
 const openVersions = ref<Set<number>>(new Set())
 const newTag = ref<Tag>({ label: '', type: 'software' })
 const newFlag = ref('')
+const showJsonImport = ref(false)
+const jsonInput = ref('')
+const jsonError = ref('')
 
 const filteredProjects = computed(() => {
   const q = searchQuery.value.toLowerCase()
@@ -396,6 +417,12 @@ function toggleVersion(i: number) {
   }
 }
 
+// Sürüm listesi en yenisi en üstte sırada tutulur (bkz. saveProject: changelog[0]
+// projenin görünen sürümüdür), bu yüzden yeni sürümler her zaman başa eklenir.
+function shiftOpenVersionsForInsert(insertCount: number) {
+  openVersions.value = new Set([...openVersions.value].map(idx => idx + insertCount))
+}
+
 function addVersion() {
   if (!editingProject.value) return
   const newVersion: ChangelogEntry = {
@@ -408,7 +435,58 @@ function addVersion() {
   if (!editingProject.value.changelog) {
     editingProject.value.changelog = []
   }
-  editingProject.value.changelog.push(newVersion)
+  shiftOpenVersionsForInsert(1)
+  editingProject.value.changelog.unshift(newVersion)
+  openVersions.value.add(0)
+}
+
+function normalizeChangelogEntry(raw: any): ChangelogEntry {
+  return {
+    version: String(raw?.version ?? 'v0.0.1'),
+    label: String(raw?.label ?? ''),
+    date: formatDateOnly(String(raw?.date ?? new Date().toISOString().split('T')[0])),
+    isLatest: false,
+    items: Array.isArray(raw?.items)
+      ? raw.items.map((it: any) => ({ flag: String(it?.flag ?? flags.value[0] ?? 'ADDED'), text: String(it?.text ?? '') }))
+      : [],
+  }
+}
+
+function toggleJsonImport() {
+  showJsonImport.value = !showJsonImport.value
+  jsonInput.value = ''
+  jsonError.value = ''
+}
+
+function addVersionFromJson() {
+  if (!editingProject.value) return
+  jsonError.value = ''
+
+  let parsed: unknown
+  try {
+    parsed = JSON.parse(jsonInput.value)
+  } catch {
+    jsonError.value = 'Invalid JSON'
+    return
+  }
+
+  const rawEntries = Array.isArray(parsed) ? parsed : [parsed]
+  if (rawEntries.length === 0) {
+    jsonError.value = 'No entries found'
+    return
+  }
+
+  const entries = rawEntries.map(normalizeChangelogEntry)
+
+  if (!editingProject.value.changelog) {
+    editingProject.value.changelog = []
+  }
+  shiftOpenVersionsForInsert(entries.length)
+  editingProject.value.changelog.unshift(...entries)
+  entries.forEach((_, idx) => openVersions.value.add(idx))
+
+  showJsonImport.value = false
+  jsonInput.value = ''
 }
 
 function removeVersion(i: number) {
