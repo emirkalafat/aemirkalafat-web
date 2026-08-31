@@ -5,7 +5,7 @@
       <template #filters>
         <div class="flex items-center gap-3 bg-surface-container-lowest border border-primary px-4 py-3 self-start">
           <span class="w-2 h-2 bg-on-tertiary-container animate-pulse"></span>
-          <span class="font-code text-code text-tertiary uppercase">Overall Uptime: {{ overallUptime }}</span>
+          <span class="font-code text-code text-tertiary-text uppercase">Overall Uptime: {{ overallUptime }}</span>
         </div>
       </template>
     </PageHeader>
@@ -40,9 +40,9 @@
           </div>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 lg:gap-8">
+        <div class="flex flex-col gap-6 lg:gap-8">
           <article v-for="service in services" :key="service.name"
-            class="bg-surface-container-lowest border relative group flex flex-col brutalist-offset-hover shadow-cyber-purple transition-[box-shadow]"
+            class="bg-surface-container-lowest border relative group flex flex-col md:flex-row brutalist-offset-hover shadow-cyber-purple transition-[box-shadow]"
             :class="service.status === 'OUTAGE'
               ? 'border-2 border-error-container'
               : 'border-primary'">
@@ -51,99 +51,116 @@
               class="absolute -inset-[1px] border border-tertiary opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
             </div>
 
-            <!-- Card Header Strip -->
-            <div class="px-4 py-2 flex justify-between items-center"
-              :class="service.status === 'OUTAGE' ? 'bg-error' : 'bg-primary'">
-              <span class="font-code text-label-md uppercase tracking-widest"
-                :class="service.status === 'OUTAGE' ? 'text-on-error' : 'text-on-primary'">{{ service.name }}</span>
-              <div v-if="!service.url" class="flex items-center gap-2">
-                <span class="font-code text-code"
-                  :class="service.status === 'OUTAGE' ? 'text-on-error' : 'text-on-primary'">{{ service.status }}</span>
+            <!-- Left: identity + stats -->
+            <div class="p-6 flex flex-col gap-4 md:w-[260px] md:shrink-0 border-b md:border-b-0 md:border-r border-surface-variant"
+              :class="service.status === 'OUTAGE'
+                ? 'bg-[repeating-linear-gradient(45deg,transparent,transparent_10px,rgba(147,0,10,0.05)_10px,rgba(147,0,10,0.05)_20px)]'
+                : ''">
+              <div v-if="!service.url" class="self-start flex items-center gap-2 font-code text-label-md uppercase tracking-widest px-3 py-1"
+                :class="service.status === 'OUTAGE' ? 'bg-error text-on-error' : 'bg-primary text-on-primary'">
+                <span>{{ service.status }}</span>
                 <span v-if="service.status === 'OPERATIONAL'"
                   class="w-2 h-2 bg-on-tertiary-container animate-pulse"></span>
                 <span v-else class="w-2 h-2 bg-on-error animate-ping"></span>
               </div>
               <!-- Status and VISIT link are stacked in the same grid cell so the
-                 hover swap never changes this box's size and reflows the grid. -->
-              <div v-else class="grid">
+                 hover swap never changes this box's size and reflows the layout. -->
+              <div v-else class="self-start grid">
                 <div
-                  class="col-start-1 row-start-1 flex items-center gap-2 transition-opacity group-hover:opacity-0 group-hover:invisible"
-                  :class="service.status === 'OUTAGE' ? 'text-on-error' : 'text-on-primary'">
-                  <span class="font-code text-code">{{ service.status }}</span>
+                  class="col-start-1 row-start-1 flex items-center gap-2 font-code text-label-md uppercase tracking-widest px-3 py-1 transition-opacity group-hover:opacity-0 group-hover:invisible"
+                  :class="service.status === 'OUTAGE' ? 'bg-error text-on-error' : 'bg-primary text-on-primary'">
+                  <span>{{ service.status }}</span>
                   <span v-if="service.status === 'OPERATIONAL'"
                     class="w-2 h-2 bg-on-tertiary-container animate-pulse"></span>
                   <span v-else class="w-2 h-2 bg-on-error animate-ping"></span>
                 </div>
                 <a :href="service.url" target="_blank" rel="noopener noreferrer"
                   @click.stop="trackStatusServiceVisit(service.name, service.url!)"
-                  class="col-start-1 row-start-1 font-code text-code flex items-center gap-1 opacity-0 invisible transition-opacity group-hover:opacity-100 group-hover:visible"
-                  :class="service.status === 'OUTAGE' ? 'text-on-error' : 'text-on-primary'">
-                  <span class="material-symbols-outlined text-[13px]">open_in_new</span>
+                  class="col-start-1 row-start-1 font-code text-label-md uppercase tracking-widest px-3 py-1 bg-primary text-on-primary flex items-center gap-2 opacity-0 invisible transition-opacity group-hover:opacity-100 group-hover:visible">
+                  <span class="material-symbols-outlined text-[16px]">open_in_new</span>
                   VISIT
                 </a>
               </div>
-            </div>
 
-            <!-- Card Body -->
-            <div class="p-6 flex-1 flex flex-col gap-6" :class="service.status === 'OUTAGE'
-              ? 'bg-[repeating-linear-gradient(45deg,transparent,transparent_10px,rgba(147,0,10,0.05)_10px,rgba(147,0,10,0.05)_20px)]'
-              : ''">
-              <!-- Stats Row -->
-              <div class="flex justify-between items-baseline border-b border-surface-variant pb-4">
+              <h3 class="font-code text-label-lg uppercase tracking-wide text-on-surface">{{ service.name }}</h3>
+
+              <div class="flex justify-between gap-6">
                 <div>
-                  <p class="font-code text-code text-on-surface-variant uppercase mb-1">Uptime</p>
+                  <p class="font-code text-code text-on-surface-variant uppercase mb-1">24h Uptime</p>
                   <p class="font-headline-md text-headline-md text-on-surface">{{ service.uptime }}</p>
                 </div>
-                <div class="text-right">
+                <div>
                   <p class="font-code text-code text-on-surface-variant uppercase mb-1">Latency</p>
                   <p class="font-code text-body-lg"
-                    :class="service.status === 'OUTAGE' ? 'text-error' : 'text-tertiary'">
-                    {{
-                      service.latency }}</p>
+                    :class="service.status === 'OUTAGE' ? 'text-error' : 'text-tertiary-text'">
+                    {{ service.latency }}</p>
                 </div>
+              </div>
+            </div>
+
+            <!-- Right: timeline -->
+            <div class="p-6 flex-1 flex flex-col gap-3">
+              <div class="flex justify-between items-baseline">
+                <span class="font-code text-code text-on-surface-variant uppercase tracking-widest">Ping · Last {{ service.spanLabel }}</span>
+                <span class="font-code text-code"
+                  :class="service.status === 'OUTAGE' ? 'text-error' : 'text-on-surface-variant'">{{
+                    service.rangeLabel }}</span>
               </div>
 
               <!-- Sparkline -->
-              <div class="flex flex-col gap-1">
-                <div class="relative h-16 w-full border border-surface-variant bg-background overflow-hidden">
-                  <!-- Vertical grid lines -->
-                  <div class="absolute inset-0 opacity-20"
-                    style="background-image: linear-gradient(to right, #353535 1px, transparent 1px); background-size: 10% 100%;">
-                  </div>
-                  <!-- SVG Sparkline -->
-                  <svg class="absolute inset-0 w-full h-full" viewBox="0 0 100 20" preserveAspectRatio="none">
-                    <!-- Down/maintenance column overlays -->
-                    <template v-for="(pt, i) in service.sparklineData" :key="i">
-                      <rect v-if="pt.status !== 1" :x="pt.x - (100 / service.sparklineData.length) / 2"
-                        :width="100 / service.sparklineData.length" y="0" height="20"
-                        :fill="pt.status === 0 ? 'rgba(255,180,171,0.35)' : 'rgba(255,220,100,0.2)'">
-                        <title>{{ pt.status
-                          === 0 ? 'Outage' : 'Maintenance' }}</title>
-                      </rect>
-                    </template>
-                    <!-- Ping baseline guide -->
-                    <line x1="0" y1="18" x2="100" y2="18" stroke="rgba(255,255,255,0.06)" stroke-width="0.5"
-                      vector-effect="non-scaling-stroke" />
-                    <!-- Ping line — breaks at non-up segments, spikes up = high latency = bad -->
-                    <path :d="buildLinePath(service.sparklineData)" fill="none" stroke="#4cd6ff" stroke-width="1"
-                      vector-effect="non-scaling-stroke" />
-                    <!-- Max ping axis label (top-left) -->
-                    <text x="1" y="5" font-size="3.5" font-family="monospace" fill="rgba(76,214,255,0.5)">{{
-                      service.sparklineMaxPing }}ms</text>
-                    <!-- Zero baseline label (bottom-left) -->
-                    <text x="1" y="19.5" font-size="3.5" font-family="monospace" fill="rgba(76,214,255,0.5)">0ms</text>
-                  </svg>
-                  <!-- Error overlay label -->
-                  <div v-if="service.errorLabel"
-                    class="absolute bottom-1 right-1 font-code text-code text-error bg-background px-1">{{
-                      service.errorLabel
-                    }}</div>
+              <div class="relative h-20 w-full border border-surface-variant bg-background overflow-hidden">
+                <!-- Vertical grid lines -->
+                <div class="absolute inset-0 opacity-20"
+                  style="background-image: linear-gradient(to right, #353535 1px, transparent 1px); background-size: 10% 100%;">
                 </div>
-                <!-- Time axis -->
-                <div class="flex justify-between">
-                  <span class="font-code text-code text-on-surface-variant opacity-60">-24H</span>
-                  <span class="font-code text-code text-on-surface-variant opacity-60">NOW</span>
+                <!-- SVG Sparkline -->
+                <svg class="absolute inset-0 w-full h-full" viewBox="0 0 100 20" preserveAspectRatio="none">
+                  <!-- Down/maintenance column overlays -->
+                  <template v-for="(pt, i) in service.sparklineData" :key="i">
+                    <rect v-if="pt.status !== 1" :x="pt.x - (100 / service.sparklineData.length) / 2"
+                      :width="100 / service.sparklineData.length" y="0" height="20"
+                      :fill="pt.status === 0 ? 'rgba(255,180,171,0.35)' : 'rgba(255,220,100,0.2)'">
+                      <title>{{ pt.status
+                        === 0 ? 'Outage' : 'Maintenance' }}</title>
+                    </rect>
+                  </template>
+                  <!-- Ping baseline guide -->
+                  <line x1="0" y1="18" x2="100" y2="18" stroke="rgba(255,255,255,0.06)" stroke-width="0.5"
+                    vector-effect="non-scaling-stroke" />
+                  <!-- Ping line — breaks at non-up segments, spikes up = high latency = bad -->
+                  <path :d="buildLinePath(service.sparklineData)" fill="none" stroke="#4cd6ff" stroke-width="1"
+                    vector-effect="non-scaling-stroke" />
+                  <!-- Max ping axis label (top-left) -->
+                  <text x="1" y="5" font-size="3.5" font-family="monospace" fill="rgba(76,214,255,0.5)">{{
+                    service.sparklineMaxPing }}ms</text>
+                  <!-- Zero baseline label (bottom-left) -->
+                  <text x="1" y="19.5" font-size="3.5" font-family="monospace" fill="rgba(76,214,255,0.5)">0ms</text>
+                </svg>
+                <!-- Error overlay label -->
+                <div v-if="service.errorLabel"
+                  class="absolute bottom-1 right-1 font-code text-code text-error bg-background px-1">{{
+                    service.errorLabel
+                  }}</div>
+              </div>
+
+              <!-- Hourly status strip -->
+              <div class="flex gap-[2px] h-5">
+                <div v-for="(bucket, i) in service.hourlyBuckets" :key="i" class="flex-1"
+                  :class="bucket === 'down' ? 'bg-error' : bucket === 'up' ? 'bg-on-tertiary-container' : ''"
+                  :style="bucket === 'maint' ? 'background-color: rgba(255,220,100,0.6)' : ''"
+                  :title="bucket">
                 </div>
+              </div>
+
+              <!-- Time axis — real clock ticks instead of a bare '-24H' -->
+              <div class="hidden sm:flex justify-between font-code text-code text-on-surface-variant">
+                <span v-for="(tick, i) in service.ticks" :key="i"
+                  :class="i === service.ticks.length - 1 ? 'text-tertiary-text font-bold' : 'opacity-60'">{{ tick }}</span>
+              </div>
+              <div class="flex sm:hidden justify-between font-code text-code text-on-surface-variant">
+                <span class="opacity-60">{{ service.ticks[0] }}</span>
+                <span class="opacity-60">{{ service.ticks[Math.floor((service.ticks.length - 1) / 2)] }}</span>
+                <span class="text-tertiary-text font-bold">NOW</span>
               </div>
             </div>
           </article>

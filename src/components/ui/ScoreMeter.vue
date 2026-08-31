@@ -4,12 +4,20 @@
     :class="[
       tierColor.border,
       tierColor.shadow,
+      isPerfect && 'rating-perfect',
     ]"
   >
-    <p class="font-code text-code text-on-surface-variant uppercase tracking-widest text-xs">AGGREGATE_SCORE</p>
+    <p class="font-code text-code text-on-surface-variant uppercase tracking-widest text-xs flex items-center gap-1.5">
+      AGGREGATE_SCORE
+      <span v-if="isPerfect" class="text-tertiary-text rating-perfect-text">★ PERFECT</span>
+    </p>
 
     <div class="flex items-end gap-1 leading-none">
-      <span :class="tierColor.text" class="font-code font-bold" style="font-size: 3.5rem; line-height: 1;">{{ displayRating }}</span>
+      <span
+        :class="[tierColor.text, isPerfect && 'rating-perfect-text']"
+        class="font-code font-bold"
+        style="font-size: 3.5rem; line-height: 1;"
+      >{{ displayRating }}</span>
       <span class="font-code text-on-surface-variant text-lg">/10</span>
     </div>
 
@@ -50,22 +58,29 @@ const animatedRating = ref(0)
 
 const displayRating = computed(() => animatedRating.value.toFixed(1))
 
-const tierColor = computed(() => {
-  const tier = props.rating >= 9 ? 'high' : props.rating >= 7 ? 'mid' : 'low'
+const isPerfect = computed(() => props.rating >= 9.5)
 
-  if (tier === 'high') {
+const tierColor = computed(() => {
+  if (props.rating >= 9) {
     return {
-      text: 'text-tertiary',
+      text: 'text-tertiary-text',
       border: 'border-tertiary',
       shadow: 'shadow-tertiary',
       fill: 'bg-tertiary',
     }
-  } else if (tier === 'mid') {
+  } else if (props.rating >= 7) {
     return {
-      text: 'text-primary-fixed-dim',
-      border: 'border-primary-fixed-dim',
-      shadow: 'shadow-primary-fixed-dim',
-      fill: 'bg-primary-fixed-dim',
+      text: 'text-rating-good',
+      border: 'border-rating-good',
+      shadow: 'shadow-rating-good',
+      fill: 'bg-rating-good',
+    }
+  } else if (props.rating >= 5) {
+    return {
+      text: 'text-rating-average',
+      border: 'border-rating-average',
+      shadow: 'shadow-rating-average',
+      fill: 'bg-rating-average',
     }
   } else {
     return {

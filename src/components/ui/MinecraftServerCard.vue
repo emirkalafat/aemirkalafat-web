@@ -37,7 +37,7 @@
         </div>
         <div class="text-right">
           <p class="font-code text-code text-on-surface-variant uppercase mb-1">Version</p>
-          <p class="font-code text-body-lg text-tertiary">{{ server.version }}</p>
+          <p class="font-code text-body-lg text-tertiary-text">{{ server.version }}</p>
         </div>
       </div>
 
@@ -47,7 +47,7 @@
         <p class="font-code text-code text-on-surface-variant uppercase mb-1">Connect</p>
         <button
           type="button"
-          class="font-code text-body-lg text-tertiary flex items-center gap-2"
+          class="font-code text-body-lg text-tertiary-text flex items-center gap-2"
           @click="copyAddress"
         >
           <span class="truncate">{{ server.address }}</span>

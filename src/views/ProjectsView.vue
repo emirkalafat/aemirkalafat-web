@@ -34,7 +34,7 @@
               placeholder="GREP_PROJECTS..."
               class="bg-transparent border-none text-on-surface text-body-md font-code py-2 px-3 focus:ring-0 w-full md:w-64 outline-none"
             />
-            <button class="px-3 text-primary hover:text-tertiary transition-colors border-l border-primary">
+            <button class="px-3 text-primary hover:text-tertiary-text transition-colors border-l border-primary">
               <span class="material-symbols-outlined">search</span>
             </button>
           </div>
@@ -44,7 +44,7 @@
 
     <!-- Project List -->
     <section class="flex-1 p-margin-mobile lg:p-margin-desktop bg-surface-container-lowest">
-      <div class="grid grid-cols-1 xl:grid-cols-2 gap-6 items-start">
+      <div class="grid grid-cols-1 xl:grid-cols-2 gap-6">
         <ProjectCard
           v-for="project in filteredProjects"
           :key="project.name"

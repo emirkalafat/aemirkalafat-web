@@ -7,7 +7,7 @@
       <template #filters>
         <div v-if="servers.length > 0" class="flex items-center gap-3 bg-surface-container-lowest border border-primary px-4 py-3 self-start">
           <span class="w-2 h-2 bg-on-tertiary-container animate-pulse"></span>
-          <span class="font-code text-code text-tertiary uppercase">{{ onlineCount }} / {{ servers.length }} online</span>
+          <span class="font-code text-code text-tertiary-text uppercase">{{ onlineCount }} / {{ servers.length }} online</span>
         </div>
       </template>
     </PageHeader>

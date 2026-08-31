@@ -79,8 +79,8 @@ export const seedProjects: Project[] = [
       panelLabel: "System Status",
       statusColor: "green",
       metrics: [
-        { label: "Uptime", value: "99.999%", valueColor: "text-tertiary" },
-        { label: "Latency", value: "0.4ms", valueColor: "text-tertiary" },
+        { label: "Uptime", value: "99.999%", valueColor: "text-tertiary-text" },
+        { label: "Latency", value: "0.4ms", valueColor: "text-tertiary-text" },
       ],
       barPercent: 85,
       barColor: "bg-tertiary",
@@ -250,8 +250,8 @@ export const seedProjects: Project[] = [
       panelLabel: "DSP Node",
       statusColor: "green",
       metrics: [
-        { label: "Latency", value: "1.2ms", valueColor: "text-tertiary" },
-        { label: "CPU Load", value: "38%", valueColor: "text-tertiary" },
+        { label: "Latency", value: "1.2ms", valueColor: "text-tertiary-text" },
+        { label: "CPU Load", value: "38%", valueColor: "text-tertiary-text" },
       ],
       barPercent: 38,
       barColor: "bg-tertiary",

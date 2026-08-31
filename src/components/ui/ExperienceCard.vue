@@ -41,7 +41,7 @@
             <span
               v-for="skill in role.skills"
               :key="skill"
-              class="px-2 py-0.5 text-label-md font-code text-xs uppercase border border-tertiary text-tertiary">
+              class="px-2 py-0.5 text-label-md font-code text-xs uppercase border border-tertiary text-tertiary-text">
               {{ skill }}
             </span>
           </div>

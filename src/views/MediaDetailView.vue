@@ -7,14 +7,14 @@
           <span class="font-code text-code border border-primary px-3 py-1 text-on-surface-variant">{{ card.type }}</span>
           <span
             class="font-code text-code border px-3 py-1 flex items-center gap-2"
-            :class="card.isCompleted ? 'border-tertiary text-tertiary' : 'border-on-surface-variant text-on-surface-variant'"
+            :class="card.isCompleted ? 'border-tertiary text-tertiary-text' : 'border-on-surface-variant text-on-surface-variant'"
           >
             <span class="w-2 h-2 inline-block" :class="card.isCompleted ? 'bg-tertiary' : 'bg-on-surface-variant opacity-50'"></span>
             STATE: {{ card.isCompleted ? 'COMPLETED' : 'IN_PROGRESS' }}
           </span>
           <span
             class="font-code text-code border px-3 py-1"
-            :class="card.rating >= 9 ? 'border-tertiary text-tertiary' : 'border-primary text-primary'"
+            :class="card.rating >= 9 ? 'border-tertiary text-tertiary-text' : 'border-primary text-primary'"
           >{{ card.ratingLabel }}</span>
         </div>
       </template>
@@ -54,7 +54,7 @@
                   <span>SYS_METADATA</span>
                   <a v-if="card.externalUrl" :href="card.externalUrl" target="_blank" rel="noopener noreferrer"
                     @click="trackMediaSourceClick(card.id, card.title, card.externalUrl)"
-                    class="bg-tertiary text-on-tertiary px-3 py-1 font-code text-xs uppercase hover:bg-on-tertiary hover:text-tertiary transition-colors">
+                    class="bg-tertiary text-on-tertiary px-3 py-1 font-code text-xs uppercase hover:bg-on-tertiary hover:text-tertiary-text transition-colors">
                     VIEW_SOURCE
                   </a>
                 </div>
@@ -81,7 +81,7 @@
                   <div v-for="[label, value] in metricEntries" :key="label" class="flex flex-col">
                     <div class="flex justify-between font-code text-code mb-2 mb-3">
                       <span class="text-on-surface-variant uppercase text-xs">{{ label }}</span>
-                      <span class="text-tertiary font-bold">{{ value }}%</span>
+                      <span class="text-tertiary-text font-bold">{{ value }}%</span>
                     </div>
                     <div class="h-2 bg-surface-container-high w-full">
                       <div class="h-2 bg-tertiary" :style="`width: ${value}%`"></div>
@@ -90,7 +90,7 @@
                 </div>
                 <div class="border-t border-primary mt-6 pt-4 font-code text-code text-on-surface-variant flex flex-col gap-1 text-xs">
                   <p>LAST_ACCESS: {{ card.date }}</p>
-                  <p :class="card.isCompleted ? 'text-tertiary' : 'text-on-surface-variant'">
+                  <p :class="card.isCompleted ? 'text-tertiary-text' : 'text-on-surface-variant'">
                     STATE: {{ card.isCompleted ? 'COMPLETED ✓' : 'IN_PROGRESS' }}
                   </p>
                 </div>
@@ -137,7 +137,7 @@ watch(card, c => {
   if (c) trackMediaView(c.id, c.title, c.type)
 }, { immediate: true })
 
-const analysisTitle = computed(() => card.value ? `${card.value.title}_ANALYSIS` : 'MEDIA_ANALYSIS')
+const analysisTitle = computed(() => card.value ? card.value.title : 'MEDIA_ANALYSIS')
 
 const descriptionLines = computed(() => {
   if (!card.value) return []

@@ -14,7 +14,7 @@
             v-for="tag in project.tags"
             :key="tag.label"
             class="font-code text-code px-2 py-1 border"
-            :class="tag.type === 'hardware' ? 'border-cyber-purple text-cyber-purple' : 'border-tertiary text-tertiary'"
+            :class="tag.type === 'hardware' ? 'border-cyber-purple text-cyber-purple' : 'border-tertiary text-tertiary-text'"
           >{{ tag.label }}</span>
         </div>
       </template>
@@ -50,7 +50,7 @@
                   :key="link.label"
                   :href="link.url"
                   @click="trackProjectLinkClick(project.name, link.label, link.url)"
-                  class="flex items-center gap-3 font-code text-code text-on-surface-variant hover:text-tertiary transition-colors py-3 border-b border-surface-variant last:border-0"
+                  class="flex items-center gap-3 font-code text-code text-on-surface-variant hover:text-tertiary-text transition-colors py-3 border-b border-surface-variant last:border-0"
                 >
                   <LinkIcon :icon="link.icon" />
                   {{ link.label }}
@@ -77,7 +77,7 @@
                 </div>
                 <div class="bg-surface-container-lowest p-4">
                   <p class="font-code text-code text-on-surface-variant mb-1 uppercase">Last Deploy</p>
-                  <p class="font-code text-label-md text-tertiary">{{ project.date }}</p>
+                  <p class="font-code text-label-md text-tertiary-text">{{ project.date }}</p>
                 </div>
               </div>
             </div>
@@ -106,9 +106,9 @@
                   <div class="flex flex-wrap items-baseline gap-3 mb-1">
                     <span
                       class="font-code text-2xl font-bold leading-none"
-                      :class="entryIdx === 0 ? 'text-tertiary' : 'text-on-surface'"
+                      :class="entryIdx === 0 ? 'text-tertiary-text' : 'text-on-surface'"
                     >{{ entry.version }}</span>
-                    <span v-if="entryIdx === 0" class="font-code text-code border border-tertiary text-tertiary px-2 py-0.5 text-[11px] uppercase">LATEST</span>
+                    <span v-if="entryIdx === 0" class="font-code text-code border border-tertiary text-tertiary-text px-2 py-0.5 text-[11px] uppercase">LATEST</span>
                   </div>
                   <div class="flex flex-wrap items-center gap-3 mb-4">
                     <span class="font-code text-code text-on-surface-variant opacity-60">{{ formatDateOnly(entry.date) }}</span>
@@ -157,7 +157,7 @@ watch(project, p => {
 
 function flagClass(flag: ChangelogFlag) {
   const map: Record<ChangelogFlag, string> = {
-    ADDED: 'text-tertiary',
+    ADDED: 'text-tertiary-text',
     FIXED: 'text-[#4ade80]',
     IMPRV: 'text-primary',
     INIT:  'text-on-surface-variant',

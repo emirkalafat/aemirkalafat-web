@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Space+Grotesk:wght@300..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@300..700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap');
 
 @tailwind base;
@@ -27,14 +27,21 @@
   --color-secondary-container: 231 229 225;
   --color-on-secondary-container: 47 49 49;
   --color-tertiary: 8 145 178;
+  --color-tertiary-text: 3 110 131;
   --color-on-tertiary: 255 255 255;
   --color-tertiary-container: 207 244 252;
   --color-on-tertiary-container: 11 90 110;
+  --color-rating-average: 217 119 6;
+  --color-rating-good: 147 51 234;
   --color-outline: 121 118 122;
   --color-outline-variant: 201 198 193;
   --color-inverse-surface: 28 28 30;
   --color-inverse-on-surface: 245 244 241;
   --color-inverse-primary: 198 198 198;
+  --color-error: 186 26 26;
+  --color-on-error: 255 255 255;
+  --color-error-container: 255 218 214;
+  --color-on-error-container: 65 0 2;
 }
 
 .dark {
@@ -60,14 +67,25 @@
   --color-secondary-container: 69 71 71;
   --color-on-secondary-container: 180 181 181;
   --color-tertiary: 76 214 255;
+  --color-tertiary-text: 76 214 255;
   --color-on-tertiary: 0 53 67;
   --color-tertiary-container: 0 0 0;
   --color-on-tertiary-container: 0 128 157;
+  --color-rating-average: 251 146 60;
+  --color-rating-good: 192 132 252;
   --color-outline: 152 142 144;
   --color-outline-variant: 76 69 70;
   --color-inverse-surface: 229 226 225;
   --color-inverse-on-surface: 49 48 48;
   --color-inverse-primary: 94 94 94;
+  --color-error: 255 180 171;
+  --color-on-error: 105 0 5;
+  --color-error-container: 147 0 10;
+  --color-on-error-container: 255 218 214;
+}
+
+.font-code {
+  font-weight: 500;
 }
 
 html {
@@ -198,6 +216,33 @@ body::before {
   opacity: 0.025;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' seed='2' /%3E%3C/filter%3E%3Crect width='400' height='400' fill='currentColor' filter='url(%23noiseFilter)' /%3E%3C/svg%3E");
   z-index: -1;
+}
+
+/* Perfect (10/10) rating glow */
+@keyframes rating-perfect-pulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgb(var(--color-tertiary) / 0.55);
+  }
+  50% {
+    box-shadow: 0 0 18px 4px rgb(var(--color-tertiary) / 0.55);
+  }
+}
+
+@keyframes rating-perfect-shimmer {
+  0%, 100% {
+    filter: brightness(1);
+  }
+  50% {
+    filter: brightness(1.25);
+  }
+}
+
+.rating-perfect {
+  animation: rating-perfect-pulse 1.8s ease-in-out infinite;
+}
+
+.rating-perfect-text {
+  animation: rating-perfect-shimmer 1.8s ease-in-out infinite;
 }
 
 .sparkline-path {

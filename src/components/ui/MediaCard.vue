@@ -1,7 +1,7 @@
 <template>
   <RouterLink :to="`/media/${id}`" class="block">
     <article
-      class="border border-primary bg-surface group flex flex-col relative transition-transform duration-200 brutalist-offset shadow-primary hover:shadow-tertiary brutalist-offset-hover cursor-pointer">
+      class="h-full border border-primary bg-surface group flex flex-col relative transition-transform duration-200 brutalist-offset shadow-primary hover:shadow-tertiary brutalist-offset-hover cursor-pointer">
     <div class="h-10 bg-primary flex items-center justify-between px-4">
       <span class="font-code text-label-md text-on-primary">ID: {{ id }}</span>
       <span class="font-code text-label-md text-on-primary flex items-center gap-1">
@@ -12,36 +12,41 @@
     <div class="p-4 flex gap-4 flex-1">
       <!-- Poster (left, fixed) -->
       <div
-        class="w-24 sm:w-28 shrink-0 aspect-[2/3] border border-primary bg-surface-variant relative overflow-hidden group-hover:border-tertiary transition-colors">
+        class="w-28 sm:w-36 shrink-0 aspect-[2/3] border border-primary bg-surface-variant relative overflow-hidden group-hover:border-tertiary transition-colors">
         <img :src="imageUrl" :alt="title"
           class="w-full h-full object-cover filter grayscale group-hover:grayscale-0 transition-all duration-500" />
-        <div
-          class="absolute top-1 right-1 px-1.5 py-0.5 font-code text-[10px] font-bold text-on-primary rounded-sm"
-          :style="{ background: ratingGradient, border: '1px solid rgb(59 130 246 / 0.4)' }">
-          {{ rating }}/10
-        </div>
       </div>
 
       <!-- Content (right, flex) -->
       <div class="flex-1 min-w-0 flex flex-col">
         <h2
-          class="text-headline-md font-headline-md text-primary mb-1 truncate group-hover:text-tertiary transition-colors">
+          class="text-headline-md font-headline-md text-primary mb-1 truncate group-hover:text-tertiary-text transition-colors">
           {{ title }}
         </h2>
         <div
           class="text-label-md font-code text-on-surface-variant mb-2 flex flex-wrap gap-x-3 gap-y-0.5">
           <span v-for="(item, idx) in meta" :key="idx">{{ item }}</span>
         </div>
-        <p class="text-body-md font-body-md text-on-surface-variant line-clamp-2">
+        <p class="text-body-md font-body-md text-on-surface-variant line-clamp-2 min-h-[3.25rem]">
           {{ description }}
         </p>
         <div class="mt-auto pt-3 border-t border-primary">
-          <div class="flex justify-between font-code text-label-md mb-2">
-            <span class="text-primary">SYSTEM_RATING</span>
-            <span :class="ratingClass">{{ ratingLabel }}</span>
+          <div class="flex items-center justify-between mb-2">
+            <span class="font-code text-[10px] tracking-widest text-on-surface-variant uppercase">SYSTEM_RATING</span>
+            <span
+              class="font-code text-[10px] font-bold uppercase px-2 py-0.5 border"
+              :class="[tierColor.text, tierColor.border]"
+            >{{ ratingLabel }}</span>
           </div>
-          <RatingBar :rating="rating" />
-          <div class="mt-2 flex items-center justify-end gap-1 font-code text-code text-on-surface-variant group-hover:text-tertiary transition-colors uppercase">
+          <div class="flex items-center gap-3">
+            <span
+              class="font-code font-bold leading-none shrink-0 tabular-nums"
+              style="font-size: 2rem;"
+              :class="[tierColor.text, isPerfect && 'rating-perfect-text']"
+            >{{ rating.toFixed(1) }}<span class="text-on-surface-variant text-sm font-normal">/10</span></span>
+            <RatingBar :rating="rating" class="flex-1" :class="isPerfect && 'rating-perfect'" />
+          </div>
+          <div class="mt-2 flex items-center justify-end gap-1 font-code text-code text-on-surface-variant group-hover:text-tertiary-text transition-colors uppercase">
             ANALYZE <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
           </div>
         </div>
@@ -82,23 +87,17 @@ const typeIcon = computed(() => {
   }
 })
 
-const ratingClass = computed(() => {
-  if (props.rating >= 9) {
-    return 'text-tertiary'
-  } else if (props.rating >= 7) {
-    return 'text-primary-fixed-dim'
-  } else {
-    return 'text-error'
-  }
-})
+const isPerfect = computed(() => props.rating >= 9.5)
 
-const ratingGradient = computed(() => {
+const tierColor = computed(() => {
   if (props.rating >= 9) {
-    return 'linear-gradient(135deg, rgb(59 130 246 / 0.6), rgb(168 85 247 / 0.6))'
+    return { text: 'text-tertiary-text', border: 'border-tertiary' }
   } else if (props.rating >= 7) {
-    return 'linear-gradient(135deg, rgb(59 130 246 / 0.5), rgb(59 130 246 / 0.3))'
+    return { text: 'text-rating-good', border: 'border-rating-good' }
+  } else if (props.rating >= 5) {
+    return { text: 'text-rating-average', border: 'border-rating-average' }
   } else {
-    return 'linear-gradient(135deg, rgb(168 85 247 / 0.5), rgb(168 85 247 / 0.3))'
+    return { text: 'text-error', border: 'border-error' }
   }
 })
 </script>
