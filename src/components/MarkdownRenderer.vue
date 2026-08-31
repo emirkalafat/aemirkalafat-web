@@ -55,7 +55,7 @@ function initializeMarked() {
       },
 
       codespan(code: string) {
-        return `<code class="bg-surface-dim text-tertiary font-code text-sm px-2 py-0.5">${code}</code>`
+        return `<code class="bg-surface-dim text-tertiary-text font-code text-sm px-2 py-0.5">${code}</code>`
       },
 
       blockquote(quote: string) {
@@ -79,7 +79,7 @@ function initializeMarked() {
 
       link(href: string, title: string | null | undefined, text: string) {
         const titleAttr = title ? ` title="${title}"` : ''
-        return `<a href="${href}"${titleAttr} class="text-tertiary hover:text-primary underline transition-colors" target="_blank" rel="noopener noreferrer">${text}</a>`
+        return `<a href="${href}"${titleAttr} class="text-tertiary-text hover:text-primary underline transition-colors" target="_blank" rel="noopener noreferrer">${text}</a>`
       },
 
       image(href: string, title: string | null, text: string) {

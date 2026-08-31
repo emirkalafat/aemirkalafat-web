@@ -6,10 +6,10 @@
       ROOT@PORTFOLIO:~#
     </div>
     <div class="flex gap-4 items-center">
-      <button @click="toggleTheme" class="text-primary hover:text-tertiary transition-colors">
+      <button @click="toggleTheme" class="text-primary hover:text-tertiary-text transition-colors">
         <span class="material-symbols-outlined">{{ isDark ? 'light_mode' : 'dark_mode' }}</span>
       </button>
-      <button @click="isOpen = !isOpen" class="text-primary hover:text-tertiary transition-colors lg:hidden">
+      <button @click="isOpen = !isOpen" class="text-primary hover:text-tertiary-text transition-colors lg:hidden">
         <span class="material-symbols-outlined">{{ isOpen ? 'close' : 'menu' }}</span>
       </button>
     </div>
@@ -41,7 +41,7 @@
       </div>
       <div>
         <h1 class="text-headline-md font-headline-md text-on-surface text-[20px] leading-tight">KALAFAT</h1>
-        <p class="text-label-md font-code text-on-surface-variant">v7.0.0-aug</p>
+        <p class="text-label-md font-code text-on-surface-variant">v7.1.0-aug</p>
       </div>
     </div>
 

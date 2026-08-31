@@ -37,7 +37,7 @@
               <p class="font-code text-sm text-on-surface truncate font-bold">{{ post.title }}</p>
               <p class="font-code text-xs text-on-surface-variant uppercase">{{ post.category }}</p>
             </div>
-            <span class="font-code text-xs text-tertiary whitespace-nowrap">{{ post.date }}</span>
+            <span class="font-code text-xs text-tertiary-text whitespace-nowrap">{{ post.date }}</span>
           </div>
         </div>
       </div>
@@ -102,7 +102,7 @@
         <div class="border border-on-surface bg-surface-dim">
           <div class="bg-on-surface text-surface px-4 py-2 font-code text-xs uppercase flex justify-between items-center">
             <span>IMAGE ASSETS // {{ selectedPost.id }}</span>
-            <label class="cursor-pointer hover:text-tertiary transition-colors flex items-center gap-1">
+            <label class="cursor-pointer hover:text-tertiary-text transition-colors flex items-center gap-1">
               <span class="material-symbols-outlined text-[18px]">upload</span>
               <span>UPLOAD</span>
               <input
@@ -140,7 +140,7 @@
                 <button
                   @click="copyUrl(img.url)"
                   :title="copiedUrl === img.url ? 'Copied!' : 'Copy URL'"
-                  class="p-1 hover:text-tertiary transition-colors"
+                  class="p-1 hover:text-tertiary-text transition-colors"
                 >
                   <span class="material-symbols-outlined text-[18px]">{{ copiedUrl === img.url ? 'check' : 'content_copy' }}</span>
                 </button>

@@ -41,7 +41,7 @@
               placeholder="QUERY_LOGS..."
               class="bg-transparent border-none text-on-surface text-body-md font-code py-2 px-3 focus:ring-0 w-full md:w-64 outline-none"
             />
-            <button class="px-3 text-primary hover:text-tertiary transition-colors border-l border-primary">
+            <button class="px-3 text-primary hover:text-tertiary-text transition-colors border-l border-primary">
               <span class="material-symbols-outlined">search</span>
             </button>
           </div>
@@ -71,14 +71,14 @@
                 :alt="featuredPost.title"
                 class="w-full h-full object-cover filter grayscale group-hover:grayscale-0 transition-all duration-500"
               />
-              <div class="absolute bottom-4 right-4 border border-tertiary bg-background/80 p-2 hidden group-hover:block text-tertiary font-code text-xs">
+              <div class="absolute bottom-4 right-4 border border-tertiary bg-background/80 p-2 hidden group-hover:block text-tertiary-text font-code text-xs">
                 IMG_RDY: TRUE
               </div>
             </div>
             <div class="p-6 flex flex-col justify-between flex-1">
               <div>
                 <div class="flex gap-2 mb-4">
-                  <span class="border border-tertiary text-tertiary px-2 py-0.5 text-xs font-code">[{{ featuredPost.category }}]</span>
+                  <span class="border border-tertiary text-tertiary-text px-2 py-0.5 text-xs font-code">[{{ featuredPost.category }}]</span>
                   <span class="border border-outline text-outline px-2 py-0.5 text-xs font-code">READ_TIME: {{ featuredPost.readTime }}</span>
                 </div>
                 <h3 class="text-headline-lg-mobile md:text-headline-md font-headline-md text-on-surface mb-4 leading-tight">
@@ -89,7 +89,7 @@
                 </p>
               </div>
               <div class="mt-auto">
-                <RouterLink :to="`/blog/${featuredPost.id}`" class="inline-flex items-center gap-2 text-tertiary font-code text-label-md uppercase hover:underline">
+                <RouterLink :to="`/blog/${featuredPost.id}`" class="inline-flex items-center gap-2 text-tertiary-text font-code text-label-md uppercase hover:underline">
                   EXECUTE_READ <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
                 </RouterLink>
               </div>
@@ -102,7 +102,7 @@
           <div class="border border-on-surface bg-surface-container-lowest p-6 h-full flex flex-col" style="transition: all 0.2s ease-in-out;">
             <div class="border-b border-outline pb-4 mb-4">
               <h4 class="text-label-md font-code text-on-surface uppercase tracking-widest flex items-center gap-2">
-                <span class="material-symbols-outlined text-tertiary">memory</span>
+                <span class="material-symbols-outlined text-tertiary-text">memory</span>
                 SYSTEM_STATS
               </h4>
             </div>
@@ -120,7 +120,7 @@
                 <span>LATEST_COM:</span> <span class="text-on-surface">0x4F2A</span>
               </li>
             </ul>
-            <div class="mt-6 bg-[#1A1A1A] border border-outline p-4 font-code text-xs text-tertiary overflow-hidden">
+            <div class="mt-6 bg-[#1A1A1A] border border-outline p-4 font-code text-xs text-tertiary-text overflow-hidden">
               <div class="animate-pulse">
                 &gt; ping 127.0.0.1<br/>
                 &gt; 64 bytes from 127.0.0.1: icmp_seq=1 ttl=64<br/>
@@ -137,14 +137,14 @@
           class="md:col-span-6 lg:col-span-4 border border-outline bg-surface-container-lowest p-6 flex flex-col neo-hover-glow relative group h-full"
         >
           <div class="flex justify-between items-start mb-6">
-            <span class="border border-outline text-on-surface px-2 py-0.5 text-xs font-code group-hover:border-tertiary group-hover:text-tertiary transition-colors">[{{ post.category }}]</span>
+            <span class="border border-outline text-on-surface px-2 py-0.5 text-xs font-code group-hover:border-tertiary group-hover:text-tertiary-text transition-colors">[{{ post.category }}]</span>
             <span class="text-outline font-code text-xs">{{ post.date }}</span>
           </div>
-          <RouterLink :to="`/blog/${post.id}`" class="font-headline-md text-on-surface mb-3 text-xl group-hover:text-tertiary transition-colors leading-tight">{{ post.title }}</RouterLink>
+          <RouterLink :to="`/blog/${post.id}`" class="font-headline-md text-on-surface mb-3 text-xl group-hover:text-tertiary-text transition-colors leading-tight">{{ post.title }}</RouterLink>
           <p class="text-body-md font-body-md text-on-surface-variant mb-6 line-clamp-4 flex-1">{{ post.description }}</p>
           <div class="flex justify-between items-center border-t border-surface-container-highest pt-4 mt-auto">
             <span class="text-outline font-code text-xs">RT: {{ post.readTime }}</span>
-            <RouterLink :to="`/blog/${post.id}`" class="text-on-surface hover:text-tertiary font-code text-sm uppercase">READ_MORE</RouterLink>
+            <RouterLink :to="`/blog/${post.id}`" class="text-on-surface hover:text-tertiary-text font-code text-sm uppercase">READ_MORE</RouterLink>
           </div>
         </article>
 
@@ -155,13 +155,13 @@
         >
           <div class="flex flex-col md:w-1/4 shrink-0 border-r-0 md:border-r border-outline md:pr-6 gap-2">
             <span class="text-outline font-code text-sm">TIMESTAMP: {{ widePost.date }}</span>
-            <span class="border border-outline text-on-surface px-2 py-0.5 text-xs font-code w-max group-hover:border-tertiary group-hover:text-tertiary transition-colors">[{{ widePost.category }}]</span>
+            <span class="border border-outline text-on-surface px-2 py-0.5 text-xs font-code w-max group-hover:border-tertiary group-hover:text-tertiary-text transition-colors">[{{ widePost.category }}]</span>
             <span class="text-outline font-code text-xs mt-auto hidden md:block">RT: {{ widePost.readTime }}</span>
           </div>
           <div class="flex flex-col flex-1 justify-center">
-            <RouterLink :to="`/blog/${widePost.id}`" class="font-headline-md text-on-surface mb-2 text-2xl group-hover:text-tertiary transition-colors">{{ widePost.title }}</RouterLink>
+            <RouterLink :to="`/blog/${widePost.id}`" class="font-headline-md text-on-surface mb-2 text-2xl group-hover:text-tertiary-text transition-colors">{{ widePost.title }}</RouterLink>
             <p class="text-body-md font-body-md text-on-surface-variant mb-4">{{ widePost.description }}</p>
-            <RouterLink :to="`/blog/${widePost.id}`" class="text-on-surface hover:text-tertiary font-code text-sm uppercase mt-2 w-max inline-flex items-center gap-1">
+            <RouterLink :to="`/blog/${widePost.id}`" class="text-on-surface hover:text-tertiary-text font-code text-sm uppercase mt-2 w-max inline-flex items-center gap-1">
               &gt; EXECUTE_READ
             </RouterLink>
           </div>

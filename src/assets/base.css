@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Space+Grotesk:wght@300..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@300..700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap');
 
 @tailwind base;
@@ -27,6 +27,7 @@
   --color-secondary-container: 231 229 225;
   --color-on-secondary-container: 47 49 49;
   --color-tertiary: 8 145 178;
+  --color-tertiary-text: 3 110 131;
   --color-on-tertiary: 255 255 255;
   --color-tertiary-container: 207 244 252;
   --color-on-tertiary-container: 11 90 110;
@@ -37,6 +38,10 @@
   --color-inverse-surface: 28 28 30;
   --color-inverse-on-surface: 245 244 241;
   --color-inverse-primary: 198 198 198;
+  --color-error: 186 26 26;
+  --color-on-error: 255 255 255;
+  --color-error-container: 255 218 214;
+  --color-on-error-container: 65 0 2;
 }
 
 .dark {
@@ -62,6 +67,7 @@
   --color-secondary-container: 69 71 71;
   --color-on-secondary-container: 180 181 181;
   --color-tertiary: 76 214 255;
+  --color-tertiary-text: 76 214 255;
   --color-on-tertiary: 0 53 67;
   --color-tertiary-container: 0 0 0;
   --color-on-tertiary-container: 0 128 157;
@@ -72,6 +78,14 @@
   --color-inverse-surface: 229 226 225;
   --color-inverse-on-surface: 49 48 48;
   --color-inverse-primary: 94 94 94;
+  --color-error: 255 180 171;
+  --color-on-error: 105 0 5;
+  --color-error-container: 147 0 10;
+  --color-on-error-container: 255 218 214;
+}
+
+.font-code {
+  font-weight: 500;
 }
 
 html {

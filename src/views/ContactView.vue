@@ -48,7 +48,7 @@
         <!-- Status Message -->
         <div v-if="statusMessage" :class="[
           'p-3 border-l-4 font-code text-sm',
-          isSending ? 'border-l-tertiary text-tertiary' : 'border-l-error text-error'
+          isSending ? 'border-l-tertiary text-tertiary-text' : 'border-l-error text-error'
         ]">
           {{ statusMessage }}
         </div>

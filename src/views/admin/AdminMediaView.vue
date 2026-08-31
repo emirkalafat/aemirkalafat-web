@@ -42,7 +42,7 @@
               <p class="font-code text-sm text-on-surface truncate font-bold">{{ card.title }}</p>
               <p class="font-code text-xs text-on-surface-variant">{{ card.type }}</p>
             </div>
-            <span class="font-code text-xs text-tertiary whitespace-nowrap">{{ card.rating }}</span>
+            <span class="font-code text-xs text-tertiary-text whitespace-nowrap">{{ card.rating }}</span>
           </div>
         </div>
       </div>

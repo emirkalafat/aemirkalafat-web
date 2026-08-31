@@ -33,7 +33,7 @@
             {{ exporting ? `EXPORTING... (${exportProgress})` : 'EXPORT_JSON' }}
           </button>
         </div>
-        <p v-if="exportMsg" class="font-code text-code" :class="exportMsg.startsWith('✗') ? 'text-error' : 'text-tertiary'">{{ exportMsg }}</p>
+        <p v-if="exportMsg" class="font-code text-code" :class="exportMsg.startsWith('✗') ? 'text-error' : 'text-tertiary-text'">{{ exportMsg }}</p>
       </div>
 
       <div class="border-t border-on-surface/20"></div>
@@ -72,7 +72,7 @@
         <div v-if="previewItems.length > 0" class="border border-on-surface/30 bg-surface-dim p-4 space-y-2 max-h-40 overflow-y-auto">
           <p class="font-code text-code text-on-surface-variant uppercase mb-2">{{ previewItems.length }} kayıt bulundu</p>
           <div v-for="(item, i) in previewItems" :key="i" class="font-code text-code text-on-surface flex gap-3">
-            <span class="text-tertiary select-none">{{ i + 1 }}</span>
+            <span class="text-tertiary-text select-none">{{ i + 1 }}</span>
             <span>{{ item.name ?? item.id ?? JSON.stringify(item).slice(0, 60) + '...' }}</span>
           </div>
         </div>
@@ -87,7 +87,7 @@
           {{ importing ? `UPLOADING... (${importProgress}/${previewItems.length})` : `IMPORT_${previewItems.length}_ITEMS` }}
         </button>
 
-        <p v-if="importMsg" class="font-code text-code" :class="importMsg.startsWith('✗') ? 'text-error' : 'text-tertiary'">{{ importMsg }}</p>
+        <p v-if="importMsg" class="font-code text-code" :class="importMsg.startsWith('✗') ? 'text-error' : 'text-tertiary-text'">{{ importMsg }}</p>
       </div>
     </div>
   </section>
@@ -132,7 +132,7 @@ const PROJECT_TEMPLATE = [
       panelLabel: 'System Status',
       statusColor: 'green',
       metrics: [
-        { label: 'Version', value: '1.0.0', valueColor: 'text-tertiary' }
+        { label: 'Version', value: '1.0.0', valueColor: 'text-tertiary-text' }
       ],
       barPercent: 100,
       barColor: 'bg-tertiary'
