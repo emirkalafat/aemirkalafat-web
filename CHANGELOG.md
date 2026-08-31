@@ -4,6 +4,18 @@ User-facing release notes. Written in plain language for site visitors.
 
 ---
 
+## v7.1.0 — 2026-08-31
+
+**Status page rebuilt, readability pass**
+
+- **ADDED** — The status page now shows an hourly status strip and real clock-time labels under each service's ping history, replacing the unclear "-24H" marker.
+- **IMPRV** — Service status cards are now full-width, one per row, with uptime and latency on a single line so each card is more compact.
+- **IMPRV** — Text and labels using the accent teal color are easier to read in light mode, without losing the terminal look.
+- **IMPRV** — Project cards on the Projects page now line up at the same height within a row, even when a title wraps onto two lines.
+- **FIXED** — Status page timestamps and outage durations could show the wrong time due to a timezone parsing bug; they now reflect your actual local time.
+
+---
+
 ## v7.0.0 — 2026-08-29
 
 **Media ratings, rebuilt**

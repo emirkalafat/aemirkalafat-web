@@ -44,7 +44,7 @@
 
     <!-- Project List -->
     <section class="flex-1 p-margin-mobile lg:p-margin-desktop bg-surface-container-lowest">
-      <div class="grid grid-cols-1 xl:grid-cols-2 gap-6 items-start">
+      <div class="grid grid-cols-1 xl:grid-cols-2 gap-6">
         <ProjectCard
           v-for="project in filteredProjects"
           :key="project.name"

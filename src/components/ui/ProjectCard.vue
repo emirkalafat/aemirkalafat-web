@@ -17,7 +17,7 @@
     </div>
 
     <!-- Card Body -->
-    <div class="p-gutter flex flex-col md:flex-row gap-gutter items-start">
+    <div class="p-gutter flex flex-col md:flex-row gap-gutter flex-1">
       <!-- Left: info -->
       <div class="flex-1 flex flex-col gap-4">
         <div class="flex flex-wrap gap-2">
