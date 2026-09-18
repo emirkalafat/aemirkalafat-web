@@ -1,15 +1,9 @@
 <template>
   <div class="flex-1 flex flex-col">
-    <PageHeader :title="project?.name ?? 'PROJECT_MATRIX'">
+    <PageHeader :title="project?.name ?? 'PROJECT_MATRIX'" :logo-url="project?.logoUrl">
       <template #filters>
         <div v-if="project" class="flex flex-wrap items-center gap-3">
           <span class="font-code text-code border border-primary px-3 py-1 text-on-surface-variant">{{ project.version }}</span>
-          <span class="flex items-center gap-2">
-            <span class="w-2 h-2 animate-pulse" :class="project.status === 'STABLE' ? 'bg-on-tertiary-container' : 'bg-[#ffaa00]'"></span>
-            <span class="font-code text-code uppercase" :class="project.status === 'STABLE' ? 'text-on-tertiary-container' : 'text-[#ffaa00]'">
-              {{ project.status === 'STABLE' ? 'SYSTEM_ONLINE' : 'BETA_UNSTABLE' }}
-            </span>
-          </span>
           <span
             v-for="tag in project.tags"
             :key="tag.label"
@@ -37,7 +31,7 @@
             <div class="border border-primary bg-surface-container-lowest">
               <div class="bg-primary px-4 py-2 font-code text-label-md text-on-primary uppercase">// OVERVIEW.MD</div>
               <div class="p-6 max-w-[68ch]">
-                <p class="text-body-md font-body-md text-on-surface leading-[1.8]">{{ project.description }}</p>
+                <p class="text-body-md font-body-md text-on-surface leading-[1.8] whitespace-pre-line">{{ project.description }}</p>
               </div>
             </div>
 

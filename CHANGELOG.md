@@ -4,6 +4,18 @@ User-facing release notes. Written in plain language for site visitors.
 
 ---
 
+## v8.0.0 — 2026-09-18
+
+**Project logos**
+
+- **ADDED** — Projects can now have a logo. On the Projects page, a project with a logo gets a dedicated icon panel next to its details; projects without one simply don't show that space.
+- **ADDED** — A project's detail page now displays its logo next to the title, sized to match the height of the version and tag row below it, with its width scaling naturally so non-square logos aren't stretched or cropped.
+- **ADDED** — The admin project editor has a new LOGO field — paste an image URL or upload one directly.
+- **IMPRV** — Removed the redundant "SYSTEM_ONLINE" / "BETA_UNSTABLE" label from the project detail page header; the version and tags already convey that, and the footer's system status indicator is unchanged.
+- **FIXED** — Multi-paragraph project descriptions written in the admin panel were rendering as a single run-on paragraph on the project detail page; line breaks are now preserved.
+
+---
+
 ## v7.1.0 — 2026-08-31
 
 **Status page rebuilt, readability pass**

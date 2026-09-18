@@ -3,17 +3,27 @@
     <!-- Background accent line -->
     <div class="absolute bottom-0 left-0 right-0 h-px opacity-30" style="background: linear-gradient(90deg, rgb(59 130 246), rgb(168 85 247), transparent);"></div>
 
-    <h1
-      class="text-headline-lg-mobile lg:text-headline-lg font-headline-lg-mobile lg:font-headline-lg text-primary tracking-tight mb-6 flex items-center gap-4">
-      <span class="w-4 h-8 animate-pulse inline-block" style="background: linear-gradient(to bottom, rgb(59 130 246), rgb(168 85 247));"></span>
-      {{ title }}
-    </h1>
-    <p v-if="description"
-      class="text-body-lg font-body-lg text-on-surface-variant max-w-3xl mb-8 pl-4"
-      style="border-left: 4px solid rgb(59 130 246 / 0.4);">
-      {{ description }}
-    </p>
-    <slot name="filters"></slot>
+    <div :class="logoUrl ? 'flex items-start gap-5 lg:gap-6' : ''">
+      <div
+        v-if="logoUrl"
+        class="h-24 lg:h-28 shrink-0 border border-primary bg-surface-container-lowest flex items-center justify-center overflow-hidden"
+      >
+        <img :src="logoUrl" :alt="title" class="h-full w-auto object-contain" />
+      </div>
+      <div class="flex-1 min-w-0">
+        <h1
+          class="text-headline-lg-mobile lg:text-headline-lg font-headline-lg-mobile lg:font-headline-lg text-primary tracking-tight mb-6 flex items-center gap-4">
+          <span v-if="!logoUrl" class="w-4 h-8 animate-pulse inline-block" style="background: linear-gradient(to bottom, rgb(59 130 246), rgb(168 85 247));"></span>
+          {{ title }}
+        </h1>
+        <p v-if="description"
+          class="text-body-lg font-body-lg text-on-surface-variant max-w-3xl mb-8 pl-4"
+          style="border-left: 4px solid rgb(59 130 246 / 0.4);">
+          {{ description }}
+        </p>
+        <slot name="filters"></slot>
+      </div>
+    </div>
   </header>
 </template>
 
@@ -21,6 +31,7 @@
 interface Props {
   title: string
   description?: string
+  logoUrl?: string
 }
 
 defineProps<Props>()

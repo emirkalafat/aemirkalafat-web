@@ -53,7 +53,13 @@
         </div>
       </div>
 
-      <!-- Right: stats panel -->
+      <!-- Right: logo bay -->
+      <div v-if="logoUrl" class="hidden md:flex w-[172px] shrink-0 border border-surface-variant bg-surface-dim flex-col items-center justify-center gap-2.5 p-4">
+        <div class="w-[88px] h-[88px] flex items-center justify-center overflow-hidden bg-surface-container-lowest border border-surface-variant">
+          <img :src="logoUrl" :alt="`${name} logo`" class="w-full h-full object-contain" />
+        </div>
+        <span class="font-code text-[10px] tracking-wider text-tertiary-text uppercase">project_icon</span>
+      </div>
 
     </div>
 
@@ -122,6 +128,7 @@ interface Props {
   commit: string
   stats: Stats
   changelog: ChangelogEntry[]
+  logoUrl?: string
 }
 
 const props = defineProps<Props>()
