@@ -52,6 +52,7 @@ export interface Project {
   language?: string;
   framework?: string;
   license?: string;
+  logoUrl?: string;
 }
 
 export const seedProjects: Project[] = [

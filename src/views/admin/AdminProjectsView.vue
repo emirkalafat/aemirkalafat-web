@@ -88,6 +88,26 @@
             </div>
 
             <div class="col-span-2 flex flex-col gap-2">
+              <label class="font-code text-xs text-on-surface-variant uppercase">LOGO</label>
+              <div class="flex items-center gap-3">
+                <div class="w-12 h-12 shrink-0 border border-on-surface/30 bg-surface flex items-center justify-center overflow-hidden">
+                  <img v-if="editingProject.logoUrl" :src="editingProject.logoUrl" alt="Logo preview" class="w-full h-full object-contain" />
+                  <span v-else class="material-symbols-outlined text-lg text-on-surface-variant/40">deployed_code</span>
+                </div>
+                <input
+                  v-model="editingProject.logoUrl"
+                  placeholder="https://..."
+                  class="flex-1 bg-transparent border-b border-on-surface focus:border-tertiary text-code font-code text-on-surface px-0 py-2 focus:ring-0 outline-none"
+                />
+                <label class="shrink-0 cursor-pointer bg-on-surface text-surface px-3 py-2 font-code text-xs uppercase hover:bg-tertiary transition-colors flex items-center gap-1">
+                  <span class="material-symbols-outlined text-sm">upload</span>
+                  {{ uploadingLogo ? '...' : 'UPLOAD' }}
+                  <input type="file" accept="image/*" class="hidden" :disabled="uploadingLogo" @change="handleLogoUpload" />
+                </label>
+              </div>
+            </div>
+
+            <div class="col-span-2 flex flex-col gap-2">
               <label class="font-code text-xs text-on-surface-variant uppercase">DESCRIPTION</label>
               <textarea
                 v-model="editingProject.description"
@@ -321,6 +341,7 @@ import { ref, computed, toRaw } from 'vue'
 import { useProjects } from '@/composables/useProjects'
 import { useProjectSettings } from '@/composables/useProjectSettings'
 import { formatDateOnly } from '@/utils/date'
+import { uploadFile } from '@/services/storage'
 import type { Project, Tag, ChangelogEntry } from '@/data/projects'
 
 const projects = useProjects()
@@ -335,6 +356,7 @@ const newFlag = ref('')
 const showJsonImport = ref(false)
 const jsonInput = ref('')
 const jsonError = ref('')
+const uploadingLogo = ref(false)
 
 const filteredProjects = computed(() => {
   const q = searchQuery.value.toLowerCase()
@@ -365,6 +387,7 @@ function newProject() {
     language: '' as string | undefined,
     framework: '' as string | undefined,
     license: '' as string | undefined,
+    logoUrl: '' as string | undefined,
     stats: {
       panelLabel: 'Status',
       statusColor: 'green' as const,
@@ -376,6 +399,23 @@ function newProject() {
     links: [],
   }
   openVersions.value.clear()
+}
+
+async function handleLogoUpload(event: Event) {
+  const input = event.target as HTMLInputElement
+  const file = input.files?.[0]
+  if (!file || !editingProject.value) return
+
+  uploadingLogo.value = true
+  try {
+    const path = `projects/${editingProject.value.name || 'untitled'}/logo_${Date.now()}_${file.name}`
+    editingProject.value.logoUrl = await uploadFile(path, file)
+  } catch (e) {
+    console.error('Logo upload failed:', e)
+  } finally {
+    uploadingLogo.value = false
+    input.value = ''
+  }
 }
 
 function addTag() {
