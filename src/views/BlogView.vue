@@ -12,7 +12,7 @@
               'border border-primary px-4 py-2 hover:bg-surface-variant transition-colors uppercase',
               activeFilter === null ? 'bg-tertiary border-tertiary text-[#1a1a1a]' : 'text-primary'
             ]"
-          >[*] Hepsi</button>
+          >[*] ALL</button>
           <button
             @click="selectFilter('DEV')"
             :class="[
