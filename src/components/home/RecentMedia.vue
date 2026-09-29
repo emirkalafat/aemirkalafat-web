@@ -6,15 +6,19 @@
           v-for="(m, i) in recent"
           :key="m.id"
           v-reveal="i * 100"
-          :to="`/media/${m.id}`"
+          :to="mediaRoute(m)"
           class="group block">
           <div
             class="relative aspect-[2/3] border border-primary bg-surface-variant overflow-hidden group-hover:border-rating-average transition-colors">
             <img
+              v-if="m.imageUrl"
               :src="m.imageUrl"
               :alt="m.title"
               loading="lazy"
               class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition duration-500" />
+            <div v-else class="w-full h-full flex items-center justify-center text-on-surface-variant">
+              <span class="material-symbols-outlined text-[64px] opacity-40">{{ icon(m.type) }}</span>
+            </div>
             <span class="absolute top-2 left-2 w-7 h-7 flex items-center justify-center bg-background border border-primary">
               <span class="material-symbols-outlined text-[16px]">{{ icon(m.type) }}</span>
             </span>
@@ -47,7 +51,7 @@
             </h3>
             <p v-if="watched(m.date)" class="font-code text-xs text-on-surface-variant uppercase flex items-center gap-1">
               <span class="material-symbols-outlined text-[14px]">calendar_month</span>
-              {{ m.type === 'TEXT' ? 'Read' : 'Watched' }} {{ watched(m.date) }}
+              <template v-if="m.seasonNumber != null">S{{ m.seasonNumber }} · </template>{{ m.type === 'TEXT' ? 'Read' : 'Watched' }} {{ watched(m.date) }}
             </p>
           </div>
         </RouterLink>
@@ -70,12 +74,13 @@ import RatingBar from '@/components/ui/RatingBar.vue'
 import { useMedia } from '@/composables/useMedia'
 import { vReveal } from '@/composables/useReveal'
 import { formatDateOnly } from '@/utils/date'
+import { mediaRoute } from '@/utils/media'
 
 const { items } = useMedia()
 
 const recent = computed(() =>
   [...items.value]
-    .filter(m => m.imageUrl)
+    .filter(m => m.kind !== 'SERIES')
     .sort((a, b) => (b.date ?? '').localeCompare(a.date ?? ''))
     .slice(0, 4),
 )

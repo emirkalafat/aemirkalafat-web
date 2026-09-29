@@ -1,12 +1,12 @@
 <template>
-  <RouterLink :to="`/media/${id}`" class="block">
+  <RouterLink :to="route" class="block">
     <article
       class="h-full border border-primary bg-surface group flex flex-col relative transition-transform duration-200 brutalist-offset shadow-primary hover:shadow-tertiary brutalist-offset-hover cursor-pointer">
     <div class="h-10 bg-primary flex items-center justify-between px-4">
       <span class="font-code text-label-md text-on-primary">ID: {{ id }}</span>
       <span class="font-code text-label-md text-on-primary flex items-center gap-1">
         <span class="material-symbols-outlined text-[14px]">{{ typeIcon }}</span>
-        {{ type }}
+        {{ type }}<template v-if="seasonNumber != null"> · S{{ seasonNumber }}</template>
       </span>
     </div>
     <div class="p-4 flex gap-4 flex-1">
@@ -60,6 +60,7 @@
 import { computed } from 'vue'
 import { RouterLink } from 'vue-router'
 import RatingBar from './RatingBar.vue'
+import { mediaRoute } from '@/utils/media'
 
 interface Props {
   id: string
@@ -70,9 +71,16 @@ interface Props {
   meta: string[]
   description: string
   ratingLabel: string
+  kind?: 'SERIES' | 'SEASON'
+  seriesId?: string
+  seasonNumber?: number
 }
 
 const props = defineProps<Props>()
+
+const route = computed(() =>
+  mediaRoute({ id: props.id, kind: props.kind, seriesId: props.seriesId, seasonNumber: props.seasonNumber }),
+)
 
 const typeIcon = computed(() => {
   switch (props.type) {

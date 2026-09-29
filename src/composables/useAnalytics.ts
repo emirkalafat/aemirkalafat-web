@@ -28,8 +28,8 @@ export function useAnalytics() {
     track('view_blog_post', { blog_id: id, blog_title: title, blog_category: category })
   }
 
-  function trackMediaView(id: string, title: string, type?: string) {
-    track('view_media', { media_id: id, media_title: title, media_type: type })
+  function trackMediaView(id: string, title: string, type?: string, seasonNumber?: number) {
+    track('view_media', { media_id: id, media_title: title, media_type: type, season_number: seasonNumber })
   }
 
   function trackSocialClick(platform: string, location: string) {

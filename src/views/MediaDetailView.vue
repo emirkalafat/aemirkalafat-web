@@ -4,7 +4,7 @@
       <template #filters>
         <div v-if="card" class="flex flex-wrap items-center gap-3">
           <span class="font-code text-code border border-primary px-3 py-1 text-on-surface-variant">ID: {{ card.id }}</span>
-          <span class="font-code text-code border border-primary px-3 py-1 text-on-surface-variant">{{ card.type }}</span>
+          <span class="font-code text-code border border-primary px-3 py-1 text-on-surface-variant">{{ card.type }}{{ card.kind === 'SEASON' ? ` · S${card.seasonNumber}` : '' }}</span>
           <span
             class="font-code text-code border px-3 py-1 flex items-center gap-2"
             :class="card.isCompleted ? 'border-tertiary text-tertiary-text' : 'border-on-surface-variant text-on-surface-variant'"
@@ -20,15 +20,23 @@
       </template>
     </PageHeader>
 
-    <section class="flex-1 lg:min-h-0 p-margin-mobile lg:p-margin-desktop bg-surface-container-lowest">
+    <section
+      class="flex-1 lg:min-h-0 flex flex-col gap-gutter p-margin-mobile lg:p-margin-desktop bg-surface-container-lowest"
+      :class="card?.kind === 'SEASON' && siblings.length ? 'pt-gutter lg:pt-gutter' : ''">
       <!-- Not found -->
       <div v-if="!card" class="border border-primary bg-surface p-8 text-center">
-        <p class="font-code text-body-md text-on-surface-variant">[RECORD_NOT_FOUND]</p>
+        <p class="font-code text-body-md text-on-surface-variant">{{ ready ? '[RECORD_NOT_FOUND]' : 'LOADING_RECORD...' }}</p>
       </div>
 
       <template v-else>
+        <SeasonSwitcher
+          v-if="card.kind === 'SEASON' && siblings.length"
+          :series-id="card.seriesId!"
+          :seasons="siblings"
+          :current="card.seasonNumber" />
+
         <!-- Main 2-column grid (viewport-height locked on lg+) -->
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter h-full lg:min-h-0">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter flex-1 lg:min-h-0">
 
           <!-- LEFT COLUMN: Poster -->
           <div class="lg:col-span-4 border border-primary flex flex-col h-full lg:min-h-0">
@@ -52,8 +60,8 @@
               <div class="md:col-span-2 border border-primary bg-surface-container-lowest flex flex-col">
                 <div class="bg-primary px-4 py-2 font-code text-label-md text-on-primary uppercase flex justify-between items-center">
                   <span>SYS_METADATA</span>
-                  <a v-if="card.externalUrl" :href="card.externalUrl" target="_blank" rel="noopener noreferrer"
-                    @click="trackMediaSourceClick(card.id, card.title, card.externalUrl)"
+                  <a v-if="sourceUrl" :href="sourceUrl" target="_blank" rel="noopener noreferrer"
+                    @click="trackMediaSourceClick(card.id, card.title, sourceUrl)"
                     class="bg-tertiary text-on-tertiary px-3 py-1 font-code text-xs uppercase hover:bg-on-tertiary hover:text-tertiary-text transition-colors">
                     VIEW_SOURCE
                   </a>
@@ -69,7 +77,7 @@
               </div>
 
               <!-- AGGREGATE_SCORE -->
-              <ScoreMeter :rating="card.rating" :label="card.ratingLabel" class="md:col-span-1" />
+              <ScoreMeter :key="card.id" :rating="card.rating" :label="card.ratingLabel" class="md:col-span-1" />
 
             </div>
 
@@ -125,19 +133,36 @@ import { computed, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import PageHeader from '@/components/ui/PageHeader.vue'
 import ScoreMeter from '@/components/ui/ScoreMeter.vue'
+import SeasonSwitcher from '@/components/media/SeasonSwitcher.vue'
 import { useMedia } from '@/composables/useMedia'
 import { useAnalytics } from '@/composables/useAnalytics'
+import { seasonDocId, seasonsOf } from '@/utils/media'
 
 const route = useRoute()
 const media = useMedia()
-const card = computed(() => media.items.value.find(c => c.id === route.params.id))
+const { ready } = media
+
+// /media/:id/s/:season maps to the flat season document `${id}-s${season}`.
+const cardId = computed(() =>
+  route.params.season ? seasonDocId(String(route.params.id), Number(route.params.season)) : String(route.params.id),
+)
+const card = computed(() => media.items.value.find(c => c.id === cardId.value))
+const series = computed(() => (card.value?.kind === 'SEASON' ? media.getById(card.value.seriesId ?? '') : undefined))
+const siblings = computed(() =>
+  card.value?.kind === 'SEASON' ? seasonsOf(media.items.value, card.value.seriesId ?? '') : [],
+)
+const sourceUrl = computed(() => series.value?.externalUrl ?? card.value?.externalUrl)
 
 const { trackMediaView, trackMediaSourceClick } = useAnalytics()
 watch(card, c => {
-  if (c) trackMediaView(c.id, c.title, c.type)
+  if (c) trackMediaView(c.id, c.title, c.type, c.seasonNumber)
 }, { immediate: true })
 
-const analysisTitle = computed(() => card.value ? card.value.title : 'MEDIA_ANALYSIS')
+const analysisTitle = computed(() => {
+  const c = card.value
+  if (!c) return 'MEDIA_ANALYSIS'
+  return c.kind === 'SEASON' ? `${c.title} · S${c.seasonNumber}` : c.title
+})
 
 const descriptionLines = computed(() => {
   if (!card.value) return []
@@ -154,20 +179,23 @@ const metricEntries = computed((): [string, number][] => {
 })
 
 const metaEntries = computed((): [string, string][] => {
-  if (!card.value) return []
+  const c = card.value
+  if (!c) return []
   const entries: [string, string][] = []
-  for (const item of card.value.meta) {
-    const colonIndex = item.indexOf(': ')
-    if (colonIndex !== -1) {
-      const label = item.substring(0, colonIndex)
-      const value = item.substring(colonIndex + 2)
-      entries.push([label, value])
-    } else {
-      entries.push(['', item])
-    }
+  const isSeason = c.kind === 'SEASON'
+
+  if (isSeason) {
+    entries.push(['SERIES', c.title])
+    entries.push(['SEASON', `${c.seasonNumber}${c.seasonTitle ? ` — ${c.seasonTitle}` : ''}`])
+    if (c.episodeCount) entries.push(['EPISODES', String(c.episodeCount)])
   }
-  entries.push(['TYPE', card.value.type])
-  entries.push(['DATE', card.value.date])
+  for (const item of isSeason ? series.value?.meta ?? [] : c.meta) {
+    const colonIndex = item.indexOf(': ')
+    if (colonIndex !== -1) entries.push([item.substring(0, colonIndex), item.substring(colonIndex + 2)])
+    else entries.push(['', item])
+  }
+  entries.push(['TYPE', c.type])
+  entries.push([isSeason ? 'WATCHED' : 'DATE', c.date])
   return entries
 })
 </script>

@@ -10,7 +10,8 @@ const routes = [
     children: [
       { path: "", component: () => import("@/views/HomeView.vue") },
       { path: "media", component: () => import("@/views/MediaView.vue") },
-      { path: "media/:id", component: () => import("@/views/MediaDetailView.vue") },
+      { path: "media/:id", component: () => import("@/views/MediaRouteView.vue") },
+      { path: "media/:id/s/:season", component: () => import("@/views/MediaDetailView.vue") },
       { path: "projects", component: () => import("@/views/ProjectsView.vue") },
       { path: "projects/:name", component: () => import("@/views/ProjectDetailView.vue") },
       { path: "blog", component: () => import("@/views/BlogView.vue") },

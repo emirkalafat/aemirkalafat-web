@@ -8,7 +8,7 @@
           <span class="material-symbols-outlined text-sm">subscriptions</span>
         </div>
         <div class="p-6 flex flex-col space-y-2">
-          <span class="font-display text-display text-on-surface leading-none">{{ media.items.value.length }}</span>
+          <span class="font-display text-display text-on-surface leading-none">{{ media.items.value.filter(c => c.kind !== 'SEASON').length }}</span>
           <div class="flex items-center space-x-2 text-on-surface-variant text-sm font-code">
             <span class="w-2 h-2 bg-tertiary rounded-none"></span>
             <span>TOTAL_ITEMS</span>
