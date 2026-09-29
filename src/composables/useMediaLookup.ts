@@ -171,6 +171,39 @@ async function searchOpenLibrary(query: string): Promise<BookResult[]> {
   }
 }
 
+export interface TmdbSeason {
+  seasonNumber: number
+  name: string
+  airDate: string
+  episodeCount: number
+  posterUrl: string
+  overview: string
+}
+
+// Specials (season 0) are intentionally skipped.
+async function getTvSeasons(tmdbId: number): Promise<{ totalSeasons: number; seasons: TmdbSeason[] }> {
+  const apiKey = import.meta.env.VITE_TMDB_API_KEY
+  if (!apiKey) throw new Error('TMDB API key not configured')
+
+  const res = await fetch(`${TMDB_BASE}/tv/${tmdbId}`, {
+    headers: { accept: 'application/json', Authorization: `Bearer ${apiKey}` },
+  })
+  if (!res.ok) throw new Error(`TMDB API error: ${res.status}`)
+
+  const data = await res.json()
+  const seasons: TmdbSeason[] = (data.seasons ?? [])
+    .filter((s: any) => s.season_number > 0)
+    .map((s: any) => ({
+      seasonNumber: s.season_number,
+      name: s.name ?? '',
+      airDate: s.air_date ?? '',
+      episodeCount: s.episode_count ?? 0,
+      posterUrl: s.poster_path ? `${TMDB_IMG}${s.poster_path}` : '',
+      overview: s.overview ?? '',
+    }))
+  return { totalSeasons: seasons.length, seasons }
+}
+
 export function useMediaLookup() {
-  return { searchTMDB, searchBooks }
+  return { searchTMDB, searchBooks, getTvSeasons }
 }

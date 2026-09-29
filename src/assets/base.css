@@ -31,6 +31,8 @@
   --color-on-tertiary: 255 255 255;
   --color-tertiary-container: 207 244 252;
   --color-on-tertiary-container: 11 90 110;
+  --color-cyber-purple: 189 0 255;
+  --color-on-cyber-purple: 255 255 255;
   --color-rating-average: 217 119 6;
   --color-rating-good: 147 51 234;
   --color-outline: 121 118 122;
@@ -71,6 +73,8 @@
   --color-on-tertiary: 0 53 67;
   --color-tertiary-container: 0 0 0;
   --color-on-tertiary-container: 0 128 157;
+  --color-cyber-purple: 167 139 218;
+  --color-on-cyber-purple: 26 20 40;
   --color-rating-average: 251 146 60;
   --color-rating-good: 192 132 252;
   --color-outline: 152 142 144;
@@ -376,6 +380,137 @@ select:focus-visible {
 
 .nav-link:hover::after {
   opacity: 0.6;
+}
+
+/* Scroll reveal (see composables/useReveal.ts) */
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.7s cubic-bezier(0.2, 0.7, 0.2, 1), transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.reveal.is-revealed {
+  opacity: 1;
+  transform: none;
+}
+
+.reveal .heading-rule {
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) 0.25s;
+}
+
+.reveal.is-revealed .heading-rule {
+  transform: scaleX(1);
+}
+
+/* Hero entrance */
+.hero-in {
+  opacity: 0;
+  animation: fadeSlideIn 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
+  animation-delay: var(--d, 0ms);
+}
+
+/* Outlined word with a "current" sweeping through it */
+.circuit-text {
+  color: transparent;
+  -webkit-text-stroke: 1px rgb(var(--color-on-surface));
+  background-image: linear-gradient(100deg, transparent 42%, rgb(var(--color-tertiary)) 50%, transparent 58%);
+  background-size: 250% 100%;
+  background-position: 150% 0;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: circuit-sweep 5s ease-in-out 1.4s infinite;
+}
+
+@keyframes circuit-sweep {
+  0% { background-position: 150% 0; }
+  55%, 100% { background-position: -50% 0; }
+}
+
+/* Dot grid that lights up around the pointer */
+.pointer-grid {
+  overflow: hidden;
+  -webkit-mask-image: radial-gradient(circle 280px at var(--mx, 75%) var(--my, 45%), #000 0%, rgb(0 0 0 / 0.08) 100%);
+  mask-image: radial-gradient(circle 280px at var(--mx, 75%) var(--my, 45%), #000 0%, rgb(0 0 0 / 0.08) 100%);
+}
+
+.pointer-grid-dots {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: calc(100% + 22px);
+  background-image: radial-gradient(rgb(var(--color-outline) / 0.6) 1px, transparent 1.5px);
+  background-size: 22px 22px;
+  will-change: transform;
+}
+
+/* Tech ticker */
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 40s linear infinite;
+}
+
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+@keyframes marquee {
+  to { transform: translateX(-50%); }
+}
+
+/* CRT scanlines */
+.crt-scanlines {
+  background-image: repeating-linear-gradient(0deg, rgb(0 0 0 / 0.07) 0, rgb(0 0 0 / 0.07) 1px, transparent 1px, transparent 3px);
+}
+
+.dark .crt-scanlines {
+  background-image: repeating-linear-gradient(0deg, rgb(255 255 255 / 0.035) 0, rgb(255 255 255 / 0.035) 1px, transparent 1px, transparent 3px);
+}
+
+.crt-vignette {
+  background: radial-gradient(ellipse at center, transparent 55%, rgb(0 0 0 / 0.12) 100%);
+}
+
+.term-line-in {
+  animation: fadeSlideIn 0.25s ease-out both;
+}
+
+/* Film strip frame for the media section */
+.film-strip {
+  position: relative;
+  padding: 26px 20px;
+  border: 1px solid rgb(var(--color-outline-variant));
+  background: rgb(var(--color-surface-container-lowest));
+}
+
+.film-strip::before,
+.film-strip::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 8px;
+  background-image: repeating-linear-gradient(90deg, rgb(var(--color-outline-variant)) 0, rgb(var(--color-outline-variant)) 12px, transparent 12px, transparent 24px);
+  opacity: 0.8;
+}
+
+.film-strip::before { top: 8px; }
+.film-strip::after { bottom: 8px; }
+
+/* Contribution heatmap: cells switch on left-to-right */
+.reveal .gh-cell {
+  opacity: 0;
+  transform: scale(0.4);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  transition-delay: calc(var(--col, 0) * 14ms);
+}
+
+.reveal.is-revealed .gh-cell {
+  opacity: 1;
+  transform: none;
 }
 
 @media (prefers-reduced-motion: reduce) {

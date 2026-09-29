@@ -89,9 +89,12 @@
               :title="card.title"
               :imageUrl="card.imageUrl"
               :rating="card.rating"
-              :meta="card.meta"
-              :description="card.description"
+              :meta="cardMeta(card)"
+              :description="card.summary || card.description"
               :ratingLabel="card.ratingLabel"
+              :kind="card.kind"
+              :seriesId="card.seriesId"
+              :seasonNumber="card.seasonNumber"
             />
           </div>
         </div>
@@ -137,6 +140,14 @@ function ratingTier(rating: number): RatingTier {
   return 'BAD'
 }
 
+function cardMeta(card: MediaCardData): string[] {
+  if (card.kind !== 'SEASON') return card.meta
+  return [
+    ...(card.seasonTitle ? [card.seasonTitle] : []),
+    ...(card.episodeCount ? [`${card.episodeCount} EPISODES`] : []),
+  ]
+}
+
 function selectFilter(value: FilterType) {
   activeFilter.value = value
   trackFilterSelect('media', value ?? 'ALL')
@@ -149,12 +160,19 @@ function selectRatingFilter(value: RatingTier) {
 
 const filteredCards = computed(() => {
   return media.items.value.filter(card => {
+    // Series roots only hold the overall verdict; their seasons are the timeline entries.
+    if (card.kind === 'SERIES') return false
     const matchesFilter = !activeFilter.value || card.type === activeFilter.value
     const matchesRating = !activeRatingFilter.value || ratingTier(card.rating) === activeRatingFilter.value
     const q = searchQuery.value.toLowerCase()
     const matchesSearch = !q || card.title.toLowerCase().includes(q) || card.description.toLowerCase().includes(q)
     return matchesFilter && matchesRating && matchesSearch
-  })
+  }).sort(
+    (a, b) =>
+      (b.date ?? '').localeCompare(a.date ?? '') ||
+      (b.seasonNumber ?? 0) - (a.seasonNumber ?? 0) ||
+      a.title.localeCompare(b.title),
+  )
 })
 
 watch(searchQuery, q => trackSearch('media', q, filteredCards.value.length))

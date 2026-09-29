@@ -17,6 +17,19 @@ export interface MediaCardData {
   isCompleted?: boolean;
   metrics?: MediaMetrics;
   externalUrl?: string;
+  // Series support. No `kind` means a standalone movie/book/legacy single-rating show.
+  kind?: "SERIES" | "SEASON";
+  // SEASON only
+  seriesId?: string;
+  seasonNumber?: number;
+  seasonTitle?: string;
+  episodeCount?: number;
+  summary?: string;
+  // SERIES only (rating/date are kept in sync by the admin panel)
+  tmdbId?: number;
+  totalSeasons?: number;
+  seasonCount?: number;
+  ratingOverride?: number | null;
 }
 
 export const seedMediaCards: MediaCardData[] = [

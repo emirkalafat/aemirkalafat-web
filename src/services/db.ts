@@ -5,6 +5,7 @@ import {
   deleteDoc,
   onSnapshot,
   getDocs,
+  writeBatch,
   type Unsubscribe,
   type DocumentData,
   type QueryDocumentSnapshot,
@@ -62,4 +63,18 @@ export async function getSubcollection<T extends DocumentData>(
   } catch {
     return []
   }
+}
+
+export type BatchOp =
+  | { type: 'set'; collection: string; id: string; data: DocumentData }
+  | { type: 'delete'; collection: string; id: string }
+
+export async function batchWrite(ops: BatchOp[]): Promise<void> {
+  const batch = writeBatch(db)
+  for (const op of ops) {
+    const ref = doc(db, op.collection, op.id)
+    if (op.type === 'set') batch.set(ref, op.data, { merge: true })
+    else batch.delete(ref)
+  }
+  await batch.commit()
 }
