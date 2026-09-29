@@ -1,13 +1,16 @@
 <template>
-  <div class="flex-1 flex flex-col">
+  <div class="relative isolate flex-1 flex flex-col" @pointermove="onPointerMove">
+    <!-- Viewport-sized dot grid that lights up around the pointer; sticky so it follows the scroll without taking layout space -->
+    <div
+      ref="gridEl"
+      class="pointer-grid sticky top-0 h-screen -mb-[100vh] -z-10 pointer-events-none"
+      aria-hidden="true">
+      <div ref="dotsEl" class="pointer-grid-dots"></div>
+    </div>
     <main class="flex-1 flex flex-col pt-24 lg:pt-margin-desktop px-margin-mobile md:px-margin-desktop gap-24 max-w-7xl mx-auto w-full pb-margin-desktop">
 
       <!-- 00 // Hero -->
-      <section
-        ref="heroEl"
-        class="relative isolate z-10 grid grid-cols-1 md:grid-cols-12 gap-gutter items-center pt-4 md:min-h-[614px]"
-        @pointermove="onHeroPointer">
-        <div class="hero-grid absolute inset-0 -z-10 pointer-events-none" aria-hidden="true"></div>
+      <section class="relative isolate z-10 grid grid-cols-1 md:grid-cols-12 gap-gutter items-center pt-4 md:min-h-[614px]">
 
         <div class="md:col-span-7 flex flex-col gap-6">
           <div class="hero-in inline-block bg-surface-container-lowest border border-primary px-4 py-2 self-start" style="--d: 0ms">
@@ -134,11 +137,31 @@ onBeforeUnmount(() => desktopQuery.removeEventListener('change', onQueryChange))
 
 const isCurrent = (exp: WorkExperience) => exp.roles.some(r => /present/i.test(r.period))
 
-const heroEl = ref<HTMLElement | null>(null)
+const gridEl = ref<HTMLElement | null>(null)
+const dotsEl = ref<HTMLElement | null>(null)
 let raf = 0
-function onHeroPointer(e: PointerEvent) {
-  if (raf || !heroEl.value) return
-  const el = heroEl.value
+let scrollRaf = 0
+
+// The dots scroll with the page (one 22px tile period at a time); the light stays under the pointer.
+function onScroll() {
+  if (scrollRaf) return
+  scrollRaf = requestAnimationFrame(() => {
+    scrollRaf = 0
+    if (dotsEl.value) dotsEl.value.style.transform = `translate3d(0, ${-(window.scrollY % 22)}px, 0)`
+  })
+}
+onMounted(() => {
+  window.addEventListener('scroll', onScroll, { passive: true })
+  onScroll()
+})
+onBeforeUnmount(() => {
+  window.removeEventListener('scroll', onScroll)
+  cancelAnimationFrame(scrollRaf)
+})
+
+function onPointerMove(e: PointerEvent) {
+  if (raf || !gridEl.value) return
+  const el = gridEl.value
   const { clientX, clientY } = e
   raf = requestAnimationFrame(() => {
     raf = 0

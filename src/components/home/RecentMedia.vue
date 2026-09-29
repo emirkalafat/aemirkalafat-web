@@ -1,4 +1,5 @@
 <template>
+  <div>
   <div class="film-strip">
     <div class="grid grid-cols-2 md:grid-cols-4 gap-gutter">
       <template v-if="recent.length">
@@ -61,10 +62,18 @@
       </template>
     </div>
   </div>
-  <div class="flex justify-end mt-4">
-    <RouterLink to="/media" class="font-code text-code uppercase flex items-center gap-1 text-on-surface-variant hover:text-rating-average transition-colors">
-      All ratings <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+  <div class="border border-t-0 border-outline-variant bg-surface-container-lowest px-5 py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+    <p class="font-code text-code text-on-surface-variant">
+      <span class="text-rating-average font-bold">{{ total }}</span> movies, series seasons and books rated so far.
+    </p>
+    <RouterLink
+      to="/media"
+      class="shrink-0 flex items-center justify-center gap-2 bg-rating-average text-[#1a1a1a] font-label-md text-label-md px-6 py-3 uppercase border border-primary brutalist-offset shadow-primary brutalist-offset-hover transition-[transform,box-shadow] duration-200">
+      <span class="material-symbols-outlined text-[18px]">movie_filter</span>
+      Browse all reviews
+      <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
     </RouterLink>
+  </div>
   </div>
 </template>
 
@@ -84,6 +93,8 @@ const recent = computed(() =>
     .sort((a, b) => (b.date ?? '').localeCompare(a.date ?? ''))
     .slice(0, 4),
 )
+
+const total = computed(() => items.value.filter(m => m.kind !== 'SERIES').length)
 
 const icon = (type: string) => (type === 'TV_SERIES' ? 'tv' : type === 'TEXT' ? 'book' : 'movie')
 

@@ -429,11 +429,21 @@ select:focus-visible {
 }
 
 /* Dot grid that lights up around the pointer */
-.hero-grid {
-  background-image: radial-gradient(rgb(var(--color-outline) / 0.6) 1px, transparent 1.5px);
-  background-size: 22px 22px;
+.pointer-grid {
+  overflow: hidden;
   -webkit-mask-image: radial-gradient(circle 280px at var(--mx, 75%) var(--my, 45%), #000 0%, rgb(0 0 0 / 0.08) 100%);
   mask-image: radial-gradient(circle 280px at var(--mx, 75%) var(--my, 45%), #000 0%, rgb(0 0 0 / 0.08) 100%);
+}
+
+.pointer-grid-dots {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: calc(100% + 22px);
+  background-image: radial-gradient(rgb(var(--color-outline) / 0.6) 1px, transparent 1.5px);
+  background-size: 22px 22px;
+  will-change: transform;
 }
 
 /* Tech ticker */

@@ -43,17 +43,22 @@
           more
         </div>
       </div>
-    </div>
 
-    <div class="flex justify-end -mt-6">
-      <a
-        :href="`https://github.com/${USERNAME}`"
-        target="_blank"
-        rel="noopener"
-        class="font-code text-code uppercase flex items-center gap-1 text-on-surface-variant hover:text-tertiary-text transition-colors"
-        @click="trackSocialClick('github', 'activity')">
-        View profile <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
-      </a>
+      <div class="border-t border-outline-variant px-5 py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <p class="font-code text-code text-on-surface-variant">
+          Repositories, pull requests and everything behind these squares.
+        </p>
+        <a
+          :href="`https://github.com/${USERNAME}`"
+          target="_blank"
+          rel="noopener"
+          class="shrink-0 flex items-center justify-center gap-2 bg-tertiary text-on-tertiary font-label-md text-label-md px-6 py-3 uppercase border border-primary brutalist-offset shadow-primary brutalist-offset-hover transition-[transform,box-shadow] duration-200"
+          @click="trackSocialClick('github', 'activity')">
+          <span class="material-symbols-outlined text-[18px]">code</span>
+          Open GitHub profile
+          <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+        </a>
+      </div>
     </div>
   </section>
 </template>

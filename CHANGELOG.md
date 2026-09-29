@@ -4,6 +4,32 @@ User-facing release notes. Written in plain language for site visitors.
 
 ---
 
+## v9.0.0 — 2026-11
+
+**TV series, rated season by season**
+
+- **ADDED** — Shows are now rated one season at a time. Each season has its own score, review, and the month and year I watched it, so a great first season and a weaker third one can finally be told apart.
+- **ADDED** — Every series has its own overview page with the overall score, the average of its seasons, the best and weakest season, the years I watched it over, and a bar chart of how the seasons compare. It also carries my overall thoughts on the show and a short take on each season, with a link to the full review.
+- **ADDED** — A season's page has a season switcher at the top, so you can hop between seasons or jump to the series overview without going back to the list.
+- **IMPRV** — On the media page, every season shows up as its own card marked with its season number, placed on the month it was watched.
+- **FIXED** — Media cards inside a month are now sorted by the exact day I watched them, newest first, instead of in no particular order.
+- **FIXED** — Opening a review no longer flashes "record not found" while the page is still loading.
+
+**A livelier homepage**
+
+- **ADDED** — The homepage hero now has a live terminal. It introduces itself, then you can type commands: `help` lists them, and you can look up my skills, experience, and education, open the Projects, Blog, Media, Status, and Contact pages, toggle light and dark mode, or download a CV. On phones the terminal sits at the bottom of the page instead.
+- **ADDED** — In the terminal, typing `cv` shows the four CVs as a numbered list, and typing the number downloads that one.
+- **ADDED** — A new "Projects" section shows my three most recent projects right on the homepage.
+- **ADDED** — A GitHub activity graph shows my contributions over the last year, with my longest streak, active days, and best day.
+- **ADDED** — A new "Input.Stream()" section shows the latest four movies, series seasons, or books I've rated, with a large score panel and the month I watched or read each one.
+- **ADDED** — A scroll-to-top button appears on every page once you've scrolled down, with a thin bar along its bottom edge showing how far through the page you are.
+- **IMPRV** — Each homepage section now has its own look and a numbered heading: experience runs along a timeline, projects get a colorful ticker, and education is laid out as a numbered stack.
+- **IMPRV** — Sections and cards fade in as you scroll, the hero introduces itself piece by piece, and a soft dotted grid lights up around your cursor across the whole page.
+- **IMPRV** — The purple accent color is calmer and easier on the eyes in dark mode.
+- **IMPRV** — My software developer role at talsen team GmbH now shows its end date (September 2026), and my high school is no longer listed under education.
+
+---
+
 ## v8.1.0 — 2026-09-29
 
 **Role-specific CVs**
