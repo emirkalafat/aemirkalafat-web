@@ -108,7 +108,7 @@ interface Stats {
   barColor: string
 }
 
-type ChangelogFlag = 'ADDED' | 'FIXED' | 'IMPRV' | 'INIT' | 'WARN'
+type ChangelogFlag = string
 
 interface ChangelogEntry {
   version: string
@@ -138,13 +138,13 @@ const isOpen = ref(false)
 const latestEntry = computed(() => props.changelog[0] ?? null)
 
 function flagClass(flag: ChangelogFlag) {
-  const map: Record<ChangelogFlag, string> = {
+  const map: Record<string, string> = {
     ADDED: 'text-tertiary-text',
     FIXED: 'text-[#4ade80]',
     IMPRV: 'text-primary',
     INIT: 'text-on-surface-variant',
     WARN: 'text-error',
   }
-  return map[flag]
+  return map[flag] ?? 'text-on-surface-variant'
 }
 </script>

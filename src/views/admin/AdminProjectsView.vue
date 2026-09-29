@@ -236,7 +236,7 @@
 
           <!-- Versions -->
           <div class="space-y-3">
-            <div v-for="(entry, i) in editingProject.changelog" :key="entry.version" class="border border-on-surface/20 bg-surface-container">
+            <div v-for="(entry, i) in editingProject.changelog" :key="i" class="border border-on-surface/20 bg-surface-container">
               <!-- Header -->
               <div @click="toggleVersion(i)" class="p-3 cursor-pointer hover:bg-surface-container-highest transition-colors flex justify-between items-center border-b border-on-surface/20">
                 <div class="flex items-center gap-3 flex-1">
@@ -276,7 +276,7 @@
 
                 <!-- Items -->
                 <div class="border-t border-on-surface/20 pt-3">
-                  <div v-for="(item, j) in entry.items" :key="`${entry.version}-${j}`" class="flex gap-2 mb-2 items-start">
+                  <div v-for="(item, j) in entry.items" :key="`${i}-${j}`" class="flex gap-2 mb-2 items-start">
                     <select v-model="item.flag" class="bg-transparent border-b border-on-surface text-code font-code text-on-surface focus:ring-0 focus:border-tertiary px-0 py-2 cursor-pointer outline-none w-24 text-sm">
                       <option v-for="f in flags" :key="f" :value="f">{{ f }}</option>
                     </select>

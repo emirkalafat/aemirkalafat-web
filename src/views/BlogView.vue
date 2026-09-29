@@ -55,7 +55,7 @@
 
         <!-- Featured Post -->
         <article
-          v-if="showFeatured"
+          v-if="featuredPost && showFeatured"
           class="md:col-span-12 lg:col-span-8 border border-on-surface bg-surface-container-lowest flex flex-col neo-hover-glow relative group overflow-hidden"
         >
           <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-0"
@@ -98,7 +98,7 @@
         </article>
 
         <!-- Sidebar Stats -->
-        <aside v-if="showFeatured" class="md:col-span-12 lg:col-span-4 flex flex-col gap-gutter">
+        <aside v-if="featuredPost && showFeatured" class="md:col-span-12 lg:col-span-4 flex flex-col gap-gutter">
           <div class="border border-on-surface bg-surface-container-lowest p-6 h-full flex flex-col" style="transition: all 0.2s ease-in-out;">
             <div class="border-b border-outline pb-4 mb-4">
               <h4 class="text-label-md font-code text-on-surface uppercase tracking-widest flex items-center gap-2">
@@ -150,7 +150,7 @@
 
         <!-- Wide Post -->
         <article
-          v-if="showWidePost"
+          v-if="widePost && showWidePost"
           class="col-span-1 md:col-span-12 border border-outline bg-surface-container-lowest p-6 flex flex-col md:flex-row gap-6 neo-hover-glow relative group"
         >
           <div class="flex flex-col md:w-1/4 shrink-0 border-r-0 md:border-r border-outline md:pr-6 gap-2">

@@ -7,7 +7,7 @@
       </div>
       <div>
         <h1 class="text-headline-md font-headline-md text-on-surface text-[20px] leading-tight">KALAFAT</h1>
-        <p class="text-label-md font-code text-on-surface-variant">v8.0.0-sep</p>
+        <p class="text-label-md font-code text-on-surface-variant">v{{ appVersion }}</p>
       </div>
     </div>
     <div class="flex-1 overflow-y-auto py-4 flex flex-col gap-2 px-4">
@@ -39,6 +39,7 @@ import { RouterLink } from 'vue-router'
 import { useTheme } from '@/composables/useTheme'
 import NavLink from './NavLink.vue'
 
+const appVersion = __APP_VERSION__
 const { theme, toggle } = useTheme()
 
 const isDark = computed(() => theme.value === 'dark')
