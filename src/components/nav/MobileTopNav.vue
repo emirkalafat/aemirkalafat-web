@@ -41,7 +41,7 @@
       </div>
       <div>
         <h1 class="text-headline-md font-headline-md text-on-surface text-[20px] leading-tight">KALAFAT</h1>
-        <p class="text-label-md font-code text-on-surface-variant">v8.0.0-sep</p>
+        <p class="text-label-md font-code text-on-surface-variant">v{{ appVersion }}</p>
       </div>
     </div>
 
@@ -81,6 +81,8 @@
 import { computed, ref, watch, onMounted, onUnmounted } from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
 import { useTheme } from '@/composables/useTheme'
+
+const appVersion = __APP_VERSION__
 import NavLink from './NavLink.vue'
 
 const { theme, toggle } = useTheme()
