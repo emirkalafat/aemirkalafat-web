@@ -36,8 +36,8 @@ export function useAnalytics() {
     track('social_click', { platform, location })
   }
 
-  function trackCvDownload() {
-    track('cv_download', {})
+  function trackCvDownload(field?: string, lang?: string) {
+    track('cv_download', { field, lang })
   }
 
   function trackProjectLinkClick(projectName: string, linkLabel: string, linkUrl: string) {
