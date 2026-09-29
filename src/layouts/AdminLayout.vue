@@ -72,12 +72,14 @@
         <RouterView />
       </div>
     </main>
+    <ScrollToTop />
   </div>
 </template>
 
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
 import { useAuth } from '@/composables/useAuth'
+import ScrollToTop from '@/components/ui/ScrollToTop.vue'
 
 const router = useRouter()
 const { logout } = useAuth()

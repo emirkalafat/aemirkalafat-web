@@ -63,33 +63,43 @@
         </div>
       </section>
 
-      <!-- 02 // Projects: inverted band with tech ticker -->
-      <section v-reveal class="border border-primary bg-on-surface text-background overflow-hidden brutalist-offset shadow-cyber-purple">
-        <TechMarquee :items="allSkills" />
-        <div class="flex flex-col md:flex-row items-center justify-between gap-6 p-gutter">
-          <div class="flex flex-col gap-2">
-            <p class="font-label-md text-label-md font-code uppercase text-background/60">02 // Projects.ls()</p>
+      <!-- 02 // Projects: featured cards + inverted band with tech ticker -->
+      <section class="flex flex-col gap-10">
+        <SectionHeading index="02" title="Projects.ls()" accent="primary" />
+        <FeaturedProjects />
+        <div v-reveal class="border border-primary bg-on-surface text-background overflow-hidden brutalist-offset shadow-cyber-purple">
+          <TechMarquee :items="allSkills" />
+          <div class="flex flex-col md:flex-row items-center justify-between gap-6 p-gutter">
             <p class="font-body-md text-body-md text-background/80 max-w-lg">
-              Want to see what I actually build? Check out my projects — side quests, experiments, and things that (mostly) work in production.
+              That's the highlight reel. The full log has the side quests, experiments, and things that (mostly) work in production.
             </p>
+            <RouterLink to="/projects"
+              class="shrink-0 flex items-center gap-2 bg-background text-on-surface font-label-md text-label-md px-8 py-4 uppercase brutalist-offset-hover shadow-cyber-purple transition-[box-shadow]">
+              <span class="material-symbols-outlined text-[18px]">folder_open</span>
+              View Projects
+            </RouterLink>
           </div>
-          <RouterLink to="/projects"
-            class="shrink-0 flex items-center gap-2 bg-background text-on-surface font-label-md text-label-md px-8 py-4 uppercase brutalist-offset-hover shadow-cyber-purple transition-[box-shadow]">
-            <span class="material-symbols-outlined text-[18px]">folder_open</span>
-            View Projects
-          </RouterLink>
         </div>
       </section>
 
-      <!-- 03 // Education: call stack -->
+      <!-- 03 // GitHub contribution heatmap -->
+      <GithubActivity />
+
+      <!-- 04 // Media: recent movies, series and books on a film strip -->
       <section class="flex flex-col gap-10">
-        <SectionHeading index="03" title="Education.Stack()" accent="purple" />
-        <EducationStack :items="education" />
+        <SectionHeading index="04" title="Input.Stream()" accent="amber" />
+        <RecentMedia />
       </section>
 
-      <!-- 04 // Terminal: lives in the hero on desktop, down here on mobile -->
+      <!-- 05 // Education: call stack -->
+      <section class="flex flex-col gap-10">
+        <SectionHeading index="05" title="Education.Stack()" accent="purple" />
+        <EducationStack :items="visibleEducation" />
+      </section>
+
+      <!-- 06 // Terminal: lives in the hero on desktop, down here on mobile -->
       <section v-if="!isDesktop" class="flex flex-col gap-10">
-        <SectionHeading index="04" title="Terminal.Open()" accent="primary" />
+        <SectionHeading index="06" title="Terminal.Open()" accent="primary" />
         <HeroTerminal v-reveal />
       </section>
 
@@ -105,7 +115,10 @@ import HeroTerminal from '@/components/home/HeroTerminal.vue'
 import SectionHeading from '@/components/home/SectionHeading.vue'
 import TechMarquee from '@/components/home/TechMarquee.vue'
 import EducationStack from '@/components/home/EducationStack.vue'
-import { experience, education, allSkills } from '@/data/experience'
+import FeaturedProjects from '@/components/home/FeaturedProjects.vue'
+import RecentMedia from '@/components/home/RecentMedia.vue'
+import GithubActivity from '@/components/home/GithubActivity.vue'
+import { experience, visibleEducation, allSkills } from '@/data/experience'
 import type { WorkExperience } from '@/data/experience'
 import { useAnalytics } from '@/composables/useAnalytics'
 import { vReveal } from '@/composables/useReveal'

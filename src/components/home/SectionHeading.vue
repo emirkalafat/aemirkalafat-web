@@ -21,13 +21,13 @@ import { vReveal } from '@/composables/useReveal'
 const props = defineProps<{
   index: string
   title: string
-  accent: 'tertiary' | 'purple' | 'primary'
+  accent: 'tertiary' | 'purple' | 'primary' | 'amber'
 }>()
 
 const accentText = computed(
-  () => ({ tertiary: 'text-tertiary-text', purple: 'text-cyber-purple', primary: 'text-primary' })[props.accent],
+  () => ({ tertiary: 'text-tertiary-text', purple: 'text-cyber-purple', primary: 'text-primary', amber: 'text-rating-average' })[props.accent],
 )
 const accentBg = computed(
-  () => ({ tertiary: 'bg-tertiary', purple: 'bg-cyber-purple', primary: 'bg-primary' })[props.accent],
+  () => ({ tertiary: 'bg-tertiary', purple: 'bg-cyber-purple', primary: 'bg-primary', amber: 'bg-rating-average' })[props.accent],
 )
 </script>

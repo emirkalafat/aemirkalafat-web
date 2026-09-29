@@ -21,6 +21,7 @@ export interface Education {
   period: string
   activities?: string
   skills?: string[]
+  hidden?: boolean
 }
 
 export const experience: WorkExperience[] = [
@@ -89,8 +90,11 @@ export const education: Education[] = [
     degree: 'High School Diploma',
     field: 'Science Track (Sayısal)',
     period: 'Oct 2016 – Jun 2020',
+    hidden: true,
   },
 ]
+
+export const visibleEducation: Education[] = education.filter(e => !e.hidden)
 
 export const allSkills: string[] = [
   ...new Set([

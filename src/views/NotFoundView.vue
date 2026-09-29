@@ -16,7 +16,7 @@
       </div>
 
       <button @click="navigate"
-        class="bg-primary text-on-primary border border-primary font-label-md text-label-md px-8 py-4 uppercase hover:bg-tertiary hover:text-on-tertiary hover:border-tertiary hover:-translate-x-1 hover:-translate-y-1 hover:shadow-[4px_4px_0px_#BD00FF] transition-all duration-100 flex items-center gap-2">
+        class="bg-primary text-on-primary border border-primary font-label-md text-label-md px-8 py-4 uppercase hover:bg-tertiary hover:text-on-tertiary hover:border-tertiary hover:-translate-x-1 hover:-translate-y-1 hover:shadow-[4px_4px_0px_rgb(var(--color-cyber-purple))] transition-all duration-100 flex items-center gap-2">
         <span class="material-symbols-outlined text-[18px]">{{ canGoBack ? 'arrow_back' : 'home' }}</span>
         {{ canGoBack ? 'Go Back' : 'Go Home' }}
       </button>

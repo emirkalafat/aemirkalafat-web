@@ -4,14 +4,14 @@
       :aria-expanded="open"
       aria-haspopup="true"
       @click="open = !open"
-      class="bg-primary text-on-primary border border-primary font-label-md text-label-md px-8 py-4 uppercase hover:bg-tertiary hover:text-on-tertiary hover:border-tertiary hover:-translate-x-1 hover:-translate-y-1 hover:shadow-[4px_4px_0px_#BD00FF] transition-all duration-100 flex items-center gap-2">
+      class="bg-primary text-on-primary border border-primary font-label-md text-label-md px-8 py-4 uppercase hover:bg-tertiary hover:text-on-tertiary hover:border-tertiary hover:-translate-x-1 hover:-translate-y-1 hover:shadow-[4px_4px_0px_rgb(var(--color-cyber-purple))] transition-all duration-100 flex items-center gap-2">
       <span class="material-symbols-outlined text-[18px]">download</span>
       Download CV
       <span class="material-symbols-outlined text-[18px] transition-transform" :class="open ? 'rotate-180' : ''">expand_more</span>
     </button>
 
     <div v-if="open"
-      class="absolute left-0 top-full mt-3 z-30 w-[min(20rem,calc(100vw-2rem))] bg-surface-container-lowest border border-primary shadow-[4px_4px_0px_#BD00FF]">
+      class="absolute left-0 top-full mt-3 z-30 w-[min(20rem,calc(100vw-2rem))] bg-surface-container-lowest border border-primary shadow-[4px_4px_0px_rgb(var(--color-cyber-purple))]">
       <div v-for="(group, gi) in groups" :key="group.field" :class="gi > 0 ? 'border-t border-primary' : ''">
         <p class="font-code text-code text-tertiary-text uppercase px-4 pt-3 pb-1">// {{ group.field }}</p>
         <a v-for="item in group.items" :key="item.lang"

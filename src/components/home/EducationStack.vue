@@ -1,6 +1,6 @@
 <template>
   <div class="border border-cyber-purple bg-surface-container-lowest font-code text-code brutalist-offset shadow-cyber-purple">
-    <div class="flex items-center justify-between gap-4 bg-cyber-purple text-white px-4 py-2 select-none">
+    <div class="flex items-center justify-between gap-4 bg-cyber-purple text-on-cyber-purple px-4 py-2 select-none">
       <span>CALL STACK</span>
       <span class="text-xs opacity-90">{{ items.length }} frames</span>
     </div>

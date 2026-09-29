@@ -54,7 +54,7 @@
 <script setup lang="ts">
 import { nextTick, onBeforeUnmount, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { experience, education, allSkills } from '@/data/experience'
+import { experience, visibleEducation, allSkills } from '@/data/experience'
 import { useAnalytics } from '@/composables/useAnalytics'
 import { useTheme } from '@/composables/useTheme'
 
@@ -147,7 +147,7 @@ const commands: Record<string, Command> = {
   },
   education: {
     desc: 'print education stack',
-    run: () => education.map(e => o(`[✓] ${e.institution} — ${e.field} (${e.period})`, 'ok')),
+    run: () => visibleEducation.map(e => o(`[✓] ${e.institution} — ${e.field} (${e.period})`, 'ok')),
   },
   cv: {
     desc: 'download my CV (pick a number)',
