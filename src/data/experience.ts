@@ -26,14 +26,14 @@ export interface Education {
 export const experience: WorkExperience[] = [
   {
     company: 'talsen team GmbH - Germany',
-    totalDuration: '1 yr 10 mos',
+    totalDuration: '2 yrs 1 mo',
     locationType: 'Remote',
     roles: [
       {
         title: 'Software Developer',
         employmentType: 'Full-time',
-        period: 'Jul 2025 – Present',
-        duration: '1 yr',
+        period: 'Jul 2025 – Sep 2026',
+        duration: '1 yr 3 mos',
         skills: ['Agile Project Management'],
       },
       {
@@ -90,4 +90,11 @@ export const education: Education[] = [
     field: 'Science Track (Sayısal)',
     period: 'Oct 2016 – Jun 2020',
   },
+]
+
+export const allSkills: string[] = [
+  ...new Set([
+    ...experience.flatMap(e => e.roles.flatMap(r => r.skills)),
+    ...education.flatMap(e => e.skills ?? []),
+  ]),
 ]

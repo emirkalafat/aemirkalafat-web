@@ -1,21 +1,26 @@
 <template>
   <div class="flex-1 flex flex-col">
-    <main class="flex-1 flex flex-col pt-24 lg:pt-margin-desktop px-margin-mobile md:px-margin-desktop gap-16 max-w-7xl mx-auto w-full pb-margin-desktop">
+    <main class="flex-1 flex flex-col pt-24 lg:pt-margin-desktop px-margin-mobile md:px-margin-desktop gap-24 max-w-7xl mx-auto w-full pb-margin-desktop">
 
-      <!-- Hero Section -->
-      <section class="grid grid-cols-1 md:grid-cols-12 gap-gutter items-center pt-4 md:min-h-[614px]">
-        <div class="md:col-span-8 flex flex-col gap-6">
-          <div class="inline-block bg-surface-container-lowest border border-primary px-4 py-2 self-start">
+      <!-- 00 // Hero -->
+      <section
+        ref="heroEl"
+        class="relative isolate z-10 grid grid-cols-1 md:grid-cols-12 gap-gutter items-center pt-4 md:min-h-[614px]"
+        @pointermove="onHeroPointer">
+        <div class="hero-grid absolute inset-0 -z-10 pointer-events-none" aria-hidden="true"></div>
+
+        <div class="md:col-span-7 flex flex-col gap-6">
+          <div class="hero-in inline-block bg-surface-container-lowest border border-primary px-4 py-2 self-start" style="--d: 0ms">
             <span class="font-code text-code text-tertiary-text blinking-cursor">&gt; SYSTEM INITIALIZED</span>
           </div>
           <h1 class="font-display text-headline-lg md:text-display text-on-surface leading-tight">
-            FROM <br/>
-            <span class="text-transparent" style="-webkit-text-stroke: 1px rgb(var(--color-on-surface));">CIRCUITS</span> <br/>
-            TO CODE.
+            <span class="hero-in block" style="--d: 120ms">FROM</span>
+            <span class="hero-in block" style="--d: 240ms"><span class="circuit-text">CIRCUITS</span></span>
+            <span class="hero-in block" style="--d: 360ms">TO CODE.</span>
           </h1>
 
           <!-- Description: collapsible on mobile, always visible on desktop -->
-          <div class="border-l-4 border-primary pl-4">
+          <div class="hero-in border-l-4 border-primary pl-4" style="--d: 480ms">
             <p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl"
               :class="bioExpanded ? '' : 'line-clamp-2 md:line-clamp-none'">
               Hello, <b>Ahmet Emir Kalafat</b>, here. I'm a Computer &amp; Electrical Engineer with a Double Major from Fatih Sultan Mehmet Vakıf University and an Erasmus+ exchange in Electrical &amp; Automation Engineering under my belt. Professionally, I've been building software at talsen team GmbH and previously developed mobile applications at SameUp — always chasing that sweet spot between low-level hardware and high-level software.
@@ -28,7 +33,7 @@
             </button>
           </div>
 
-          <div class="flex flex-wrap gap-4 mt-4 md:mt-8">
+          <div class="hero-in relative z-20 flex flex-wrap gap-4 mt-4 md:mt-8" style="--d: 600ms">
             <CvDownloadMenu />
             <a href="https://github.com/emirkalafat" target="_blank" rel="noopener"
               @click="trackSocialClick('github', 'hero')"
@@ -38,97 +43,54 @@
             </a>
           </div>
         </div>
-        <div class="md:col-span-4 relative h-64 md:h-full hidden md:flex items-end min-h-[300px] border border-primary overflow-hidden bg-surface-container">
-          <div class="absolute inset-0 opacity-20" style="background-image: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(198,198,198,0.1) 2px, rgba(198,198,198,0.1) 4px);"></div>
-          <div class="absolute inset-0 flex items-center justify-center opacity-10">
-            <span class="material-symbols-outlined" style="font-size: 120px;">memory</span>
+
+        <HeroTerminal v-if="isDesktop" class="hero-in md:col-span-5" style="--d: 500ms" />
+      </section>
+
+      <!-- 01 // Experience: vertical timeline -->
+      <section class="flex flex-col gap-10">
+        <SectionHeading index="01" title="Experience.Log()" accent="tertiary" />
+        <div class="relative flex flex-col gap-gutter md:pl-10">
+          <div class="hidden md:block absolute left-3 top-2 bottom-2 w-px bg-tertiary/40" aria-hidden="true"></div>
+          <div v-for="(exp, i) in experience" :key="exp.company" v-reveal="i * 120" class="relative">
+            <span
+              class="hidden md:block absolute -left-[34px] top-6 w-3 h-3 rotate-45 bg-tertiary ring-4 ring-surface-container-lowest"
+              aria-hidden="true">
+              <span v-if="isCurrent(exp)" class="absolute inset-0 bg-tertiary animate-ping"></span>
+            </span>
+            <ExperienceCard v-bind="exp" />
           </div>
-          <div class="relative z-10 bg-primary text-on-primary font-code text-code px-2 py-1 m-2">FIG 1.0 - CORE_ARCHITECTURE</div>
         </div>
       </section>
 
-      <!-- Experience Section -->
-      <section class="flex flex-col gap-8">
-        <h2 class="font-headline-md text-headline-md border-b-2 border-tertiary pb-2 uppercase w-full">Experience.Log()</h2>
-        <div class="flex flex-col gap-gutter">
-          <ExperienceCard v-for="exp in experience" :key="exp.company" v-bind="exp" />
-        </div>
-
-        <!-- Projects CTA -->
-        <div class="border border-primary bg-surface-container-lowest flex flex-col md:flex-row items-center justify-between gap-6 p-gutter mt-4 transition-transform duration-200 brutalist-offset shadow-primary brutalist-offset-hover">
+      <!-- 02 // Projects: inverted band with tech ticker -->
+      <section v-reveal class="border border-primary bg-on-surface text-background overflow-hidden brutalist-offset shadow-cyber-purple">
+        <TechMarquee :items="allSkills" />
+        <div class="flex flex-col md:flex-row items-center justify-between gap-6 p-gutter">
           <div class="flex flex-col gap-2">
-            <p class="font-label-md text-label-md text-tertiary-text font-code uppercase">Projects.ls()</p>
-            <p class="font-body-md text-body-md text-on-surface-variant max-w-lg">
+            <p class="font-label-md text-label-md font-code uppercase text-background/60">02 // Projects.ls()</p>
+            <p class="font-body-md text-body-md text-background/80 max-w-lg">
               Want to see what I actually build? Check out my projects — side quests, experiments, and things that (mostly) work in production.
             </p>
           </div>
           <RouterLink to="/projects"
-            class="shrink-0 flex items-center gap-2 bg-on-surface text-background font-label-md text-label-md px-8 py-4 uppercase brutalist-offset-hover shadow-tertiary transition-[box-shadow]">
+            class="shrink-0 flex items-center gap-2 bg-background text-on-surface font-label-md text-label-md px-8 py-4 uppercase brutalist-offset-hover shadow-cyber-purple transition-[box-shadow]">
             <span class="material-symbols-outlined text-[18px]">folder_open</span>
             View Projects
           </RouterLink>
         </div>
       </section>
 
-      <!-- Education Section -->
-      <section class="flex flex-col gap-8">
-        <h2 class="font-headline-md text-headline-md border-b-2 border-cyber-purple pb-2 uppercase w-full">Education.Stack()</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-gutter">
-          <EducationCard v-for="edu in education" :key="edu.institution + edu.degree" v-bind="edu" />
-        </div>
+      <!-- 03 // Education: call stack -->
+      <section class="flex flex-col gap-10">
+        <SectionHeading index="03" title="Education.Stack()" accent="purple" />
+        <EducationStack :items="education" />
       </section>
 
-      <!-- Terminal Output Card -->
-      <section class="flex flex-col gap-8">
-        <h2 class="font-headline-md text-headline-md border-b-2 border-primary pb-2 uppercase w-full">System.Status()</h2>
-        <div class="border border-outline bg-surface-container p-0">
-          <div class="bg-primary text-on-primary font-code text-code px-4 py-2 border-b border-outline flex justify-between">
-            <span>bash - 80x24</span>
-            <span>_ </span>
-          </div>
-          <div class="p-4 font-code text-code text-on-surface-variant flex flex-col gap-2 h-auto overflow-y-auto">
-            <div class="flex gap-4">
-              <span class="text-tertiary-text select-none">1</span>
-              <span class="text-primary">$ ./compile_career.sh</span>
-            </div>
-            <div class="flex gap-4">
-              <span class="text-tertiary-text select-none">2</span>
-              <span>[INFO] Stacking education modules...</span>
-            </div>
-            <div class="flex gap-4">
-              <span class="text-tertiary-text select-none">3</span>
-              <span>[✓] FSMVU: Double Major in Computer Engineering (2021-2026)</span>
-            </div>
-            <div class="flex gap-4">
-              <span class="text-tertiary-text select-none">4</span>
-              <span>[✓] Erasmus+ Exchange: Electrical &amp; Automation Eng (2023)</span>
-            </div>
-            <div class="flex gap-4">
-              <span class="text-tertiary-text select-none">5</span>
-              <span>[INFO] Loading career experience buffer...</span>
-            </div>
-            <div class="flex gap-4">
-              <span class="text-tertiary-text select-none">6</span>
-              <span>[✓] talsen team GmbH: Full-stack Developer (1 yr 10 mos)</span>
-            </div>
-            <div class="flex gap-4">
-              <span class="text-tertiary-text select-none">7</span>
-              <span>[✓] SameUp: Mobile Dev Trailblazer (1 yr 2 mos)</span>
-            </div>
-            <div class="flex gap-4">
-              <span class="text-tertiary-text select-none">8</span>
-              <span>[INFO] Skill matrix compiled: Hardware + Software fusion ⚡</span>
-            </div>
-            <div class="flex gap-4">
-              <span class="text-tertiary-text select-none">9</span>
-              <span class="text-error">[WARN] Coffee levels depleted. System unstable without caffeine.</span>
-            </div>
-            <div class="flex gap-4">
-              <span class="text-tertiary-text select-none">10</span>
-              <span class="text-primary blinking-cursor">$ </span>
-            </div>
-          </div>
-        </div>
+      <!-- 04 // Terminal: lives in the hero on desktop, down here on mobile -->
+      <section v-if="!isDesktop" class="flex flex-col gap-10">
+        <SectionHeading index="04" title="Terminal.Open()" accent="primary" />
+        <HeroTerminal v-reveal />
       </section>
 
     </main>
@@ -136,13 +98,41 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { onBeforeUnmount, onMounted, ref } from 'vue'
 import ExperienceCard from '@/components/ui/ExperienceCard.vue'
 import CvDownloadMenu from '@/components/ui/CvDownloadMenu.vue'
-import EducationCard from '@/components/ui/EducationCard.vue'
-import { experience, education } from '@/data/experience'
+import HeroTerminal from '@/components/home/HeroTerminal.vue'
+import SectionHeading from '@/components/home/SectionHeading.vue'
+import TechMarquee from '@/components/home/TechMarquee.vue'
+import EducationStack from '@/components/home/EducationStack.vue'
+import { experience, education, allSkills } from '@/data/experience'
+import type { WorkExperience } from '@/data/experience'
 import { useAnalytics } from '@/composables/useAnalytics'
+import { vReveal } from '@/composables/useReveal'
 
 const bioExpanded = ref(false)
 const { trackSocialClick } = useAnalytics()
+
+const desktopQuery = window.matchMedia('(min-width: 768px)')
+const isDesktop = ref(desktopQuery.matches)
+const onQueryChange = (e: MediaQueryListEvent) => (isDesktop.value = e.matches)
+onMounted(() => desktopQuery.addEventListener('change', onQueryChange))
+onBeforeUnmount(() => desktopQuery.removeEventListener('change', onQueryChange))
+
+const isCurrent = (exp: WorkExperience) => exp.roles.some(r => /present/i.test(r.period))
+
+const heroEl = ref<HTMLElement | null>(null)
+let raf = 0
+function onHeroPointer(e: PointerEvent) {
+  if (raf || !heroEl.value) return
+  const el = heroEl.value
+  const { clientX, clientY } = e
+  raf = requestAnimationFrame(() => {
+    raf = 0
+    const r = el.getBoundingClientRect()
+    el.style.setProperty('--mx', `${clientX - r.left}px`)
+    el.style.setProperty('--my', `${clientY - r.top}px`)
+  })
+}
+onBeforeUnmount(() => cancelAnimationFrame(raf))
 </script>

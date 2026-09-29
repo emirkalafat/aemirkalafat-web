@@ -22,7 +22,9 @@
       <div v-for="(role, idx) in roles" :key="idx" class="flex gap-4">
         <!-- Timeline dot and line -->
         <div class="flex flex-col items-center">
-          <div class="w-3 h-3 bg-primary rounded-full"></div>
+          <div class="relative w-3 h-3 rounded-full" :class="isCurrent(role.period) ? 'bg-tertiary' : 'bg-primary'">
+            <span v-if="isCurrent(role.period)" class="absolute inset-0 rounded-full bg-tertiary animate-ping opacity-75"></span>
+          </div>
           <div v-if="idx < roles.length - 1" class="w-px h-12 bg-primary opacity-40 mt-2"></div>
         </div>
 
@@ -55,4 +57,6 @@
 import type { WorkExperience } from '@/data/experience'
 
 defineProps<WorkExperience>()
+
+const isCurrent = (period: string) => /present/i.test(period)
 </script>
