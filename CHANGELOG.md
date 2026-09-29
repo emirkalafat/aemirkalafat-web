@@ -4,6 +4,15 @@ User-facing release notes. Written in plain language for site visitors.
 
 ---
 
+## v8.1.0 — 2026-09-29
+
+**Role-specific CVs**
+
+- **ADDED** — The homepage "Download CV" button now opens a menu with four CVs: Software and Electrical, each in Turkish and English. Pick the one that fits, and it downloads right away.
+- **IMPRV** — The CV menu highlights the language matching your browser's language as the recommended choice.
+
+---
+
 ## v8.0.0 — 2026-09-18
 
 **Project logos**
